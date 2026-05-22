@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "analitica-judicial-penal-juvenil"
+version = "0.1.0"
+description = "Pipeline reproducible de limpieza y normalización de causas del fuero penal juvenil (Provincia de Buenos Aires)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Equipo Analítica Judicial" }]
+keywords = ["analytics", "judicial", "etl", "data-cleaning", "argentina"]
+
+# Dependencias mínimas para correr el pipeline ETL.
+# Cumple STK-01: stack mínimo y necesario.
+dependencies = [
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+    "numpy>=1.26",
+    "pandera>=0.18",
+]
+
+# Grupos de dependencias por propósito (CFG-02).
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+dashboard = [
+    "streamlit>=1.35",
+    "matplotlib>=3.8",
+    "altair>=5.3",
+]
+
+[project.scripts]
+analitica-pipeline = "src.pipeline:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+exclude = ["tests*", "notebooks*", "data*", "outputs*"]
+
+# --- Ruff: formateo + linting (PY-01) -------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "RUF",  # ruff-specific
+]
+ignore = [
+    "E501",  # line too long (gestionado por el formatter)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "B011",  # asserts en tests son OK
+]
+"dashboard/tabs/tramites.py" = [
+    "RUF001", "RUF002", "RUF003",  # uso intencional de × para "trámite × delito"
+]
+
+# --- Pytest --------------------------------------------------------------
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+]
+
+# --- Mypy ----------------------------------------------------------------
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false  # baseline laxa; subir gradualmente (TY-02)
+ignore_missing_imports = true

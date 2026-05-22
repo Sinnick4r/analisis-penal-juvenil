@@ -1,0 +1,44 @@
+﻿delito_estandar,objetivo_ministerio,criterio_match,observacion,activo
+robo simple,robo simple,match_directo,Equivalencia univoca,True
+hurto,hurto simple,match_directo,Equivalencia univoca,True
+lesiones leves,lesiones leves,match_directo,Equivalencia univoca,True
+lesiones graves,lesiones graves,match_directo,Equivalencia univoca,True
+amenazas,amenazas,match_directo,Equivalencia univoca,True
+amenazas agravadas,amenazas agravadas,match_directo,Equivalencia univoca,True
+abuso sexual,abuso sexual,match_ambiguo,El CSV ministerial trae mas de un codigo,True
+abuso sexual con acceso carnal,abuso sexual con acceso carnal,match_directo,Equivalencia univoca,True
+encubrimiento,encubrimiento,match_ambiguo,El CSV ministerial trae multiples codigos,True
+violacion de domicilio,violacion de domicilio,match_directo,Equivalencia univoca,True
+grooming,ciberacoso sexual infantil (grooming),match_directo,Equivalencia univoca,True
+estafa,estafa,match_directo,Equivalencia univoca,True
+extorsion,extorsion,match_ambiguo,CSV con multiples variantes,True
+homicidio,homicidio simple,match_directo,Equivalencia univoca,True
+homicidio agravado,homicidio agravado,match_ambiguo,CSV con multiples variantes,True
+resistencia a la autoridad,resistencia o desobediencia a un funcionario publico,match_directo,Equivalencia ministerial más cercana,True
+desobediencia,resistencia o desobediencia a un funcionario publico,match_directo,Consolidacion operativa,True
+tenencia simple de estupefacientes,tenencia simple de estupefacientes,match_directo,Equivalencia univoca,True
+tenencia de estupefacientes con fines de comercializacion,tenencia de estupefacientes con fines de comercializacion simple,match_directo,Equivalencia univoca,True
+robo agravado,robo agravado,match_ambiguo,CSV ministerial remite a mas de un codigo,True
+hurto agravado,hurto agravado,match_directo,Equivalencia aceptable,True
+danos,danos,match_ambiguo,CSV ministerial remite a mas de un codigo,True
+encubrimiento agravado por animo de lucro,encubrimiento agravado,match_ambiguo,CSV ministerial remite a multiples variantes,True
+robo agravado en poblado y en banda,robo en poblado y en banda,match_directo,Equivalencia univoca,True
+robo agravado por escalamiento,robo con escalamiento,match_directo,Equivalencia univoca,True
+robo agravado de vehiculo dejado en la via publica,robo de vehiculos,match_directo,Adecuado según auditoria del CSV,True
+hurto agravado de vehiculo dejado en la via publica,hurto de vehiculos,match_directo,Adecuado según auditoria del CSV,True
+robo agravado por efraccion,robo por efraccion,match_directo,Adecuado según auditoria del CSV,True
+robo agravado por el uso de arma,robo con arma de fuego,match_directo,Adecuado según auditoria del CSV,True
+robo agravado por el uso de arma de fuego,robo con arma de fuego,match_directo,Adecuado según auditoria del CSV,True
+robo agravado por uso de arma de fuego,robo con arma de fuego,match_directo,Adecuado según auditoria del CSV,True
+robo agravado por uso de arma no apta,robo con arma de fuego atenuado,match_directo,Adecuado según auditoria del CSV,True
+portacion ilegal de arma de guerra,portacion ilegal de arma de guerra,match_directo,Equivalencia univoca,True
+portacion ilegal de arma de fuego de uso civil,portacion ilegal de arma de uso civil,match_directo,Adecuado según auditoria del CSV,True
+tenencia ilegal de arma de uso civil,tenencia ilegal de arma de uso civil,match_directo,Adecuado según auditoria del CSV,True
+tenencia ilegal de arma de guerra,tenencia ilegal de arma de guerra,match_directo,Adecuado según auditoria del CSV,True
+lesiones culposas,lesiones culposas,match_directo,Equivalencia univoca,True
+exhibiciones obscenas,exhibiciones obscenas,match_ambiguo,CSV ministerial con mas de una variante posible,True
+incendio o estrago culposo,estragos culposos,match_directo,Se adopta la categoría ministerial más cercana,True
+abuso sexual agravado,,sin_equivalencia_definida,No existe categoria generica equivalente usable en el CSV,True
+uso de documento falso,,sin_equivalencia_definida,No se identificó una categoria generica exacta en la auditoria,True
+tenencia de estupefacientes,,sin_equivalencia_definida,Categoria demasiado amplia,True
+estupefacientes,,sin_equivalencia_definida,Categoria demasiado amplia,True

@@ -1,0 +1,20 @@
+# Configuración persistente de Streamlit.
+# El tema acá se aplica al chrome de Streamlit (sidebar, botones, métricas).
+# Los charts Altair se configuran aparte en dashboard/theme.py.
+
+[theme]
+base = "light"
+primaryColor = "#1F4E79"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F5F5"
+textColor = "#262626"
+font = "sans serif"
+
+[server]
+# Habilitar headless si se despliega en Streamlit Community Cloud.
+headless = true
+# No abrir browser automáticamente al correr localmente.
+runOnSave = true
+
+[browser]
+gatherUsageStats = false

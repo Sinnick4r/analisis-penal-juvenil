@@ -1,0 +1,81 @@
+﻿tramite_fuente,tramite_estandar,categoria,observacion,activo
+sobreseimiento,sobreseimiento,cierre,Categoria principal,True
+sobreseimento,sobreseimiento,cierre,Correccion tipografica,True
+sobreseimeitno,sobreseimiento,cierre,Correccion tipografica,True
+sobresemiento,sobreseimiento,cierre,Correccion tipografica,True
+competencia,competencia,competencia,Categoria principal,True
+acepta compentencia,competencia,competencia,Correccion tipografica,True
+acepta competencia,competencia,competencia,Equivalencia funcional,True
+competencia aceptada,competencia,competencia,Equivalencia funcional,True
+competencia de mayores,competencia,competencia,Consolidacion funcional,True
+competencia por edad,competencia,competencia,Consolidacion funcional,True
+comptencia,competencia,competencia,Correccion tipografica,True
+inhibitoria,competencia,competencia,Interpretacion funcional,True
+remite a jgj1,competencia,competencia,Remision por competencia,True
+remite a jgj1 por turno,competencia,competencia,Remision por competencia,True
+remite a jgj2,competencia,competencia,Remision por competencia,True
+remite a jgj2 por turno,competencia,competencia,Remision por competencia,True
+radicacion del jgj2,competencia,competencia,Remision/radicacion por competencia,True
+declinatoria,declinatoria_de_competencia,competencia,Categoria principal,True
+declinatoria de mayores,declinatoria_de_competencia,competencia,Consolidacion funcional,True
+declinatoria mayores,declinatoria_de_competencia,competencia,Consolidacion funcional,True
+declinatoria al jgj1,declinatoria_de_competencia,competencia,Consolidacion funcional,True
+declinatoria al jgj2,declinatoria_de_competencia,competencia,Consolidacion funcional,True
+declinatoria de caba (jnm6 sec 16),declinatoria_de_competencia,competencia,Consolidacion funcional,True
+declinatoria de competencia,declinatoria_de_competencia,competencia,Equivalencia exacta,True
+declinatoria de jg5,declinatoria_de_competencia,competencia,Consolidacion funcional,True
+delinatoria al jgj1,declinatoria_de_competencia,competencia,Correccion tipografica,True
+conversion / declinatoria a jgj1,declinatoria_de_competencia,competencia,Consolidacion funcional,True
+elevacion,elevacion_a_juicio,elevacion,Categoria principal,True
+elevacion a juicio,elevacion_a_juicio,elevacion,Categoria principal,True
+elevacion a jucio,elevacion_a_juicio,elevacion,Correccion tipografica,True
+elevacion_a_juicio,elevacion_a_juicio,elevacion,Categoria principal,True
+requisitoria,elevacion_a_juicio,elevacion,Requisitoria de elevacion a juicio,True
+elevacion a juicio (sjp),elevacion_a_juicio_ofrece_sjp,elevacion,Oferta de SJP,True
+elevacion a juicio / sjp,elevacion_a_juicio_ofrece_sjp,elevacion,Oferta de SJP,True
+elevacion / sjp,elevacion_a_juicio_ofrece_sjp,elevacion,Oferta de SJP,True
+elevacion a juicio - sjp,elevacion_a_juicio_ofrece_sjp,elevacion,Oferta de SJP,True
+elevacion - sjp,elevacion_a_juicio_ofrece_sjp,elevacion,Oferta de SJP,True
+elevacion - sjp - sob,elevacion_a_juicio_ofrece_sjp,elevacion,Oferta de SJP,True
+requisitoria / sjp,elevacion_a_juicio_ofrece_sjp,elevacion,Oferta de SJP,True
+competencia / elevacion,elevacion_a_juicio_con_cuestion_de_competencia,elevacion,Elevacion con cuestion de competencia,True
+allanamiento,allanamiento,investigacion,Categoria principal,True
+allanamiento_y_secuestro,allanamiento,investigacion,Secuestro implicito en la medida,True
+allanamiento y secuestro,allanamiento,investigacion,Secuestro implicito en la medida,True
+convalidacion de allanamiento,allanamiento,investigacion,Misma familia operativa,True
+allanamiento y detencion,allanamiento_con_pedido_de_detencion,investigacion,Allanamiento con componente de detencion,True
+allanamiento / detencion,allanamiento_con_pedido_de_detencion,investigacion,Allanamiento con componente de detencion,True
+detencion / allanamiento,allanamiento_con_pedido_de_detencion,investigacion,Allanamiento con componente de detencion,True
+allanam. / detencion / med. seg,allanamiento_con_pedido_de_detencion,investigacion,Allanamiento con detencion,True
+allanamiento - detencion - med. seg,allanamiento_con_pedido_de_detencion,investigacion,Allanamiento con detencion,True
+allanamiento- med de seguridad,allanamiento_con_medida_de_seguridad,investigacion,Allanamiento con medida de seguridad,True
+detenido,detenido,coercion,Situacion consumada,True
+detenidos,detenido,coercion,Normalizacion plural-singular,True
+detencion,pedido_de_detencion,coercion,"Acto procesal, no estado",True
+pedido de detencion,pedido_de_detencion,coercion,Acto procesal,True
+detencion / detenido,pedido_de_detencion,coercion,Se prioriza el acto procesal,True
+apertura celular,secuestro_y_apertura_de_telefono,investigacion,Consolidacion operativa,True
+secuestro_y_apertura_de_telefono,secuestro_y_apertura_de_telefono,investigacion,Categoria principal,True
+secuest y apert de tel,secuestro_y_apertura_de_telefono,investigacion,Correccion abreviada,True
+medida cautelar,medida_cautelar_ac_4099,medida,Ajuste de nomenclatura,True
+cautelar,medida_cautelar_ac_4099,medida,Ajuste de nomenclatura,True
+medida cutelar,medida_cautelar_ac_4099,medida,Correccion tipografica,True
+cese de actos de perturbacion,medida_cautelar_ac_4099,medida,Tratado como cautelar,True
+medida de seguridad,medida_de_seguridad,medida,Categoria principal,True
+derivacion,derivacion_a_servicio_local,derivacion,Ajuste de nomenclatura,True
+derivacion al servicio local,derivacion_a_servicio_local,derivacion,Categoria principal,True
+derivacion al local,derivacion_a_servicio_local,derivacion,Consolidacion local,True
+camara gesell,camara_gesell,prueba,Categoria principal,True
+prescripcion,prescripcion,cierre,Categoria propia,True
+exhorto,exhorto,oficio,Categoria propia,True
+presentacion de abogado,presentacion_de_abogado,administrativo,Categoria propia,True
+se presenta abogado,presentacion_de_abogado,administrativo,Consolidacion redaccional,True
+remision,remision_art_40_ley_13634,remision,Interpretacion jurídica confirmada,True
+proceso_especial,proceso_especial,especial,Amparo / habeas corpus,True
+amparo,proceso_especial,especial,Consolidacion funcional,True
+habeas corpus,proceso_especial,especial,Consolidacion funcional,True
+libertad,libertad,coercion,Categoria propia,True
+acumulada a 323-21,acumulacion,gestion,Acumulacion de causas,True
+acumulacion del jgj1,acumulacion,gestion,Acumulacion de causas,True
+apelacion multa,apelacion,recursivo,Categoria propia,True
+solicitud de desarchivo,solicitud_de_desarchivo,gestion,Categoria propia,True

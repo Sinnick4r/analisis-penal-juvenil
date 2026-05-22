@@ -1,0 +1,62 @@
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+build/
+dist/
+
+# --- Virtualenv ----------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# --- Tests & lint caches -------------------------------------------------
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- IDEs ----------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# --- Jupyter --------------------------------------------------------------
+.ipynb_checkpoints/
+
+# --- PRIVACIDAD DE DATOS: regla cero --------------------------------------
+# Cualquier archivo con datos causa-por-causa NO va al repo, sin excepciones.
+# Un IPP es un identificador único re-identificable contra el sistema judicial,
+# por lo tanto cae bajo política de PII aunque no haya nombres.
+
+# Registro de causas (entrada del pipeline de Iteración A).
+data/raw/*
+!data/raw/.gitkeep
+
+# Outputs derivados (se regeneran corriendo el pipeline).
+outputs/*
+!outputs/.gitkeep
+
+# Indicadores agregados mensuales del juzgado.
+# Son sin PII (conteos), pero por consistencia con la política los excluimos.
+# Si en el futuro decidís versionar este archivo, comentá la línea siguiente.
+data/external/indicadores_*.xlsx
+
+# --- Datos públicos SÍ versionados ---------------------------------------
+# El nomenclador oficial del Ministerio de Justicia es información pública
+# y se versiona en el repo para garantizar reproducibilidad estricta
+# (el pipeline corre offline, sin depender de la URL de datos.jus.gob.ar).
+# Se versiona por opt-in explícito en este proyecto.
+!data/external/codificacion-delitos-*.csv
+
+# --- Streamlit ------------------------------------------------------------
+.streamlit/secrets.toml

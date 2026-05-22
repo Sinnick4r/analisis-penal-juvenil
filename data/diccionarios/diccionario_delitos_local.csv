@@ -1,0 +1,32 @@
+﻿delito_fuente,delito_estandar,observacion,fuente_regla,requiere_revision,activo
+captacion,grooming,Validado en sistema fuente,regla_local_juzgado,False,True
+captacion por medios tecnologicos de menor de edad con fines sexuales grooming,grooming,Forma larga consolidada,regla_local_juzgado,False,True
+lesiones,lesiones leves,"Regla local: si no se especifica gravedad, se trata como lesiones leves",regla_local_juzgado,False,True
+robo,robo simple,"Regla local: si no se especifica agravante, se trata como robo simple",regla_local_juzgado,False,True
+dano,danos,Normalizacion ortografica/tecnica,limpieza_textual,False,True
+dano agravado,danos agravados,Normalizacion ortografica/tecnica,limpieza_textual,False,True
+abuso sexual simple,abuso sexual,Consolidacion local,regla_local_juzgado,False,True
+robo agravado en poblado y banda,robo agravado en poblado y en banda,Unificacion redaccional,equivalencia_operativa,False,True
+robo en poblado y banda,robo agravado en poblado y en banda,Unificacion redaccional,equivalencia_operativa,False,True
+robo poblado y banda,robo agravado en poblado y en banda,Unificacion redaccional,equivalencia_operativa,False,True
+robo agravado arma no apta y poblado y banda,robo agravado arma no apta en poblado y en banda,Unificacion redaccional,equivalencia_operativa,False,True
+robo agravado por uso de arma,robo agravado por el uso de arma,Unificacion redaccional,equivalencia_operativa,False,True
+robo agravado por uso de armas,robo agravado por el uso de arma,Unificacion redaccional,equivalencia_operativa,False,True
+robo agravado por el uso de armas,robo agravado por el uso de arma,Unificacion redaccional,equivalencia_operativa,False,True
+robo agravado pro efraccion,robo agravado por efraccion,Correccion tipografica,limpieza_textual,False,True
+robo agvdo por escalamiento,robo agravado por escalamiento,Correccion tipografica,limpieza_textual,False,True
+resistencia o desobediencia a un funcionario publico,resistencia a la autoridad,Consolidacion local,equivalencia_operativa,False,True
+desobediencia a la autoridad,desobediencia,Consolidacion local,equivalencia_operativa,False,True
+resistencia a la autoridad . y violacion de domicilio,resistencia a la autoridad y violacion de domicilio,Correccion de separacion,limpieza_textual,False,True
+hurto y dano,hurto y danos,Normalizacion tecnica,limpieza_textual,False,True
+amenazas y dano,amenazas y danos,Normalizacion tecnica,limpieza_textual,False,True
+lesiones leves y dano,lesiones leves y danos,Normalizacion tecnica,limpieza_textual,False,True
+lesiones y dano,lesiones y danos,Normalizacion tecnica,limpieza_textual,False,True
+dano y lesiones,danos y lesiones,Normalizacion tecnica,limpieza_textual,False,True
+dano y amenazas,danos y amenazas,Normalizacion tecnica,limpieza_textual,False,True
+dano y hurto,danos y hurto,Normalizacion tecnica,limpieza_textual,False,True
+dano y robo,danos y robo,Normalizacion tecnica,limpieza_textual,False,True
+dano y resistencia a la autoridad,danos y resistencia a la autoridad,Normalizacion tecnica,limpieza_textual,False,True
+tenencia de estupefacientes con fines de com,tenencia de estupefacientes con fines de comercializacion,Correccion abreviada,limpieza_textual,False,True
+tenencia de estupefacientes con fines de comercialiacion,tenencia de estupefacientes con fines de comercializacion,Correccion tipografica,limpieza_textual,False,True
+tenencia de estupefacientes fines de comercializacion,tenencia de estupefacientes con fines de comercializacion,Consolidacion redaccional,equivalencia_operativa,False,True
