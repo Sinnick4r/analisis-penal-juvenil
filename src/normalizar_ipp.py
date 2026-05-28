@@ -65,7 +65,19 @@ def clasificar_ipp(ipp: str | None | float) -> str:
     qie hacer
 
     '''
-    if ipp is None or (isinstance(ipp, float) and pd.isna(ipp)):
+    if ipp is None:
+        return "nulo"
+    # pd.isna() reconoce None, np.nan, pd.NA, NaT.
+    if not isinstance(ipp, str):
+        try:
+            if pd.isna(ipp):
+                return "nulo"
+        except (TypeError, ValueError):
+            pass
+
+    s = str(ipp).strip()
+    
+    if not s or s.lower() == "nan":
         return "nulo"
 
     s = str(ipp).strip()
