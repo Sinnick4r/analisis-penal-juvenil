@@ -1,4 +1,4 @@
-# --- Python ---------------------------------------------------------------
+# python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -9,13 +9,13 @@ __pycache__/
 build/
 dist/
 
-# --- Virtualenv ----------------------------------------------------------
+# Virtualenv 
 .venv/
 venv/
 env/
 ENV/
 
-# --- Tests & lint caches -------------------------------------------------
+# tests y lint caches 
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
@@ -23,20 +23,20 @@ ENV/
 htmlcov/
 .tox/
 
-# --- IDEs ----------------------------------------------------------------
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
 
-# --- Jupyter --------------------------------------------------------------
+# Jupyter 
 .ipynb_checkpoints/
 
-# --- PRIVACIDAD DE DATOS: regla cero --------------------------------------
+# PRIVACIDAD DE DATOS: regla cero 
 # Cualquier archivo con datos causa-por-causa NO va al repo, sin excepciones.
-# Un IPP es un identificador único re-identificable contra el sistema judicial,
-# por lo tanto cae bajo política de PII aunque no haya nombres.
+# una IPP es un identificador unica re-identificable contra el poder judiical de Bs.As.
+# por lo tanto cae bajo política de PII aunque no haya nombres
 
 # Registro de causas (entrada del pipeline de Iteración A).
 data/raw/*
@@ -47,16 +47,16 @@ outputs/*
 !outputs/.gitkeep
 
 # Indicadores agregados mensuales del juzgado.
-# Son sin PII (conteos), pero por consistencia con la política los excluimos.
-# Si en el futuro decidís versionar este archivo, comentá la línea siguiente.
+# no son  PII (conteos), pero por consistencia con la política se excluyen
+
 data/external/indicadores_*.xlsx
 
-# --- Datos públicos SÍ versionados ---------------------------------------
-# El nomenclador oficial del Ministerio de Justicia es información pública
-# y se versiona en el repo para garantizar reproducibilidad estricta
-# (el pipeline corre offline, sin depender de la URL de datos.jus.gob.ar).
-# Se versiona por opt-in explícito en este proyecto.
+#  datos publicos
 !data/external/codificacion-delitos-*.csv
 
-# --- Streamlit ------------------------------------------------------------
+# streamlit
 .streamlit/secrets.toml
+
+# Backfills de resoluciones (datos causa-por-causa).
+# Excluimos los .xlsx pero SÍ versionamos checksums.json.
+data/backfill/*.xlsx

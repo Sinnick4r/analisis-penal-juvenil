@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT: Path = Path(__file__).resolve().parent.parent
 DATA_DIR: Path = ROOT / "data"
 RAW_DIR: Path = DATA_DIR / "raw"
+BACKFILL_DIR: Path = DATA_DIR / "backfill"
 DICT_DIR: Path = DATA_DIR / "diccionarios"
 EXTERNAL_DIR: Path = DATA_DIR / "external"
 OUTPUT_DIR: Path = ROOT / "outputs"
@@ -27,6 +28,18 @@ RAW_USECOLS: str = "A:F"
 DICT_DELITOS_LOCAL: Path = DICT_DIR / "diccionario_delitos_local.csv"
 DICT_DELITOS_MINISTERIO: Path = DICT_DIR / "diccionario_delitos_ministerio.csv"
 DICT_TRAMITES: Path = DICT_DIR / "diccionario_tramites.csv"
+DICT_RESOLUCIONES: Path = DICT_DIR / "diccionario_resoluciones.csv"
+DICT_PREFIJOS_IPP: Path = DICT_DIR / "prefijos_ipp.csv"
+
+# Resoluciones: 2 archivos inmutables en backfill/ + 1 vigente en raw/.
+# La separación refleja el ciclo de vida operativo: backfill se carga una
+# vez (con checksums como safety net), raw se actualiza mensualmente.
+BACKFILL_RESOLUCIONES: list[Path] = [
+    BACKFILL_DIR / "resoluciones_2017_2019.xlsx",
+    BACKFILL_DIR / "resoluciones_2020_2023a.xlsx",
+]
+RAW_RESOLUCIONES: Path = RAW_DIR / "resoluciones_2023b_2026.xlsx"
+BACKFILL_CHECKSUMS: Path = BACKFILL_DIR / "checksums.json"
 
 # Nomenclador oficial del Ministerio de Justicia de la Nación.
 # Se descarga con `python scripts/descargar_nomenclador.py`.
@@ -45,6 +58,8 @@ INDICADORES_FILE: Path = EXTERNAL_DIR / "indicadores_jgj3si.xlsx"
 
 OUTPUT_CSV: Path = OUTPUT_DIR / "causas_penal_juvenil_2020_2026_limpio_diccionarios.csv"
 OUTPUT_XLSX: Path = OUTPUT_DIR / "causas_penal_juvenil_2020_2026_limpio_diccionarios.xlsx"
+OUTPUT_RESOLUCIONES_CSV: Path = OUTPUT_DIR / "resoluciones_2017_2026_consolidado.csv"
+OUTPUT_CRUCE_CSV: Path = OUTPUT_DIR / "causas_con_metricas_resoluciones.csv"
 
 # --- Parámetros del pipeline ----------------------------------------------
 

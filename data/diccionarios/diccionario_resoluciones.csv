@@ -1,0 +1,425 @@
+﻿token_normalizado,resolucion_canonica,categoria,validar,observaciones,frecuencia_total,datasets_presentes,ejemplos_raw
+acep compet,acepta competencia,competencia,,,1,1,Acep compet/sobres
+acept compet par,acepta competencia,competencia,,,1,1,Acept compet par
+acepta comp.,acepta competencia,competencia,,,1,1,Acepta Comp.
+acepta competen,acepta competencia,competencia,,,5,1,Acepta competen
+acepta competencia,acepta competencia,competencia,,,104,3,Acepta competencia | acepta Competencia | Acepta Competencia - Sobreseimiento
+acepta competencia parcial,acepta competencia,competencia,,,2,1,acepta competencia parcial
+acepta parc compet,acepta competencia,competencia,,,1,1,Acepta parc compet
+acepta parcialmente competencia,acepta competencia,competencia,,,5,1,acepta parcialmente competencia
+comp,acepta competencia,competencia,,,2,1,Comp/Sobreseimiento | Comp /  no al sob
+comp parcial,acepta competencia,competencia,,,1,1,Comp parcial
+competencia,acepta competencia,competencia,,,4,2,Competencia
+competencia aceptada,acepta competencia,competencia,,,35,1,Competencia Aceptada | competencia aceptada
+competencia aceptada parcialmente,acepta competencia,competencia,,,1,1,competencia aceptada parcialmente
+competencia parcialmente aceptada,acepta competencia,competencia,,,1,1,competencia parcialmente aceptada
+no hace lugar a declinatoria,acepta competencia,competencia,,,1,1,no hace lugar a declinatoria
+no hace lugar declin,acepta competencia,competencia,,,1,1,No hace lugar declin
+aclaratoria,aclaratoria,varios,,,1,1,Aclaratoria
+actualizar antecdt,actualización de antecedentes,varios,,,1,1,Actualizar antecdt
+allanamiento,allanamiento,allanamiento,,,29,3,"Allanamiento | allanamiento | Allanamiento,  No hace lugar a detención"
+allanamiento y secuestro,allanamiento,allanamiento,,,2,1,Allanamiento y secuestro | allanamiento y secuestro
+convalida allanamiento,allanamiento,allanamiento,,,2,1,convalida allanamiento-secuestro/autoriza apertura | detención concedida - convalida allanamiento
+convalidacion de allanamiento,allanamiento,allanamiento,,,2,1,"convalidacion de allanamiento | convalidacion de allanamiento, cese de prision preventiva"
+det y allanamiento,allanamiento,allanamiento,,,1,1,Det y allanamiento
+orden allanamiento,allanamiento,allanamiento,,,2,1,orden allanamiento - HABILITACIÓN DE HORARIO | orden allanamiento - orden detención
+orden de allanamiento,allanamiento,allanamiento,,,7,1,orden de allanamiento | orden de detención - orden de allanamiento | orden de allanamiento - no detención -no habilitación horario
+ordena allanam,allanamiento,allanamiento,,,4,1,Ordena allanam
+ordena allanamiento,allanamiento,allanamiento,,,6,2,Ordena allanamiento | ordena allanamiento - detención
+ordena allanmien,allanamiento,allanamiento,,,1,1,Ordena allanmien
+anticipo extraordinario de prueba,anticipo extraordinario de prueba,varios,,,2,1,anticipo extraordinario de prueba | cámara gessel/anticipo extraordinario de prueba
+anticipo prueba,anticipo extraordinario de prueba,varios,,,9,3,Anticipo  prueba
+camara gesell,anticipo extraordinario de prueba,varios,,,1,1,cámara gesell
+hace lugar a prueba,anticipo extraordinario de prueba,varios,,,2,1,Hace lugar a prueba
+acceso al contenido,apertura de celular,varios,,,1,1,autoriza apertura - acceso al contenido
+apert. celular,apertura de celular,varios,,,22,2,Apert. Celular 
+apertura cel,apertura de celular,varios,,,1,1,Secuesto/apertura cel
+apertura celular,apertura de celular,varios,,,3,1,"apertura celular | allanamiento, detención, apertura celular"
+apertura de celular,apertura de celular,varios,,,3,2,"falta de merito, prision preventiva, regimen de semilibertad, apertura de celular | apertura de celular"
+apertura de documento,apertura de celular,varios,,,1,1,apertura de documento
+autoriza aper de cel,apertura de celular,varios,,,1,1,Autoriza aper de cel
+autoriza apertura,apertura de celular,varios,,,3,1,convertir secuestro / autoriza apertura | convalida allanamiento-secuestro/autoriza apertura | autoriza apertura - acceso al contenido
+autoriza apertura celular,apertura de celular,varios,,,1,1,autoriza apertura celular
+secuestro apertura,apertura de celular,varios,,,1,1,secuestro apertura
+arresto domiciliado,arresto domiciliario,medida de coercion,,,1,1,medida de seguridad - arresto domiciliado
+arresto domiciliario,arresto domiciliario,medida de coercion,,,21,3,"Arresto domiciliario | morigeracion de prision preventiva, Arresto domiciliario | arresto domiciliario"
+arresto domiciliario denegado,arresto domiciliario,medida de coercion,,,1,1,Arresto domiciliario denegado
+arresto domicliario,arresto domiciliario,medida de coercion,,,1,1,PP-arresto domicliario
+arresto domiliario,arresto domiciliario,medida de coercion,,,1,1,"Prisión Preventiva, arresto domiliario, regimen de semilibertad"
+en domicilio,arresto domiciliario,medida de coercion,,,2,1,mantiene medida de seguridad - en domicilio
+modalidad arresto domiciliario,arresto domiciliario,medida de coercion,,,1,1,mantiene prisión preventiva - modalidad arresto domiciliario
+acta art 336c,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",1,1,Acta art 336C 
+acta art 43 iey 13634,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",1,1,Acta art 43 Iey 13634
+acta aud art 336 c,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",2,1,Acta aud Art 336 C 
+acta aud art 43,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",2,1,Acta aud art 43
+acta sjp,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",3,1,Acta SJP
+atenuacion de la medida,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",1,1,aud art. 43 - ATENUACIÓN DE LA MEDIDA
+aud art. 336 c,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",2,1,Aud art. 336 C  | Aud art. 336 C /sob
+aud art. 43,audiencia,descarte,si,"audiencia no es una resolucion, hay que chequear que se resolvio",1,1,aud art. 43 - ATENUACIÓN DE LA MEDIDA
+autoriza presentaciones de forma telematica,autorizacion de control telematico,varios,,,1,1,autoriza presentaciones de forma telemática
+amplia salidas,autorizacion de salidas,varios,,,2,1,no arresto domiciliario-mantiene medida de seguridad - amplia salidas | mantiene medida de seguridad - amplia salidas
+autoriza salida,autorizacion de salidas,varios,,,5,2,Autoriza salida | autoriza salida | autoriza Salida
+autoriza salidas,autorizacion de salidas,varios,,,3,2,Autoriza Salidas | prisión preventiva - régimen de contención - autoriza salidas  | medida de seguridad  - autoriza salidas
+autoriza viaje,autorizacion de salidas,varios,,,1,1,Autoriza Viaje/exh
+autorizacion de salidas,autorizacion de salidas,varios,,,5,1,autorizacion de salidas
+exh,autorizacion de salidas,varios,,,1,1,Autoriza Viaje/exh
+haver lugar a la solicitud de moficicacion de la salida,autorizacion de salidas,varios,,,1,1,haver lugar a la solicitud de moficicación de la salida
+mantiene salidas locales,autorizacion de salidas,varios,,,1,1,mantiene salidas locales
+salida extraordinaria,autorizacion de salidas,varios,,,2,1,Salida extraordinaria | Salida Extraordinaria
+se hace lugar a la modificacion de salidas,autorizacion de salidas,varios,,,1,1,se hace lugar a la modificación de salidas
+autor. viaje,autorizacion de viaje,varios,,,1,1,Autor. Viaje
+averig de paradero,averiguacion de paradero,varios,,,1,1,Averig de paradero
+beneficio de litigar sin gastos,beneficio de litigar sin gastos,amparo,,,1,1,Beneficio de litigar sin gastos
+cambio de calificacion,cambio de calificacion,varios,,,1,1,eleva a juicio/cambio de calificación/declina competencia
+cambio de calificacion legal,cambio de calificacion,varios,,,2,1,cambio de calificación legal - libertad con obligaciones | cambio de calificación legal - prisión preventivo - régimen de contención
+modifica calificacion legal,cambio de calificacion,varios,,,1,1,orden de allanamiento - no detención - modifica calificación legal
+certificacion de antecedentes,certificacion de antecedentes,varios,,,1,1,certificacion de antecedentes
+cesa prohibicion de acercamiento,cesa medida cautelar,ac 4099,,,1,1,Cesa Prohibición de acercamiento
+cese acto peturbacion y hostigamiento,cesa medida cautelar,ac 4099,,,1,1,cese acto peturbación y hostigamiento
+cese medida,cesa medida cautelar,ac 4099,,,1,1,Cese medida
+cesa detencion,cese de medida de coercion,medida de coercion,,,2,1,Cesa detención | Cesa detención/SJP
+cesa disposicion,cese de medida de coercion,medida de coercion,,,4,1,Cesa disposición | Cesa Disposición
+cesa med coerc,cese de medida de coercion,medida de coercion,,,1,1,Cesa med coerc
+cesa med. coercion,cese de medida de coercion,medida de coercion,,,1,1,Cesa med. Coerción
+cesar disposicion,cese de medida de coercion,medida de coercion,,,2,1,Cesar disposición
+cese de la aprehension de joven no punible,cese de medida de coercion,medida de coercion,,,1,1,conversión aprehensión - cese de la aprehensión de joven no punible
+cese de prisin preventiva,cese de medida de coercion,medida de coercion,,,1,1,"cese de prisin preventiva, libertad con obligacion"
+cese de prision preventiva,cese de medida de coercion,medida de coercion,,,4,1,"Cese de Prision Preventiva,  SJP | Cese de Prision Preventiva, nulidad, declina competencia | convalidacion de allanamiento, cese de prision preventiva"
+cese medida de coercion,cese de medida de coercion,medida de coercion,,,2,1,cese medida de coerción / libertad/ suspensión de juicio a prueba | cese medida de coerción - libertad - suspensión de juicio a prueba
+dispone cese med coe,cese de medida de coercion,medida de coercion,,,1,1,Dispone cese med coe
+cesa med seg,cese de medida de seguridad,medida de coercion,,,1,1,Cesa Med Seg/sob
+cesa med seguridad,cese de medida de seguridad,medida de coercion,,,1,1,Cesa med seguridad
+cese de medida de seguridad,cese de medida de seguridad,medida de coercion,,,2,1,"cese de medida de seguridad, Sobreseimiento | cese de medida de seguridad, sorbeseimiento, derivacion"
+cese medida de seguridad,cese de medida de seguridad,medida de coercion,,,7,1,cese medida de seguridad
+cese medida seguridad,cese de medida de seguridad,medida de coercion,,,1,1,cese medida seguridad
+comp. compulsivo,comparendo compulsivo,ordenes de detencion/captura/comparendos,,,1,1,Comp. Compulsivo
+comparendo comp,comparendo compulsivo,ordenes de detencion/captura/comparendos,,,2,1,Comparendo comp | Comparendo comp 
+comparendo compul,comparendo compulsivo,ordenes de detencion/captura/comparendos,,,1,1,Comparendo compul
+comparendo compulsivo,comparendo compulsivo,ordenes de detencion/captura/comparendos,,,14,2,"rebeldia, Comparendo compulsivo, solicita inhibitoria | rebeldia, comparendo compulsivo | Rebeldía, comparendo compulsivo"
+sin efecto el comparendo compulsivo,comparendo compulsivo sin efecto,ordenes de detencion/captura/comparendos,,,1,1,Remisión - sin efecto el comparendo compulsivo
+amparo concedido,concede amparo,amparo,,,1,1,amparo concedido - declara incompetencia
+concede apelacion,concede apelacion,apelacion,,,1,1,Concede apelacion
+concede recurso,concede apelacion,apelacion,,,1,1,concede recurso
+concede recurso apelacion,concede apelacion,apelacion,,,3,1,concede recurso apelación
+concede resurso de apelacion contra honorarios,concede apelacion,apelacion,,,1,1,concede resurso de apelación contra honorarios
+recurso apelacion concedido,concede apelacion,apelacion,,,3,1,Recurso Apelación Concedido
+constituye particular damnificado,constituye particular damnificado,varios,,,1,1,constituye particular damnificado
+conv apr en det,conversion de aprehension en detencion,medida de coercion,,,1,1,Conv apr en det
+conv de aprehension,conversion de aprehension en detencion,medida de coercion,,,1,1,Conv de aprehensión
+conv en denten,conversion de aprehension en detencion,medida de coercion,,,1,1,Conv en denten
+convers detencion,conversion de aprehension en detencion,medida de coercion,,,1,1,Convers detención
+conversion,conversion de aprehension en detencion,medida de coercion,,,25,3,Conversión | Conversion | conversión
+conversion aprehension,conversion de aprehension en detencion,medida de coercion,,,1,1,conversión aprehensión - cese de la aprehensión de joven no punible
+conversion aprehension en detencion,conversion de aprehension en detencion,medida de coercion,,,3,1,conversión aprehensión  en detención | conversión aprehensión en detención
+conversion de aprehension,conversion de aprehension en detencion,medida de coercion,,,3,1,conversión de aprehensión
+conversion de la aprehension,conversion de aprehension en detencion,medida de coercion,,,2,1,Conversión de la aprehensión | conversión de la aprehensión
+conversion de la aprehension en detencion,conversion de aprehension en detencion,medida de coercion,,,6,1,conversión de la aprehensión en detención | conversión  de la aprehensión en detención
+conversion de la aprension en detencion,conversion de aprehension en detencion,medida de coercion,,,1,1,conversión de la aprensión  en detención
+conversion en aprehension,conversion de aprehension en detencion,medida de coercion,,,2,1,conversión en aprehensión
+declara rebelde,declaracion de rebeldia,rebeldia,,,9,1,Declara rebelde
+declara rebeldia,declaracion de rebeldia,rebeldia,,,1,1,declara rebeldía - comparendo compulsivo
+declara incompetencia,declina competencia,competencia,,,1,1,amparo concedido - declara incompetencia
+decli. comp,declina competencia,competencia,,,1,1,Libertad/decli. comp
+declina compet,declina competencia,competencia,,,4,1,Declina Compet | Declina compet
+declina competen,declina competencia,competencia,,,2,1,Declina competen
+declina competencia,declina competencia,competencia,,,44,3,Declina Competencia | Declina competencia | declina competencia
+descompensacion,declina competencia,competencia,,,1,1,Descompensación
+incompetencia,declina competencia,competencia,,,5,1,Incompetencia | incompetencia | incompetencia  
+incompetencia por conexidad,declina competencia,competencia,,,21,1,incompetencia por conexidad
+incomptencia por conexidad,declina competencia,competencia,,,1,1,incomptencia por conexidad
+incomptencia por territorio,declina competencia,competencia,,,1,1,incomptencia por territorio
+radica causa,declina competencia,competencia,,,1,1,allanamiento/autoriza diligenciamiento/ radica causa
+radica en otro juzgado,declina competencia,competencia,,,1,1,no detención/ orden de allanamiento/radica en otro juzgado
+radica ipp en otro juzgado,declina competencia,competencia,,,1,1,radica IPP en otro Juzgado
+radicacion,declina competencia,competencia,,,1,1,Radicación
+remite al gtias 2,declina competencia,competencia,,,1,1,Remite al gtias 2
+sdeclina competencia,declina competencia,competencia,,,1,1,Sdeclina competencia
+efecto extrac fichas,deja sin efecto extracción de fichas dactiloscopicas,varios,,,1,1,s/ efecto extrac fichas
+deja sin efecto prohibicion de salida del pais,deja sin efecto prohibicion de salida del pais,varios,,,1,1,deja sin efecto prohibicion de salida del pais
+rebeldia s,deja sin efecto rebeldia,rebeldia,,,1,1,Rebeldia s/ efecto
+inter serv loc,derivacion al servicio local,derivacion a servicio local,,,1,1,Sobres/inter serv loc
+derivacion,derivación al servicio local,derivacion a servicio local,,,149,2,"Sobreseimiento c/ Derivacion | Sobreseimiento, derivacion | sobreseimiento, derivacion"
+anotacion conjunta,descartar,descarte,si,no valido como resolucion,1,1,"prisión preventiva, regimen cerrado,anotación conjunta"
+autoriza diligenciamiento,descartar,descarte,si,"autoriza diligenciamiento no es valido, esta mal ingresado",2,1,detención-allanamiento-AUTORIZA DILIGENCIAMIENTO | allanamiento/autoriza diligenciamiento/ radica causa
+camara gessel,descartar,,si,camara gessel y anticipo extraordinario de prueba es lo mismo,1,1,cámara gessel/anticipo extraordinario de prueba
+concedida,descartar,descarte,si,no debe tenerse en cuenta,1,1,elev a juicio solicitada por particular damnificado - concedida
+convertir secuestro,descartar,descarte,si,"no debe tenerse en cuenta , ya incluido en aprertura de celular",2,2,Convertir secuestro | convertir secuestro / autoriza apertura
+declara no punible,descartar,descarte,si,no debe tomarse en cuenta,2,2,Declara no punible | declara no punible - medida de seguridad
+disp med coercion,descartar,descarte,si,"validar manualmente con la causa original, no tiene sentido como resolucion",1,1,Disp med coerción
+domicilio familiar,descartar,descarte,si,no es tramite valido,1,1,mantiene medida de seguridad - domicilio familiar
+efecto,descartar,descarte,si,efecto se refiere a dejar la rebeldia sin efecto,1,1,Rebeldia s/ efecto
+fija aud c,descartar,descarte,si,"no son resoluciones de merito, no deberia estar registrada",1,1,Fija aud c/Fuerza Pub
+fija reglas,descartar,descarte,si,"no son resoluciones de merito, no deberia estar registrada",2,1,Fija reglas
+fija reglas conduc,descartar,descarte,si,"no son resoluciones de merito, no deberia estar registrada",2,1,Fija reglas conduc
+fuerza pub,descartar,descarte,si,"no son resoluciones de merito, no deberia estar registrada",1,1,Fija aud c/Fuerza Pub
+grooming,descartar,descarte,si,"grooming es un delito, no un tramite. no debe estar en este dataset",1,1,acepta competencia - grooming
+habilitacion de horario,descartar,descarte,si,"habilitacion de horario ya esta incluido dentro de allanamiento, no debe señalarse",2,1,orden allanamiento - HABILITACIÓN DE HORARIO | orden de allanamiento - habilitación de horario
+no habilitacion,descartar,descarte,si,"habilitacion de horario ya esta incluido dentro de allanamiento, no debe señalarse",1,1,allanamiento - no habilitación
+no habilitacion horario,descartar,descarte,si,"habilitacion de horario ya esta incluido dentro de allanamiento, no debe señalarse",1,1,orden de allanamiento - no detención -no habilitación horario
+obligaciones,descartar,descarte,si,“obligaciones” no debe detaqlalrse por separado en ningun caso,1,1,arresto domiciliario - obligaciones
+rechazo,descartar,descarte,si,"no aclara que se rechaza, no es valido sin validacion manual en la ipp original",2,1,rechazo
+s,descartar,descarte,si,debe eliminarse,1,1,s/ efecto extrac fichas
+secuesto,descartar,descarte,,"secuestro no debe ingresarse, ya esta incluidoenb la apertura de celular",1,1,Secuesto/apertura cel
+secuestro,descartar,descarte,si,"secuestro no debe ingresarse, ya esta incluido de un allanamiento",7,1,Secuestro | convalida allanamiento-secuestro/autoriza apertura | allanamiento - secuestro
+secustro,descartar,descarte,si,"secuestro no debe ingresarse, ya esta incluido de un allanamiento",1,1,allanamiento - secustro
+elev a juicio solicitada por particular damnificado,elevacion a juicio,elevacion a juicio,,,1,1,elev a juicio solicitada por particular damnificado - concedida
+elev a juicio y no nuli,elevacion a juicio,elevacion a juicio,,,1,1,Elev a juicio y no nuli
+elev juicio,elevacion a juicio,elevacion a juicio,,,1,1,No domic / elev juicio
+eleva a juicio,elevacion a juicio,elevacion a juicio,,,32,3,"Eleva a juicio | sobreseimiento, Eleva a juicio | no hace lugar a sobreseimiento, eleva a juicio"
+elevacion a juicio,elevacion a juicio,elevacion a juicio,,,24,3,"Elevacion a juicio | Elevación a juicio | Morigeracion de prisión preventiva, Regimen Semilibertad, elevación a juicio"
+elevacion a juicio concedida,elevacion a juicio,elevacion a juicio,,,3,1,elevación a juicio concedida
+remite a juicio,elevacion a juicio,elevacion a juicio,,,3,2,Remite a juicio | libertad con obligaciones/no salida alternativa al conflicto/remite a juicio
+embargo,embargo,amparo,,,1,1,Embargo
+excarcelacion,excarcelacion,eximicion de prision,,,1,1,excarcelación
+eximicion de prision,eximicion de prision,eximicion de prision,,,1,1,Eximicion de prisión
+ampliacion de sjp,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,1,1,"ampliacion de SJP, extincion de SJP"
+ext de ace,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,1,1,Ext de ace / sobres
+extincion accion,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,1,1,Extinción acción
+extincion de accion,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,7,1,Extinción de acción | Extinción de  acción
+extincion de la acc,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,2,1,Extinción de la acc
+extincion de la accion,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,23,1,extinción de la acción | Extinción de la acción | extinción  de la acción
+extincion de la accion por cumplimiento,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,1,1,extinción de la acción por cumplimiento
+extincion de la accion por cumplimiento de sjp,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,2,1,extinción de la acción por cumplimiento de SJP
+extincion de la accion por cumplimiento de suspension de juicio a prueba,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,1,1,extinción de la acción por cumplimiento de suspensión de juicio a prueba
+extincion de la accion por cumplimiento sjp,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,1,1,extinción de la acción por cumplimiento SJP
+extincion de sjp,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,1,1,"ampliacion de SJP, extincion de SJP"
+extincion sjp,extincion de la accion por cumplimiento de suspension de juicio a prueba,salida alternativa,,,82,3,Extinción SJP | Extincion SJP | extincion SJP
+hace lugar al habeas corpus,habeas corpus,habeas corpus,,,1,1,hace lugar al habeas corpus
+inhibicion,inhibitoria,competencia,,,2,2,Inhibición
+inhibitoria,inhibitoria,competencia,,,11,3,Inhibitoria | Inhibitoria/detencion | inhibitoria
+se inhibe en caus,inhibitoria,competencia,,,1,1,Se inhibe en caus
+se inhibe en la causa,inhibitoria,competencia,,,1,1,Se inhibe en la causa
+toma razon de la inhibitoria,inhibitoria,competencia,,,1,1,"toma razón de la inhibitoria, no eximición de prisión"
+intervencion de defensa oficial,intervencion de defensa oficial,varios,,,1,1,intervencion de defensa oficial
+intervencion de patronato de liberados,intervencion de patronato de liberados,varios,,,2,1,intervencion de patronato de liberados
+intimacion de cumplimiento,intimacion de cumplimiento,varios,,,1,1,Intimacion de cumplimiento
+libertad,libertad con obligaciones,medidas alternativas,,,9,3,Libertad/decli. comp | Libertad/med 68 | libertad
+libertad con obligacion,libertad con obligaciones,medidas alternativas,,,1,1,"cese de prisin preventiva, libertad con obligacion"
+libertad con obligaciones,libertad con obligaciones,medidas alternativas,,,8,2,"libertad con obligaciones | sobreseimiento, cese de prision preventiva, libertad con obligaciones | Prisión Preventiva, regiment ede semilibertad, libertad con obligaciones"
+libertad concedida,libertad con obligaciones,medidas alternativas,,,8,1,Libertad concedida | libertad concedida
+libertad concedida con obligaciones,libertad con obligaciones,medidas alternativas,,,1,1,Libertad concedida con obligaciones
+libertad reglada,libertad con obligaciones,medidas alternativas,,,1,1,libertad reglada
+falta de merito,libertad por falta de merito,medidas alternativas,,,4,3,"Falta de mérito | falta de merito, prision preventiva, regimen de semilibertad, apertura de celular | no sobreseimiento - falta de mérito - prisión preventiva -régimen semi libertad"
+lib x falta de merito,libertad por falta de merito,medidas alternativas,,,1,1,Lib x falta de merito
+libertad por falta de merito,libertad por falta de merito,medidas alternativas,,,1,1,Libertad por falta de merito
+abstenerse de actos de contacto y perturbacion,medida cautelar,ac 4099,,,1,1,medida cautelar-abstenerse de actos de contacto y perturbación
+amplia medida cautelar,medida cautelar,ac 4099,,,1,1,amplia medida cautelar - prohibición de acercamiento
+cautelar,medida cautelar,ac 4099,,,3,1,Cautelar
+cese hostigamiento,medida cautelar,ac 4099,,,1,1,medida cautelar - cese hostigamiento
+exclusion de hogar,medida cautelar,ac 4099,,,1,1,exclusión de hogar - prohibición de acercamiento
+medida cautelar,medida cautelar,ac 4099,,,11,2,Medida Cautelar | medida cautelar-abstenerse de actos de contacto y perturbación | medida cautelar  
+medida cutelar,medida cautelar,ac 4099,,,2,1,medida cutelar - prohibición de acercamiento | medida cutelar  
+prohibicion acercamiento,medida cautelar,ac 4099,,,1,1,prohibición acercamiento
+prohibicion de acercamiento,medida cautelar,ac 4099,,,33,2,Prohibicion de acercamiento | Prohibición de acercamiento | Prohibición de Acercamiento
+prohibicion de acercamiento denegada,medida cautelar,ac 4099,,,1,1,prohibición de acercamiento denegada
+prohibicion de contacto,medida cautelar,ac 4099,,,3,1,prohibición de contacto
+prohibicion de contacto y perturbacion,medida cautelar,ac 4099,,,1,1,prohibición de contacto y perturbación
+centro cerrado,medida de seguridad,medida de seguridad,,,1,1,continúa medida de seguridad - centro cerrado
+continua medida de seguridad,medida de seguridad,medida de seguridad,,,2,1,continúa medida de seguridad - centro cerrado | continúa medida de seguridad 
+mantener medida de seguridad,medida de seguridad,medida de seguridad,,,1,1,mantener medida de seguridad
+mantiene med seg,medida de seguridad,medida de seguridad,,,3,1,Mantiene Med Seg | Mantiene med seg
+mantiene med seg.,medida de seguridad,medida de seguridad,,,1,1,Mantiene Med Seg.
+mantiene medida de seguridad,medida de seguridad,medida de seguridad,,,14,1,mantiene medida de seguridad - arresto domiciliario | mantiene medida de seguridad   | mantiene medida de seguridad
+mantine medida de seguridad,medida de seguridad,medida de seguridad,,,1,1,mantine medida de seguridad - régimen de contención
+mantinemedida de seguridad,medida de seguridad,medida de seguridad,,,1,1,mantinemedida de seguridad - suspende salidas
+med seg domiciliaria,medida de seguridad,medida de seguridad,,,1,1,Med Seg Domiciliaria
+med seguridad,medida de seguridad,medida de seguridad,,,1,1,Med seguridad
+medida de seguridad,medida de seguridad,medida de seguridad,,,26,3,"Medida de seguridad | Medida de seguridad, derivacion | medida de seguridad"
+medidad de seguridad,medida de seguridad,medida de seguridad,,,1,1,Medidad de seguridad
+impone reglas,medidas de proteccion,art. 68 ley 13634,,,1,1,Impone reglas
+med 68,medidas de proteccion,art. 68 ley 13634,,,1,1,Libertad/med 68
+medidas art. 68,medidas de proteccion,art. 68 ley 13634,,,1,1,"No hace lugar a medida de seguridad, medidas art. 68, derivacion"
+modifica obligaciones,modificacion de suspension de juicio a prueba,salida alternativa,,,1,1,mantener SJP - modifica obligaciones
+modifica reglas,modificacion de suspension de juicio a prueba,salida alternativa,,,2,1,Modifica reglas
+modifica reglas de conducta,modificacion de suspension de juicio a prueba,salida alternativa,,,1,1,modifica reglas de conducta
+atenua pp,morigeracion de prision preventiva,medida de coercion,,,1,1,atenua PP  - arresto domiciliario
+morigera p preventiv,morigeracion de prision preventiva,medida de coercion,,,1,1,Morigera P preventiv
+morigeracion coercion,morigeracion de prision preventiva,medida de coercion,,,1,1,eleva a juicio - morigeración coerción
+morigeracion de prision preventiva,morigeracion de prision preventiva,medida de coercion,,,9,1,"morigeracion de prision preventiva, Arresto domiciliario | Morigeracion de prision preventiva, arresto domiciliario | Morigeracion de prisión preventiva, Regimen Semilibertad, elevación a juicio"
+morigeracion medida,morigeracion de prision preventiva,medida de coercion,,,1,1,eleva a juicio-morigeración medida- arresto domiciliario
+deniega salid extraordinaria,no autoriza salidas,varios,,,1,1,deniega salid extraordinaria
+niega salida extraordinaria,no autoriza salidas,varios,,,1,1,Niega Salida Extraordinaria
+no lugar a requeri,no autoriza salidas,varios,,,1,1,No lugar a requerí
+no lugar a salida,no autoriza salidas,varios,,,1,1,No lugar a salida
+no salida extraordinaria,no autoriza salidas,varios,,,1,1,no salida extraordinaria
+allanamiento denegado,no hace lugar a allanamiento,allanamiento,,,1,1,Allanamiento denegado
+no allan,no hace lugar a allanamiento,allanamiento,,,1,1,No detenc/no allan
+no allanam,no hace lugar a allanamiento,allanamiento,,,1,1,Detención/no allanam
+no allanamiento,no hace lugar a allanamiento,allanamiento,,,3,1,No allanamiento
+no allanamiento y secuestro,no hace lugar a allanamiento,allanamiento,,,1,1,no allanamiento y secuestro
+no det y allan,no hace lugar a allanamiento,allanamiento,,,1,1,No det y allan
+no hace lug a allana,no hace lugar a allanamiento,allanamiento,,,1,1,No hace lug a allana
+no hace lugar a allanamiento,no hace lugar a allanamiento,allanamiento,,,2,1,"no hace lugar a allanamiento | no hace lugar a detencion, no hace lugar a allanamiento"
+no lug a allanam,no hace lugar a allanamiento,allanamiento,,,1,1,No lug a allanam
+no hace lugar a apertura de celular,no hace lugar a apertura de celular,varios,,,2,1,No hace lugar a apertura de celular
+no hacer lugar a la apertura de celular,no hace lugar a apertura de celular,varios,,,1,1,No hacer lugar a la apertura de celular
+cambio de calificacion denegada,no hace lugar a cambio de calificacion,varios,,,1,1,cambio de calificacion denegada
+no cambio calificacion,no hace lugar a cambio de calificacion,varios,,,1,1,"no cambio calificacion, prision preventiva, regimen cerrado,  eleva a juicio"
+no cambio calificacion legal,no hace lugar a cambio de calificacion,varios,,,1,1,no cambio calificación legal-eleva a juicio
+no da lugar al pedido,no hace lugar a cambio de calificacion,varios,,,1,1,No da lugar al pedido
+declara abstracta la solicitud de rebeldia y captura,no hace lugar a declaracion de rebeldia,rebeldia,,,1,1,mantiene obligaciones/declara abstracta la solicitud de rebeldía y captura
+no declara rebeldia,no hace lugar a declaracion de rebeldia,rebeldia,,,1,1,No declara rebeldía
+no rebeldia,no hace lugar a declaracion de rebeldia,rebeldia,,,2,2,No rebeldía | no rebeldía - fija audiencia
+no hace lugar a derivacion,no hace lugar a derivación al servicio local,derivacion a servicio local,,,1,1,"sobreseimiento, no hace lugar a derivacion"
+no falta de merito,no hace lugar a libertad por falta de merito,medida de coercion,,,1,1,PP rég cerrado/no lugar a la nulidad y exclusión probatoria/ no falta de mérito
+no a lugar a las medidas de proteccion solicitadas,no hace lugar a medida cautelar,ac 4099,,,1,1,no a lugar a las medidas de protección solicitadas
+no ha lugar a medida cautelar,no hace lugar a medida cautelar,ac 4099,,,1,1,audiencia sobreseimiento / no ha lugar a medida cautelar
+no hace lugar a prohibicion de acercamiento,no hace lugar a medida cautelar,ac 4099,,,1,1,"sobreseimiento, no hace lugar a prohibicion de acercamiento"
+no medida cautelar,no hace lugar a medida cautelar,ac 4099,,,1,1,No medida cautelar
+no hace lugar a medida de seguridad,no hace lugar a medida de seguridad,medida de seguridad,,,1,1,"No hace lugar a medida de seguridad, medidas art. 68, derivacion"
+no medida de seguridad,no hace lugar a medida de seguridad,medida de seguridad,,,2,1,No Medida de Seguridad | comparendo compulsivo - no medida de seguridad
+deniega morigeracion,no hace lugar a morigeracion de prision preventiva,medida de coercion,,,1,1,deniega morigeracion
+no arresto domiciliario,no hace lugar a morigeracion de prision preventiva,medida de coercion,,,1,1,no arresto domiciliario-mantiene medida de seguridad - amplia salidas
+no domic,no hace lugar a morigeracion de prision preventiva,medida de coercion,,,1,1,No domic / elev juicio
+no ha lugar a prision domiciliaria,no hace lugar a morigeracion de prision preventiva,medida de coercion,,,1,1,no ha lugar a prision domiciliaria
+no morigeracion,no hace lugar a morigeracion de prision preventiva,medida de coercion,,,1,1,no  morigeración - prisión preventiva - régimen cerrado
+no lugar a la nulidad y exclusion probatoria,no hace lugar a nulidad,nulidad,,,1,1,PP rég cerrado/no lugar a la nulidad y exclusión probatoria/ no falta de mérito
+no nulidad,no hace lugar a nulidad,nulidad,,,2,2,"No nulidad | sobreseimiento, no nulidad, mantieneprision preventiva, elevacion a juicio"
+no nulidad no det,no hace lugar a nulidad,nulidad,,,1,1,No nulidad  no det
+detencion denegada,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,7,1,detención denegada
+detencion denegadda,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,detención denegadda
+fija audiencia,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,no rebeldía - fija audiencia
+no a detencion,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,2,1,No a detencion | No a detención
+no detenc,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,No detenc/no allan
+no detencion,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,6,2,No detención | orden de allanamiento - no detención -no habilitación horario | no detención/ orden de allanamiento/radica en otro juzgado
+no hace lugar a deten,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,No hace lugar a deten
+no hace lugar a detencion,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,4,1,"Allanamiento,  No hace lugar a detención | no hace lugar a detencion | no hace lugar a detencion, no hace lugar a allanamiento"
+no hace lugar detenci,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,No hace lugar detenci
+no lugar a captur,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,No lugar a captur
+no lugar a detenc,no hace lugar a orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,No lugar a detenc
+no al sob,no hace lugar a sobreseimiento,cierre de proceso,,,1,1,Comp /  no al sob
+no al sobreseimiento,no hace lugar a sobreseimiento,cierre de proceso,,,1,1,No al sobreseimiento
+no hace luagr a sobreseimiento,no hace lugar a sobreseimiento,cierre de proceso,,,1,1,"no hace luagr a sobreseimiento, SJP"
+no hace lugar a sobreesimiento,no hace lugar a sobreseimiento,cierre de proceso,,,1,1,"no hace lugar a sobreesimiento, eleva a juicio"
+no hace lugar a sobreseimiento,no hace lugar a sobreseimiento,cierre de proceso,,,1,1,"no hace lugar a sobreseimiento, eleva a juicio"
+no lugar a sob,no hace lugar a sobreseimiento,cierre de proceso,,,1,1,No lugar a sob
+no sobreseimiento,no hace lugar a sobreseimiento,cierre de proceso,,,1,1,no sobreseimiento - falta de mérito - prisión preventiva -régimen semi libertad
+no hace lugar a sjp,no hace lugar a suspension de juicio a prueba,salida alternativa,,,1,1,No hace lugar a SJP
+no salida alternativa al conflicto,no hace lugar a suspension de juicio a prueba,salida alternativa,,,1,1,libertad con obligaciones/no salida alternativa al conflicto/remite a juicio
+no sjp,no hace lugar a suspension de juicio a prueba,salida alternativa,,,1,1,no SJP - eleva a juicio
+no a citacion de vict,no hace lugara a citacion a victima,varios,,,1,1,No a citación de vict
+nulidad,nulidad,nulidad,,,5,1,"nulidad | Nulidad | Cese de Prision Preventiva, nulidad, declina competencia"
+captura,orden de captura,ordenes de detencion/captura/comparendos,,,15,2,"rebeldia, Captura | rebeldia, captura | Rebeldia, Captura"
+sin efecto captura,orden de captura sin efecto,ordenes de detencion/captura/comparendos,,,1,1,sin efecto captura - mantiene PP
+detencion,orden de detencion,ordenes de detencion/captura/comparendos,,,17,3,Inhibitoria/detencion | Detención/no allanam | Detención
+detencion concedida,orden de detencion,ordenes de detencion/captura/comparendos,,,6,1,detención concedida | detención concedida - convalida allanamiento
+orden de detencion,orden de detencion,ordenes de detencion/captura/comparendos,,,9,2,Orden de detencion | orden de detención | orden de detención - orden de allanamiento
+orden detencion,orden de detencion,ordenes de detencion/captura/comparendos,,,2,1,"orden detención, allanamiento | orden allanamiento - orden detención"
+ordena dentencion,orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,Ordena dentención
+ordena detencion,orden de detencion,ordenes de detencion/captura/comparendos,,,2,1,Ordena detención
+pedido de detenc,orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,Pedido de detenc
+ratifica detencion,orden de detencion,ordenes de detencion/captura/comparendos,,,1,1,"acepta competencia, ratifica detencion, conversion"
+prescripcion,prescripcion,cierre de proceso,,,1,1,Prescripción
+convierte en prision p,prision preventiva,medida de coercion,,,1,1,Convierte en prisión p
+mantiene p preve,prision preventiva,medida de coercion,,,1,1,Mantiene P preve
+mantiene pp,prision preventiva,medida de coercion,,,1,1,sin efecto captura - mantiene PP
+mantiene prision preventiva,prision preventiva,medida de coercion,,,7,2,mantiene prision preventiva | mantiene prisión preventiva | mantiene prisión preventiva - eleva a juicio
+mantieneprision preventiva,prision preventiva,medida de coercion,,,1,1,"sobreseimiento, no nulidad, mantieneprision preventiva, elevacion a juicio"
+pp,prision preventiva,medida de coercion,,,3,1,PP - régimen de semilibertad | PP-arresto domicliario | PP-arresto domiciliario
+pp reg cerrado,prision preventiva,medida de coercion,,,1,1,PP rég cerrado/no lugar a la nulidad y exclusión probatoria/ no falta de mérito
+pp reg contencion o semilibertad,prision preventiva,medida de coercion,,,1,1,PP rég contención o semilibertad
+pp regimen cerrado,prision preventiva,medida de coercion,,,1,1,PP régimen cerrado
+prision preventiva,prision preventiva,medida de coercion,,,68,3,Prisión preventiva | Prision preventiva | Prision Preventiva
+prision preventiva concedida,prision preventiva,medida de coercion,,,3,1,prisión preventiva concedida
+prision preventiva semi libertad,prision preventiva,medida de coercion,,,1,1,prision preventiva semi libertad
+prision preventiva. regimen cerrado,prision preventiva,medida de coercion,,,1,1,prisión preventiva. Regimen cerrado
+prision preventivo,prision preventiva,medida de coercion,,,2,1,prisión preventivo | cambio de calificación legal - prisión preventivo - régimen de contención
+no prorroga prhibicion de acercamiento,prorroga cautelar,ac 4099,,,1,1,no prórroga prhibición de acercamiento
+prorroga de investigacion,prorroga de ipp,varios,,,3,1,prorroga de investigacion
+prorroga de la ipp,prorroga de ipp,varios,,,1,1,prórroga de la IPP
+prorroga cautelar,prorroga de medida cautelar,ac 4099,,,1,1,prorroga cautelar
+prorroga de medida de seguridad,prorroga de medida de seguridad,medida de seguridad,,,1,1,prorroga de medida de seguridad
+prorroga medida de seguridad,prorroga de medida de seguridad,medida de seguridad,,,1,1,prórroga medida de seguridad
+prorroga de prision preventiva,prorroga de prision preventiva,medida de coercion,,,2,1,Prorroga de prision preventiva
+extiende sjp,prorroga de suspension de juicio a prueba,salida alternativa,,,1,1,Extiende SJP
+prorr vencimiento sjp,prorroga de suspension de juicio a prueba,salida alternativa,,,1,1,Prorr vencimiento SJP
+prorroga de sjp,prorroga de suspension de juicio a prueba,salida alternativa,,,1,1,Prorroga de SJP
+prorroga sjp,prorroga de suspension de juicio a prueba,salida alternativa,,,1,1,Prorroga SJP
+rebeldia,rebeldia,rebeldia,,,46,3,Rebeldìa | Revoca SJP / rebeldía | Revoca SJP/rebeldía
+rebeldia captura,rebeldia,rebeldia,,,1,1,"revoca libertad, rebeldía captura"
+rechaza accion,rechaza amparo,amparo,,,1,1,Rechaza acción 
+rechaza amparo,rechaza amparo,amparo,,,3,2,Rechaza amparo | Rechaza Amparo
+competencia rechazada,rechaza competencia,competencia,,,1,1,competencia rechazada/rechaza la excusación promovida
+contienda de competencia,rechaza competencia,competencia,,,1,1,contienda de competencia - recurso de casación
+cuestion de competencia,rechaza competencia,competencia,,,1,1,Cuestion de competencia
+no acepta comp,rechaza competencia,competencia,,,1,1,No acepta comp
+no acepta competencia,rechaza competencia,competencia,,,1,1,no acepta competencia
+rechaza compet,rechaza competencia,competencia,,,1,1,Rechaza compet
+rechaza competencia,rechaza competencia,competencia,,,4,2,Rechaza competencia
+recurso de casacion,rechaza competencia,competencia,,,2,1,contienda de competencia - recurso de casación | recurso de casación
+excusacion rechazada,rechaza excusacion,competencia,,,1,1,excusacion rechazada
+no acepta excusacion,rechaza excusacion,competencia,,,1,1,No acepta excusación
+rechaza la excusacion promovida,rechaza excusacion,competencia,,,1,1,competencia rechazada/rechaza la excusación promovida
+excimicion de prision denegada,rechaza eximicion de prision,eximicion de prision,,,2,1,Excimicion de prision denegada
+eximicion de prision denegada,rechaza eximicion de prision,eximicion de prision,,,1,1,Eximicion de prisión denegada
+no eximic de prision,rechaza eximicion de prision,eximicion de prision,,,1,1,No eximic de prisión
+no eximicion de prision,rechaza eximicion de prision,eximicion de prision,,,1,1,"toma razón de la inhibitoria, no eximición de prisión"
+no eximicion prision,rechaza eximicion de prision,eximicion de prision,,,1,1,No Eximición Prision
+no hace lugar a eximicion de prision,rechaza eximicion de prision,eximicion de prision,,,2,1,No hace lugar a Eximicion de Prision
+habeas corpus denegado,rechaza habeas corpus,habeas corpus,,,1,1,habeas corpus denegado
+no hace lugar a habeas corpus,rechaza habeas corpus,habeas corpus,,,1,1,no hace lugar a Hábeas Corpus
+declara abstracto habeas corpus,rechaza habeas corpus por abstracto,habeas corpus,,,1,1,declara abstracto habeas corpus
+rechaza medida seguridad,rechaza medida de seguridad,medida de coercion,,,1,1,rechaza medida seguridad
+no a cambio reg.,rechaza modificacion de suspension de juicio a prueba,salida alternativa,,,1,1,No a cambio Reg.
+rectificatoria,rectificatoria,varios,,,1,1,Rectificatoria
+recurso de reposicion,recurso de reposicion,varios,,,1,1,recurso de reposición
+r egimen cerrado,regimen cerrado,medida de coercion,,,1,1,"prision preventiva, r egimen cerrado"
+regimen cerrado,regimen cerrado,medida de coercion,,,14,2,"Prisión Preventiva, regimen cerrado | Prision preventiva, regimen cerrado | Prision Preventiva, regimen cerrado"
+regime nde semilibertad,regimen de semilibertad,medida de coercion,,,1,1,"Prisión Preventiva, regime nde semilibertad"
+regimen de contencion,regimen de semilibertad,medida de coercion,,,5,1,medida de seguridad - régimen de contención | prisión preventiva - régimen de contención | prisión preventiva - régimen de contención - autoriza salidas 
+regimen de semilibertad,regimen de semilibertad,medida de coercion,,,7,2,"Prisión Preventiva, arresto domiliario, regimen de semilibertad | prision preventiva, regimen de semilibertad | falta de merito, prision preventiva, regimen de semilibertad, apertura de celular"
+regimen semi libertad,regimen de semilibertad,medida de coercion,,,2,1,no sobreseimiento - falta de mérito - prisión preventiva -régimen semi libertad | prisión preventiva - régimen semi libertad
+regimen semilibertad,regimen de semilibertad,medida de coercion,,,3,2,"Morigeracion de prisión preventiva, Regimen Semilibertad, elevación a juicio | prision preventiva, regimen semilibertad | Prisión preventiva, régimen semilibertad"
+regiment ede semilibertad,regimen de semilibertad,medida de coercion,,,1,1,"Prisión Preventiva, regiment ede semilibertad, libertad con obligaciones"
+semilibertad,regimen de semilibertad,medida de coercion,,,3,2,"Prisión Preventiva, semilibertad | Morigeracion de prision preventiva, semilibertad, elevacion a juicio | prisión preventiva - semilibertad"
+costas,regulacion de honorarios,amparo,,,1,1,costas
+regulacion de honorarios,regulacion de honorarios,amparo,,,2,2,regulación de honorarios
+cierre definitivo del proceso,remision art. 40 ley 13634,cierre de proceso,,,2,1,cierre definitivo del proceso
+cierre del proceso,remision art. 40 ley 13634,cierre de proceso,,,2,1,cierre del proceso
+remision,remision art. 40 ley 13634,cierre de proceso,,,5,1,remisión | Remisión - sin efecto el comparendo compulsivo | Remisión - sin efecto SJP
+remision art. 40,remision art. 40 ley 13634,cierre de proceso,,,5,1,Remisión art. 40
+remite a fiscalia,remision art. 40 ley 13634,cierre de proceso,,,1,1,Remite a fiscalía
+sin efecto sjp,remision art. 40 ley 13634,cierre de proceso,,,1,1,Remisión - sin efecto SJP
+sobreseimiento remision en audiencia,remision art. 40 ley 13634,cierre de proceso,,,1,1,sobreseimiento remisión en audiencia
+revoca libertad,revocatoria de libertad,medida de coercion,,,1,1,"revoca libertad, rebeldía captura"
+revoca sjp,revocatoria de suspension de juicio a prueba,salida alternativa,,,10,3,Revoca SJP | Revoca SJP / rebeldía | Revoca SJP/rebeldía
+revoca suspension de juicio a prueba,revocatoria de suspension de juicio a prueba,salida alternativa,,,1,1,"revoca suspensión de juicio a prueba, eleva a juicio"
+hace lugar a amparo,sentencia hace lugar a accion de amparo,amparo,,,2,1,sentencia - hace lugar a amparo
+hacer lugar al amparo,sentencia hace lugar a accion de amparo,amparo,,,1,1,hacer lugar al amparo
+sentencia,sentencia hace lugar a accion de amparo,amparo,si,,2,1,sentencia - hace lugar a amparo
+audiencia sobreseimiento,sobreseimiento,cierre de proceso,,,1,1,audiencia sobreseimiento / no ha lugar a medida cautelar
+cesa intervencion,sobreseimiento,cierre de proceso,,,1,1,Cesa intervención
+pedido de sob,sobreseimiento,cierre de proceso,,,1,1,Pedido de sob
+sebreseimiento,sobreseimiento,cierre de proceso,,,1,1,sebreseimiento
+sob,sobreseimiento,cierre de proceso,,,2,1,Cesa Med Seg/sob | Aud art. 336 C /sob
+sob parcial,sobreseimiento,cierre de proceso,,,1,1,Sob parcial
+sobreimiento,sobreseimiento,cierre de proceso,,,1,1,sobreimiento
+sobres,sobreseimiento,cierre de proceso,,,3,1,Acep compet/sobres | Sobres/inter serv loc | Ext de ace / sobres
+sobreseimeinto,sobreseimiento,cierre de proceso,,,3,1,Sobreseimeinto
+sobreseimieno,sobreseimiento,cierre de proceso,,,1,1,sobreseimieno
+sobreseimientio,sobreseimiento,cierre de proceso,,,1,1,sobreseimientio
+sobreseimiento,sobreseimiento,cierre de proceso,,,1237,3,Sobreseimiento | Comp/Sobreseimiento | Sobreseimiento 
+sobreseimiento c,sobreseimiento,cierre de proceso,,,1,1,Sobreseimiento c/ Derivacion
+sobreseimiento parc,sobreseimiento,cierre de proceso,,,1,1,Sobreseimiento parc
+sobreseimiento parcial,sobreseimiento,cierre de proceso,,,4,1,eleva a juicio/sobreseimiento parcial | sobreseimiento parcial / eleva a juicio | sobreseimiento parcial  
+sobreseiminto,sobreseimiento,cierre de proceso,,,3,1,sobreseiminto
+sobresemiento,sobreseimiento,cierre de proceso,,,7,1,Sobresemiento
+sobresiemiento,sobreseimiento,cierre de proceso,,,1,1,Sobresiemiento
+sorbeseimiento,sobreseimiento,cierre de proceso,,,1,1,"cese de medida de seguridad, sorbeseimiento, derivacion"
+ssobreseimiento,sobreseimiento,cierre de proceso,,,1,1,ssobreseimiento
+solicita inhibitoria,solicita inhibitoria,competencia,,,2,1,"Solicita inhibitoria | rebeldia, Comparendo compulsivo, solicita inhibitoria"
+acuerdo de sjp,suspension de juicio a prueba,salida alternativa,,,2,1,acuerdo de SJP
+amplia sjp,suspension de juicio a prueba,salida alternativa,,,2,2,"Amplia SJP | Acepta Competencia, Amplia SJP"
+hace lug a salida alt,suspension de juicio a prueba,salida alternativa,,,1,1,Hace lug a salida alt
+mantener sjp,suspension de juicio a prueba,salida alternativa,,,1,1,mantener SJP - modifica obligaciones
+mantiene obligaciones,suspension de juicio a prueba,salida alternativa,,,1,1,mantiene obligaciones/declara abstracta la solicitud de rebeldía y captura
+mantiene sjp,suspension de juicio a prueba,salida alternativa,,,2,1,Mantiene SJP
+retoma sjp,suspension de juicio a prueba,salida alternativa,,,1,1,Retoma SJP
+salida alternativa,suspension de juicio a prueba,salida alternativa,,,1,1,Salida alternativa
+sjp,suspension de juicio a prueba,salida alternativa,,,125,2,SJP | Cesa detención/SJP | sjp
+suspencion de juicio a prueba,suspension de juicio a prueba,salida alternativa,,,1,1,suspención de juicio a prueba
+suspende reglas,suspension de juicio a prueba,salida alternativa,,,1,1,Suspende reglas
+suspension de juicio a prueba,suspension de juicio a prueba,salida alternativa,,,32,1,Suspensión de Juicio a Prueba | suspensión de Juicio a Prueba | suspensión de juicio a prueba
+suspension de plazo de 336,suspension de plazos,varios,,,1,1,suspension de plazo de 336
+suspension de tramite,suspension de plazos,varios,,,2,2,Suspensión de tramite | suspension de tramite
+suspende salidas,suspension de salidas,varios,,,1,1,mantinemedida de seguridad - suspende salidas

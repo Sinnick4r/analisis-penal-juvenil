@@ -238,3 +238,206 @@ def nomenclador_sint() -> pd.DataFrame:
         "tipo": ["delito"] * 8,
         "vigente": ["SI"] * 8,
     })
+
+
+@pytest.fixture
+def df_resoluciones_raw_sint() -> pd.DataFrame:
+    """DataFrame con la forma EXACTA de los Excel de resoluciones (pre-normalización).
+
+    Imita las 4 columnas (`Año`, `IPP`, `RESOLUCION`, `IPP  Normalizada`) con
+    casos que cubren:
+    - IPP estándar (PP-...)
+    - IPP institucional (AM-, HC-, OE-)
+    - IPP externo ("Causa NNNN")
+    - IPP malformado (PP-J-...)
+    - Resolución single-tema
+    - Resolución multi-tema (varios separadores)
+    - Resolución no presente en el diccionario
+    """
+    return pd.DataFrame({
+        "Año": pd.to_datetime([
+            "2024-03-15", "2024-04-10", "2024-05-20",
+            "2024-06-08", "2024-07-15", "2024-08-22",
+            "2024-09-30", "2024-10-15",
+        ]),
+        "IPP": pd.array([
+            "PP-14-03-001393-24/00",
+            "PP 14-04-002648-24/01",  # espacio en vez de guion
+            "AM-14-00-000012-24/00",
+            "HC-14-00-000077-24/00",
+            "OE-14-00-000087-24/00",
+            "Causa 41820",
+            "PP-J-01-00013167-5/24",  # malformado
+            "PP-14-05-003482-24/00",
+        ], dtype="string"),
+        "RESOLUCION": pd.array([
+            "sobreseimiento",                       # single
+            "sobreseimiento, derivacion",           # multi por coma
+            "Elevacion a juicio",                   # single
+            "rebeldia y captura",                   # multi por " y "
+            "allanamiento - secuestro",             # multi por " - "
+            "competencia / sobreseimiento",         # multi por " / "
+            "frase rara no en diccionario",         # sin match
+            "Rebeldia s/ efecto",                   # falso positivo: s/ NO es separador
+        ], dtype="string"),
+        "IPP  Normalizada": pd.array([        # doble espacio en el original
+            "14-03-001393-24/00",
+            "14-04-002648-24/01",
+            "AM-14-00-000012-24/00",
+            "HC-14-00-000077-24/00",
+            "OE-14-00-000087-24/00",
+            "Causa 41820",
+            "PP-J-01-00013167-5/24",
+            "14-05-003482-24/00",
+        ], dtype="string"),
+    })
+
+
+@pytest.fixture
+def df_resoluciones_raw_solo_anio_sint() -> pd.DataFrame:
+    """Variante para simular RAW1 (2017-2019): `Año` es int, no datetime."""
+    return pd.DataFrame({
+        "Año": [2017, 2018, 2019],
+        "IPP": pd.array([
+            "14-00-005027-16",
+            "14-08-001758-16",
+            "14-00-006120-16",
+        ], dtype="string"),
+        "RESOLUCION": pd.array([
+            "Autoriza salida",
+            "Sobreseimiento",
+            "Comp/Sobreseimiento",  # multi por /
+        ], dtype="string"),
+        "IPP  Normalizada": pd.array([
+            "14-00-005027-16/00",
+            "14-08-001758-16/00",
+            "14-00-006120-16/00",
+        ], dtype="string"),
+    })
+
+
+@pytest.fixture
+def diccionario_resoluciones_sint() -> pd.DataFrame:
+    """Diccionario de resoluciones sintético con los tokens del fixture."""
+    return pd.DataFrame({
+        "token_normalizado": [
+            "sobreseimiento",
+            "derivacion",
+            "elevacion a juicio",
+            "rebeldia",
+            "captura",
+            "allanamiento",
+            "secuestro",
+            "competencia",
+            "autoriza salida",
+            "rebeldia s/ efecto",
+        ],
+        "resolucion_canonica": [
+            "sobreseimiento",
+            "derivacion a servicio local",
+            "elevacion a juicio",
+            "rebeldia",
+            "captura",
+            "allanamiento",
+            "secuestro",
+            "acepta competencia",
+            "autoriza salida",
+            "rebeldia sin efecto",
+        ],
+        "categoria": [
+            "cierre de proceso",
+            "derivacion a servicio local",
+            "elevacion a juicio",
+            "rebeldia",
+            "ordenes de detencion/captura/comparendos",
+            "allanamiento",
+            "allanamiento",
+            "competencia",
+            "salida alternativa",
+            "rebeldia",
+        ],
+        "validar": [None, None, None, None, None, None, None, None, None, None],
+        "observaciones": [None] * 10,
+        "frecuencia_total": [100] * 10,
+        "datasets_presentes": [3] * 10,
+        "ejemplos_raw": [""] * 10,
+    })
+
+
+@pytest.fixture
+def df_causas_para_cruce_sint() -> pd.DataFrame:
+    """DataFrame mínimo con la forma del output de Iteración A.
+
+    5 causas que cubren los casos del cruce:
+    - Causa con 1 resolución de RAW1 (sin fecha exacta)
+    - Causa con varias resoluciones de RAW2/3
+    - Causa sin resoluciones
+    - Causa con IPP institucional (AM)
+    - Causa con IPP malformado (sin match con resoluciones)
+    """
+    return pd.DataFrame({
+        "fecha_ingreso": pd.to_datetime([
+            "2022-03-15", "2024-01-10", "2025-06-01",
+            "2024-05-15", "2023-09-20",
+        ]),
+        "anio": [2022, 2024, 2025, 2024, 2023],
+        "ipp": [
+            "PP-14-03-001393-22/00",     # 1 resol RAW1 simulada
+            "PP-14-04-002648-24/01",     # múltiples resoluciones
+            "PP-14-05-003482-25/00",     # sin resoluciones
+            "AM-14-00-000012-24/00",     # institucional
+            "PP-J-01-00013167-5/23",     # malformado, sin match
+        ],
+        "delito_estandar": [
+            "robo simple", "lesiones leves", "hurto",
+            "amparo", "robo agravado",
+        ],
+        "delito_informado": ["si"] * 5,
+    })
+
+
+@pytest.fixture
+def df_resoluciones_para_cruce_sint() -> pd.DataFrame:
+    """DataFrame mínimo con la forma del output de Iteración B (consolidado).
+
+    Sincronizado con `df_causas_para_cruce_sint`:
+    - IPP 14-03-001393-22/00: 1 resolución RAW1 (fecha NaT, solo año)
+    - IPP 14-04-002648-24/01: 3 resoluciones RAW2/3 con fechas reales
+    - AM-14-00-000012-24/00: 1 resolución (institucional)
+    - IPP 14-99-999999-99/99: 1 resolución huérfana (sin causa correspondiente)
+    """
+    return pd.DataFrame({
+        "ipp_canonico": [
+            "14-03-001393-22/00",          # 1 sola, RAW1
+            "14-04-002648-24/01",          # primera de 3
+            "14-04-002648-24/01",          # segunda
+            "14-04-002648-24/01",          # tercera
+            "AM-14-00-000012-24/00",       # institucional, 1 resol
+            "14-99-999999-99/99",          # huérfana
+        ],
+        "fecha_resolucion": pd.to_datetime([
+            None,                                       # RAW1 sin fecha
+            "2024-01-25", "2024-02-15", "2024-04-10",   # 3 resoluciones RAW2/3
+            "2024-06-01",                                # institucional
+            "2024-12-30",                                # huérfana
+        ]),
+        "anio_resolucion": pd.array(
+            [2022, 2024, 2024, 2024, 2024, 2024], dtype="Int64",
+        ),
+        "categoria_resolucion": [
+            "cierre de proceso",
+            "medida de coercion",
+            "competencia",
+            "cierre de proceso",
+            "salida alternativa",
+            "rebeldia",
+        ],
+        "resolucion_canonica": [
+            "sobreseimiento", "prision preventiva", "acepta competencia",
+            "sobreseimiento", "suspension de juicio a prueba", "rebeldia",
+        ],
+        "fuente_raw": [
+            "backfill_2017_2019", "backfill_2020_2023a", "raw_2023b_2026",
+            "raw_2023b_2026", "raw_2023b_2026", "raw_2023b_2026",
+        ],
+    })

@@ -1,0 +1,10 @@
+prefijo,tipo_ipp,descripcion,fuero_tipico,activo
+PP,estandar,Proceso Penal (IPP estándar),penal,si
+OE,oficio_exhorto,Oficios y Exhortos,multifuero,si
+AM,amparo,Amparo,multifuero,si
+QU,querella,Querella,penal,si
+HC,habeas_corpus,Habeas Corpus,multifuero,si
+FC,faltas_contravenciones,Faltas y Contravenciones,contravencional,si
+AC,apelacion_contravencional,Apelación Contravencional,contravencional,si
+HD,habeas_data,Habeas Data,civil,si
+DC,dictamen_civil,Dictamen Civil,civil,si
