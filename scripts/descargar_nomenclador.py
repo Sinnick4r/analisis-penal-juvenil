@@ -1,11 +1,5 @@
-"""Descarga el nomenclador oficial de delitos del Ministerio de Justicia.
+# descarga el nomenclador oficial de delitos del Ministerio de Justicia.
 
-Uso:
-    python scripts/descargar_nomenclador.py [--force]
-
-El archivo se guarda en `data/external/`. Si ya existe, no se redescarga
-salvo que se use `--force`.
-"""
 from __future__ import annotations
 
 import argparse
@@ -13,7 +7,6 @@ import sys
 import urllib.request
 from pathlib import Path
 
-# Permite ejecutar el script directamente sin pip install -e
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src import config  # noqa: E402
@@ -23,16 +16,7 @@ logger = get_logger(__name__)
 
 
 def descargar(destino: Path, url: str, force: bool = False) -> Path:
-    """Descarga el CSV oficial al destino indicado.
-
-    Args:
-        destino: ruta absoluta donde guardar el archivo.
-        url: URL pública del CSV.
-        force: si True, sobrescribe el archivo existente.
-
-    Returns:
-        Path del archivo descargado.
-    """
+    
     if destino.exists() and not force:
         logger.info("Ya existe %s (usar --force para sobrescribir)", destino)
         return destino
