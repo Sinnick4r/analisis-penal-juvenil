@@ -9,14 +9,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src import config  # noqa: E402
-from src.logging_setup import get_logger  # noqa: E402
+from src import config
+from src.logging_setup import get_logger
 
 logger = get_logger(__name__)
 
 
 def descargar(destino: Path, url: str, force: bool = False) -> Path:
-    
+
     if destino.exists() and not force:
         logger.info("Ya existe %s (usar --force para sobrescribir)", destino)
         return destino
@@ -29,9 +29,7 @@ def descargar(destino: Path, url: str, force: bool = False) -> Path:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Descarga el nomenclador oficial del Ministerio."
-    )
+    parser = argparse.ArgumentParser(description="Descarga el nomenclador oficial del Ministerio.")
     parser.add_argument(
         "--force",
         action="store_true",

@@ -1,11 +1,12 @@
-'''
+"""
 Funciones puras de limpieza textual.
 
 LAs saque  del notebook del proyecto original
 
 son funciones sin side effects y sin I/O
 
-'''
+"""
+
 from __future__ import annotations
 
 import re
@@ -15,15 +16,34 @@ from typing import Any
 import pandas as pd
 
 # valores qpara marcar "delito ausente" en la columna delito
-FALTANTES_DELITO: frozenset[str] = frozenset({
-    "", "nan", "none", "#value!", "#valor!",
-    "sin delito", "s/", "s", "/", "n/a", "na",
-})
+FALTANTES_DELITO: frozenset[str] = frozenset(
+    {
+        "",
+        "nan",
+        "none",
+        "#value!",
+        "#valor!",
+        "sin delito",
+        "s/",
+        "s",
+        "/",
+        "n/a",
+        "na",
+    }
+)
 
 # valores qpara marcar los "trámite ausente".
-FALTANTES_TRAMITE: frozenset[str] = frozenset({
-    "", "nan", "none", "n/a", "na", "s/d", "sd",
-})
+FALTANTES_TRAMITE: frozenset[str] = frozenset(
+    {
+        "",
+        "nan",
+        "none",
+        "n/a",
+        "na",
+        "s/d",
+        "sd",
+    }
+)
 
 # procesos especiales como amparos
 PROCESOS_ESPECIALES: frozenset[str] = frozenset({"amparo", "habeas corpus"})
@@ -37,7 +57,6 @@ REGLAS_DELITOS: tuple[tuple[str, str], ...] = (
     (r"\btva\.?\b", " tentativa "),
     (r"\ben\s+grado\s+de\s+tentativa\b", " tentativa "),
     (r"\bgrado\s+de\s+tentativa\b", " tentativa "),
-
     # abreviaturas comunes
     (r"\bx\b", " por "),
     (r"\bp/\s*", " por "),
@@ -49,7 +68,6 @@ REGLAS_DELITOS: tuple[tuple[str, str], ...] = (
     (r"\bvehicul\b", " vehiculo "),
     (r"\bvia publ\b", " via publica "),
     (r"\bvia pub\b", " via publica "),
-
     # typos frecuentes
     (r"\bhuto\b", " hurto "),
     (r"\bhurto rn\b", " hurto "),
@@ -76,18 +94,30 @@ REGLAS_DELITOS: tuple[tuple[str, str], ...] = (
     (r"\bestupefaciones\b", " estupefacientes "),
     (r"\bdesobedencia\b", " desobediencia "),
     (r"\bexibiciones obsenas\b", " exhibiciones obscenas "),
-
-    # estupefacientes 
+    # estupefacientes
     (r"\bestupef\b", " estupefacientes "),
     (r"\btenencia estupefacientes\b", " tenencia de estupefacientes "),
-    (r"\btenencia de estupefacientes p/ comer\b", " tenencia de estupefacientes con fines de comercializacion "),
-    (r"\btenencia de estupefacientes con fines de comerc\b", " tenencia de estupefacientes con fines de comercializacion "),
-    (r"\btenencia de estupefacientes con fines de comer\b", " tenencia de estupefacientes con fines de comercializacion "),
-    (r"\btenencia de estupefacientes con fines de com\b", " tenencia de estupefacientes con fines de comercializacion "),
+    (
+        r"\btenencia de estupefacientes p/ comer\b",
+        " tenencia de estupefacientes con fines de comercializacion ",
+    ),
+    (
+        r"\btenencia de estupefacientes con fines de comerc\b",
+        " tenencia de estupefacientes con fines de comercializacion ",
+    ),
+    (
+        r"\btenencia de estupefacientes con fines de comer\b",
+        " tenencia de estupefacientes con fines de comercializacion ",
+    ),
+    (
+        r"\btenencia de estupefacientes con fines de com\b",
+        " tenencia de estupefacientes con fines de comercializacion ",
+    ),
 )
 
 
 # limpieza
+
 
 def normalizar_nombre_columna(col: Any) -> str:
     col_str = str(col).strip().lower()
@@ -122,11 +152,10 @@ def limpiar_texto(texto: Any) -> Any:
     s = s.replace("]", "")
     s = s.replace("(", " ")
     s = s.replace(")", " ")
-    s = re.sub(r"[\"'`´]", "", s)  
+    s = re.sub(r"[\"'`]", "", s)
     s = re.sub(r"\.{2,}", ".", s)
     s = re.sub(r",{2,}", ",", s)
     s = re.sub(r"-{2,}", "-", s)
-
     s = re.sub(r"\s*,\s*", ", ", s)
     s = re.sub(r"\s*\.\s*", ". ", s)
     s = re.sub(r"\s*-\s*", "-", s)
@@ -148,8 +177,10 @@ def limpiar_para_match(texto: Any) -> Any:
     return s if s else pd.NA
 
 
-def aplicar_reglas_regex(texto: Any, reglas: tuple[tuple[str, str], ...] | list[tuple[str, str]]) -> Any:
- 
+def aplicar_reglas_regex(
+    texto: Any, reglas: tuple[tuple[str, str], ...] | list[tuple[str, str]]
+) -> Any:
+
     if pd.isna(texto):
         return texto
     s = str(texto)

@@ -1,19 +1,20 @@
-'''genera o regenera `data/backfill/checksums.json`
+"""genera o regenera `data/backfill/checksums.json`
 
 es para detectar  cambios en los backfills raw inmutables
-'''
+"""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src import config  # noqa: E402
-from src.logging_setup import get_logger  # noqa: E402
+from src import config
+from src.logging_setup import get_logger
 
 logger = get_logger(__name__)
 
@@ -36,7 +37,7 @@ def main() -> int:
         logger.warning("No hay archivos .xlsx en %s", config.BACKFILL_DIR)
         return 0
 
-    ahora = datetime.now(timezone.utc).isoformat()
+    ahora = datetime.now(UTC).isoformat()
     registro: dict[str, dict[str, object]] = {}
     for path in archivos:
         registro[path.name] = {
