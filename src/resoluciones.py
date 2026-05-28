@@ -10,6 +10,7 @@ multi-resoluciones explotadas a una fila por resolución canónica.
 Safety net: checksum SHA-256 sobre cada backfill, verificado en cada
 corrida. Si un archivo de backfill cambió, log warning ruidoso.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -60,6 +61,7 @@ SLASH_FALSO_POSITIVO: re.Pattern[str] = re.compile(
 
 # --- Carga + safety net (I/O) ---------------------------------------------
 
+
 def cargar_resoluciones(
     backfill_paths: list[Path] | None = None,
     raw_path: Path | None = None,
@@ -89,9 +91,7 @@ def cargar_resoluciones(
     dfs_crudos: list[pd.DataFrame] = []
     for path in [*bpaths, rpath]:
         if not path.exists():
-            raise FileNotFoundError(
-                f"No se encontró el archivo de resoluciones: {path}"
-            )
+            raise FileNotFoundError(f"No se encontró el archivo de resoluciones: {path}")
         df_raw = pd.read_excel(path, sheet_name=0, header=0)
         fuente = FUENTES_RAW.get(path.name)
         if fuente is None:
@@ -117,12 +117,14 @@ def cargar_resoluciones(
 
     logger.info(
         "Pipeline resoluciones OK: %d filas (post-explode), %d IPPs únicas",
-        len(df), df["ipp_canonico"].nunique(),
+        len(df),
+        df["ipp_canonico"].nunique(),
     )
     return df
 
 
 # --- Checksums de backfill (safety net) -----------------------------------
+
 
 def _sha256(path: Path) -> str:
     """Calcula SHA-256 del archivo en bloques (memoria-eficiente)."""
@@ -172,6 +174,7 @@ def _verificar_checksums_backfill(paths: list[Path]) -> None:
 
 # --- Normalización de columnas (puro) -------------------------------------
 
+
 def _normalizar_columnas(df: pd.DataFrame) -> pd.DataFrame:
     """Normaliza nombres de columnas a snake_case.
 
@@ -183,7 +186,7 @@ def _normalizar_columnas(df: pd.DataFrame) -> pd.DataFrame:
         "IPP": "ipp_original",
         "RESOLUCION": "resolucion_raw",
         "IPP  Normalizada": "ipp_normalizada_fuente",  # doble espacio en el original
-        "IPP Normalizada": "ipp_normalizada_fuente",   # tolerancia a single space
+        "IPP Normalizada": "ipp_normalizada_fuente",  # tolerancia a single space
     }
     df = df.rename(columns=rename)
 
@@ -196,6 +199,7 @@ def _normalizar_columnas(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # --- Explosión de multi-resoluciones --------------------------------------
+
 
 def _split_resolucion(texto: str | None) -> list[str]:
     """Divide una resolución en sus partes constituyentes.
@@ -232,9 +236,7 @@ def _explotar_multi_resolucion(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
     df["partes_resolucion"] = df["resolucion_raw"].apply(_split_resolucion)
-    df["multi_resolucion_origen"] = df["partes_resolucion"].apply(
-        lambda lst: len(lst) > 1
-    )
+    df["multi_resolucion_origen"] = df["partes_resolucion"].apply(lambda lst: len(lst) > 1)
 
     # Explode: cada parte de la lista se vuelve su propia fila.
     df = df.explode("partes_resolucion", ignore_index=True)
@@ -247,6 +249,7 @@ def _explotar_multi_resolucion(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # --- Aplicación del diccionario -------------------------------------------
+
 
 def _slug_token(texto: str | None) -> str | None:
     """Normaliza una resolución para matching con el diccionario.
@@ -295,14 +298,15 @@ def _aplicar_diccionario(df: pd.DataFrame, diccionario: pd.DataFrame) -> pd.Data
     )
 
     df["categoria_resolucion"] = df["categoria"].fillna("sin_match")
-    df["requiere_validacion_dic"] = df["validar"].fillna("no").eq("si") | df[
-        "categoria"
-    ].eq("descarte")
+    df["requiere_validacion_dic"] = df["validar"].fillna("no").eq("si") | df["categoria"].eq(
+        "descarte"
+    )
 
     return df.drop(columns=["token_lookup", "categoria", "validar"])
 
 
 # --- Normalización del IPP y fechas ---------------------------------------
+
 
 def _normalizar_ipp_y_fechas(df: pd.DataFrame) -> pd.DataFrame:
     """Aplica clasificador/normalizador del IPP y construye fechas tipadas.
@@ -373,9 +377,8 @@ def _construir_dataset_final(df: pd.DataFrame) -> pd.DataFrame:
     # Flag global de validación combinando dos criterios:
     # - el diccionario marcó validar=si o categoria=descarte
     # - el IPP es pp_malformada (typo no resuelto)
-    df["requiere_validacion"] = (
-        df["requiere_validacion_dic"]
-        | df["tipo_ipp"].apply(requiere_revision_ipp)
+    df["requiere_validacion"] = df["requiere_validacion_dic"] | df["tipo_ipp"].apply(
+        requiere_revision_ipp
     )
 
     # Asegurar las columnas finales y tipos.
@@ -387,6 +390,7 @@ def _construir_dataset_final(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # --- Persistencia ---------------------------------------------------------
+
 
 def correr_pipeline_resoluciones(
     output_csv: Path | None = None,
@@ -427,4 +431,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     import sys
+
     sys.exit(main())

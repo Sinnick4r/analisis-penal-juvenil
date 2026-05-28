@@ -8,6 +8,7 @@ Filtros disponibles:
 Devuelve un dict con los valores seleccionados. Aplicación al DataFrame
 con `aplicar_filtros`.
 """
+
 from __future__ import annotations
 
 from typing import TypedDict
@@ -27,9 +28,7 @@ def sidebar_filtros(df: pd.DataFrame) -> Filtros:
     st.sidebar.header("Filtros")
 
     # Año
-    anios_disponibles = sorted(
-        [int(a) for a in df["anio"].dropna().unique()]
-    )
+    anios_disponibles = sorted([int(a) for a in df["anio"].dropna().unique()])
     anios_sel = st.sidebar.multiselect(
         "Año de ingreso",
         options=anios_disponibles,
@@ -47,9 +46,7 @@ def sidebar_filtros(df: pd.DataFrame) -> Filtros:
     )
 
     # Estado del match ministerial
-    estados_disponibles = sorted(
-        df["estado_match_ministerio"].dropna().unique().tolist()
-    )
+    estados_disponibles = sorted(df["estado_match_ministerio"].dropna().unique().tolist())
     estados_sel = st.sidebar.multiselect(
         "Estado del cruce ministerial",
         options=estados_disponibles,

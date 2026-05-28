@@ -5,6 +5,7 @@ contrato explícito". Define columnas requeridas, dtypes, nullabilidad y
 categorías válidas. Si una corrida produce un output que no cumple el
 contrato, el pipeline falla con `SchemaError`.
 """
+
 from __future__ import annotations
 
 import pandera.pandas as pa
@@ -36,24 +37,20 @@ schema_dataset_final = pa.DataFrameSchema(
             nullable=False,
             coerce=True,
         ),
-
         # Identificadores administrativos
         "ipp": Column(str, nullable=True),
         "caratula_anonimizada": Column(str, nullable=True),
         "responsable": Column(str, nullable=True),
-
         # Trámite
         "tipo_tramite_raw": Column(str, nullable=True),
         "tipo_tramite_limpio": Column(str, nullable=True),
         "tipo_tramite_estandar": Column(str, nullable=True),
-
         # Delito
         "delito_raw": Column(str, nullable=True),
         "delito_limpio": Column(str, nullable=True),
         "delito_sin_tentativa": Column(str, nullable=True),
         "delito_estandar": Column(str, nullable=False),
         "delito_informado": Column(str, checks=Check.isin(["si", "no"])),
-
         # Flags jurídicos
         "tentativa": Column(bool),
         "es_proceso_especial": Column(bool),
@@ -65,7 +62,6 @@ schema_dataset_final = pa.DataFrameSchema(
         "agravante_vehiculo_via_publica": Column(bool),
         "agravante_no_especificado": Column(bool),
         "posible_delito_multiple": Column(bool),
-
         # Cruce ministerial
         "objetivo_ministerio": Column(str, nullable=True),
         "descripcion_ministerio": Column(str, nullable=True),
@@ -109,9 +105,14 @@ schema_indicadores_long = pa.DataFrameSchema(
 # las columnas indicador permiten NaN. Solo se valida la clave temporal.
 schema_indicadores_wide = pa.DataFrameSchema(
     columns={
-        "anio": Column(int, checks=Check.in_range(
-            config.ANIO_MINIMO, config.ANIO_MAXIMO_VALIDO,
-        ), coerce=True),
+        "anio": Column(
+            int,
+            checks=Check.in_range(
+                config.ANIO_MINIMO,
+                config.ANIO_MAXIMO_VALIDO,
+            ),
+            coerce=True,
+        ),
         "mes": Column(int, checks=Check.in_range(1, 12), coerce=True),
         "fecha_mes": Column("datetime64[ns]"),
     },
@@ -125,9 +126,18 @@ schema_indicadores_wide = pa.DataFrameSchema(
 # Categorías reconocidas de IPP. Espejo de `TIPO_IPP_VALIDOS` en
 # `src.normalizar_ipp`. Si se actualiza una lista, actualizar la otra.
 TIPO_IPP_VALIDOS_SCHEMA: list[str] = [
-    "estandar", "oficio_exhorto", "amparo", "querella", "habeas_corpus",
-    "faltas_contravenciones", "apelacion_contravencional",
-    "habeas_data", "dictamen_civil", "externa", "pp_malformada", "nulo",
+    "estandar",
+    "oficio_exhorto",
+    "amparo",
+    "querella",
+    "habeas_corpus",
+    "faltas_contravenciones",
+    "apelacion_contravencional",
+    "habeas_data",
+    "dictamen_civil",
+    "externa",
+    "pp_malformada",
+    "nulo",
 ]
 
 # Identificadores de fuente raw del audit trail.
@@ -147,7 +157,6 @@ schema_resoluciones = pa.DataFrameSchema(
         "ipp_original": Column(str, nullable=True),
         "ipp_canonico": Column(str, nullable=True),
         "tipo_ipp": Column(str, checks=Check.isin(TIPO_IPP_VALIDOS_SCHEMA)),
-
         # Fechas: RAW1 solo tiene año; RAW2/3 tienen fecha completa.
         # Por eso `fecha_resolucion` y `mes_resolucion` son nullable.
         "fecha_resolucion": Column("datetime64[ns]", nullable=True),
@@ -157,18 +166,18 @@ schema_resoluciones = pa.DataFrameSchema(
             coerce=True,
         ),
         "mes_resolucion": Column(
-            "Int64", nullable=True, checks=Check.in_range(1, 12), coerce=True,
+            "Int64",
+            nullable=True,
+            checks=Check.in_range(1, 12),
+            coerce=True,
         ),
-
         # Resolución cruda y normalizada
         "resolucion_raw": Column(str, nullable=True),
         "resolucion_canonica": Column(str, nullable=True),
         "categoria_resolucion": Column(str, nullable=False),
-
         # Flags
         "multi_resolucion_origen": Column(bool, coerce=True),
         "requiere_validacion": Column(bool, coerce=True),
-
         # Audit trail
         "fuente_raw": Column(str, checks=Check.isin(FUENTES_RAW_VALIDAS)),
     },
@@ -190,18 +199,15 @@ schema_causas_con_resoluciones = pa.DataFrameSchema(
         # eventualmente debería ser columna nativa de causas).
         "ipp_canonico": Column(str, nullable=True),
         "tipo_ipp": Column(str, checks=Check.isin(TIPO_IPP_VALIDOS_SCHEMA)),
-
         # Métricas de conteo
         "n_resoluciones": Column(int, checks=Check.ge(0), coerce=True),
         "tiene_resoluciones": Column(bool, coerce=True),
-
         # Métricas temporales (nullable: causas sin resoluciones o solo
         # con resoluciones de RAW1 sin fecha exacta).
         "fecha_primera_resolucion": Column("datetime64[ns]", nullable=True),
         "fecha_ultima_resolucion": Column("datetime64[ns]", nullable=True),
         "dias_hasta_primera_resolucion": Column("Int64", nullable=True, coerce=True),
         "dias_proceso": Column("Int64", nullable=True, coerce=True),
-
         # Flags por categoría (7 más frecuentes).
         "tiene_cierre_proceso": Column(bool, coerce=True),
         "tiene_elevacion_juicio": Column(bool, coerce=True),
@@ -210,7 +216,6 @@ schema_causas_con_resoluciones = pa.DataFrameSchema(
         "tiene_medida_coercion": Column(bool, coerce=True),
         "tiene_derivacion_servicio_local": Column(bool, coerce=True),
         "tiene_rebeldia": Column(bool, coerce=True),
-
         # Audit: todas las categorías concatenadas (no solo las 7 principales).
         "categorias_resolucion": Column(str, nullable=True),
     },

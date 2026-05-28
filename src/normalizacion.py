@@ -1,4 +1,4 @@
-'''
+"""
 Normalización de delitos
 
 Sale del notebook original:
@@ -11,8 +11,7 @@ Sale del notebook original:
   `EXCEPCIONES_NO_MULTIPLES`.
 
 
-'''
-
+"""
 
 from __future__ import annotations
 
@@ -38,7 +37,6 @@ from src.logging_setup import get_logger
 logger = get_logger(__name__)
 
 
-
 # patrones
 PATRON_TENTATIVA: str = r"\b(?:tentativa)\b"
 PATRON_AGRAVADO: str = r"\bagravad[oa]s?\b|\bcalificad[oa]s?\b"
@@ -54,18 +52,20 @@ PATRONES_AGRAVANTES: dict[str, str] = {
 
 # Delitos que parecen múltiples por contener " y " o "," pero son una
 # Se excluyen de `posible_delito_multiple`
-EXCEPCIONES_NO_MULTIPLES: frozenset[str] = frozenset({
-    "robo agravado en poblado y en banda",
-    "robo agravado arma no apta en poblado y en banda",
-    "robo agravado por el uso de arma",
-    "robo agravado por el uso de arma de fuego",
-    "robo agravado por uso de arma no apta",
-    "robo agravado por efraccion",
-    "robo agravado por escalamiento",
-    "robo agravado de vehiculo dejado en la via publica",
-    "hurto agravado de vehiculo dejado en la via publica",
-    "hurto agravado por escalamiento",
-})
+EXCEPCIONES_NO_MULTIPLES: frozenset[str] = frozenset(
+    {
+        "robo agravado en poblado y en banda",
+        "robo agravado arma no apta en poblado y en banda",
+        "robo agravado por el uso de arma",
+        "robo agravado por el uso de arma de fuego",
+        "robo agravado por uso de arma no apta",
+        "robo agravado por efraccion",
+        "robo agravado por escalamiento",
+        "robo agravado de vehiculo dejado en la via publica",
+        "hurto agravado de vehiculo dejado en la via publica",
+        "hurto agravado por escalamiento",
+    }
+)
 
 
 RENAME_MAP: dict[str, str] = {
@@ -81,13 +81,14 @@ RENAME_MAP: dict[str, str] = {
 
 # carga
 
+
 def cargar_datos_raw(
     path: Path | None = None,
     sheet_name: str = config.RAW_SHEET,
     usecols: str = config.RAW_USECOLS,
     anio_minimo: int = config.ANIO_MINIMO,
 ) -> pd.DataFrame:
-    '''
+    """
     ccarga excel y
 
     - lee la hoja `Registro` (columnas A:F).
@@ -97,7 +98,7 @@ def cargar_datos_raw(
     - filtra causas con `anio >= anio_minimo`.
     - hace backup de columnas raw: `delito_raw` y `tipo_tramite_raw`.
 
-    '''
+    """
     fuente = path if path is not None else config.RAW_FILE
     if not fuente.exists():
         raise FileNotFoundError(
@@ -116,8 +117,14 @@ def cargar_datos_raw(
 
     df = df_raw.dropna(subset=config.COLUMNAS_CLAVE, how="all").copy()
 
-    for col in ("ipp", "tipo_tramite", "caratula_anonimizada",
-                "responsable", "observaciones", "delito"):
+    for col in (
+        "ipp",
+        "tipo_tramite",
+        "caratula_anonimizada",
+        "responsable",
+        "observaciones",
+        "delito",
+    ):
         if col in df.columns:
             df[col] = df[col].astype("string").str.strip()
 
@@ -133,13 +140,14 @@ def cargar_datos_raw(
     return df
 
 
-#normalizacion de delitos
+# normalizacion de delitos
+
 
 def normalizar_delitos(
     df: pd.DataFrame,
     dict_delitos_local: pd.DataFrame,
 ) -> pd.DataFrame:
-    '''
+    """
 
     Etapas:
     1. limpieza textual base con `limpiar_texto`
@@ -151,7 +159,7 @@ def normalizar_delitos(
     7. calculo de flags: agravantes yno especificado
     8. detección de posible delito mutiple
 
-    '''
+    """
 
     filas_inicial = len(df)
     df = df.copy()
@@ -166,11 +174,12 @@ def normalizar_delitos(
     )
 
     # tentativa
-    df["tentativa"] = df["delito_limpio"].astype("string").str.contains(
-        PATRON_TENTATIVA, regex=True, na=False
+    df["tentativa"] = (
+        df["delito_limpio"].astype("string").str.contains(PATRON_TENTATIVA, regex=True, na=False)
     )
     df["delito_sin_tentativa"] = (
-        df["delito_limpio"].astype("string")
+        df["delito_limpio"]
+        .astype("string")
         .str.replace(r"\ben\s+tentativa\b", "", regex=True)
         .str.replace(r"\btentativa\b", "", regex=True)
         .str.replace(r"\s+", " ", regex=True)
@@ -200,9 +209,7 @@ def normalizar_delitos(
 
     df["delito_estandar"] = df["delito_estandar"].fillna(df["delito_key"])
     df["delito_estandar"] = df["delito_estandar"].fillna("delito_no_informado")
-    df["delito_informado"] = np.where(
-        df["delito_estandar"].eq("delito_no_informado"), "no", "si"
-    )
+    df["delito_informado"] = np.where(df["delito_estandar"].eq("delito_no_informado"), "no", "si")
 
     # flags juridicos
     delito_str = df["delito_estandar"].astype("string")
@@ -228,20 +235,21 @@ def normalizar_delitos(
 
     # validacion de shape
     assert len(df) == filas_inicial, (
-        f"normalizar_delitos cambió la cantidad de filas: "
-        f"{filas_inicial} → {len(df)}"
+        f"normalizar_delitos cambió la cantidad de filas: {filas_inicial} → {len(df)}"
     )
 
     logger.info(
-        "Delitos normalizados: %d filas | %d con tentativa | %d agravados | "
-        "%d posibles múltiples",
-        len(df), df["tentativa"].sum(), df["agravado_flag"].sum(),
+        "Delitos normalizados: %d filas | %d con tentativa | %d agravados | %d posibles múltiples",
+        len(df),
+        df["tentativa"].sum(),
+        df["agravado_flag"].sum(),
         df["posible_delito_multiple"].sum(),
     )
     return df
 
 
 # cruce de delitos estandarizados con nomenclador del Ministerio
+
 
 def cruzar_ministerio(
     df: pd.DataFrame,
@@ -287,9 +295,9 @@ def cruzar_ministerio(
     # df a puente usando como key el delito estandar
     df["delito_estandar_key"] = df["delito_estandar"].apply(limpiar_para_match)
 
-    puente_dedup = puente[[
-        "delito_estandar", "objetivo_ministerio", "criterio_match"
-    ]].drop_duplicates(subset=["delito_estandar"])
+    puente_dedup = puente[
+        ["delito_estandar", "objetivo_ministerio", "criterio_match"]
+    ].drop_duplicates(subset=["delito_estandar"])
 
     df = df.merge(
         puente_dedup,
@@ -334,8 +342,7 @@ def cruzar_ministerio(
 
     # validacion de shape
     assert len(df) == filas_inicial, (
-        f"cruzar_ministerio cambió la cantidad de filas: "
-        f"{filas_inicial} → {len(df)}"
+        f"cruzar_ministerio cambió la cantidad de filas: {filas_inicial} → {len(df)}"
     )
 
     logger.info(
@@ -346,6 +353,7 @@ def cruzar_ministerio(
 
 
 # normalizacion de tramites
+
 
 def _aplicar_reglas_residuales_tramite(df: pd.DataFrame) -> pd.DataFrame:
     # overrides locales al tipo_tramite_estandar después del merge
@@ -370,8 +378,8 @@ def normalizar_tramites(
     df: pd.DataFrame,
     dict_tramites: pd.DataFrame,
 ) -> pd.DataFrame:
-    '''
-    
+    """
+
     aca se normaliza el tipo de tramite con diccionario local + reglas
 
     1. Limpieza textual del trámite con `limpiar_tramite`
@@ -380,14 +388,12 @@ def normalizar_tramites(
     4. Fallback: si no hay match, queda el `tipo_tramite_limpio`
     5. Reglas residuales por lo que se usa en el juzgado (elevacion, competencia,
        declinatoria).
-    '''
+    """
     filas_inicial = len(df)
     df = df.copy()
 
     df["tipo_tramite_limpio"] = df["tipo_tramite_raw"].apply(limpiar_tramite)
-    df["tipo_tramite_limpio"] = df["tipo_tramite_limpio"].replace(
-        list(FALTANTES_TRAMITE), pd.NA
-    )
+    df["tipo_tramite_limpio"] = df["tipo_tramite_limpio"].replace(list(FALTANTES_TRAMITE), pd.NA)
 
     dic = dict_tramites.copy()
     dic["tramite_fuente"] = dic["tramite_fuente"].apply(limpiar_tramite)
@@ -408,8 +414,7 @@ def normalizar_tramites(
     df = _aplicar_reglas_residuales_tramite(df)
 
     assert len(df) == filas_inicial, (
-        f"normalizar_tramites cambió la cantidad de filas: "
-        f"{filas_inicial} → {len(df)}"
+        f"normalizar_tramites cambió la cantidad de filas: {filas_inicial} → {len(df)}"
     )
     logger.info("Trámites normalizados: %d filas", len(df))
     return df
@@ -453,9 +458,7 @@ def seleccionar_columnas_finales(df: pd.DataFrame) -> pd.DataFrame:
     # pasa el DataFrame al conjunto de columnas finales
     faltantes = [c for c in COLUMNAS_FINALES if c not in df.columns]
     if faltantes:
-        raise ValueError(
-            f"Faltan columnas para el dataset final: {faltantes}"
-        )
+        raise ValueError(f"Faltan columnas para el dataset final: {faltantes}")
     if "responsable" not in df.columns:
         df = df.copy()
         df["responsable"] = pd.NA

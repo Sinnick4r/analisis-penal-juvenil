@@ -4,6 +4,7 @@ Estos tests NO usan el Excel real ni los CSVs de producción: corren sobre
 los fixtures sintéticos del `conftest.py`. Permiten validar que la cadena
 completa funciona end-to-end y que el contrato pandera se cumple.
 """
+
 from __future__ import annotations
 
 import pandas as pd
@@ -40,9 +41,7 @@ class TestPipelineEndToEnd:
     def test_tiene_todas_las_columnas_esperadas(self, df_final_sintetico) -> None:
         assert set(df_final_sintetico.columns) == set(COLUMNAS_FINALES)
 
-    def test_conserva_la_cantidad_de_filas(
-        self, df_final_sintetico, df_causas_sinteticas
-    ) -> None:
+    def test_conserva_la_cantidad_de_filas(self, df_final_sintetico, df_causas_sinteticas) -> None:
         assert len(df_final_sintetico) == len(df_causas_sinteticas)
 
     def test_cumple_el_schema_pandera(self, df_final_sintetico) -> None:
@@ -50,16 +49,16 @@ class TestPipelineEndToEnd:
         validado = schema_dataset_final.validate(df_final_sintetico)
         assert len(validado) == len(df_final_sintetico)
 
-    def test_estado_match_ministerio_solo_categorias_validas(
-        self, df_final_sintetico
-    ) -> None:
+    def test_estado_match_ministerio_solo_categorias_validas(self, df_final_sintetico) -> None:
         estados_validos = {
-            "match_univoco", "match_ambiguo", "sin_equivalencia_definida",
-            "proceso_especial", "sin_delito_informado", "sin_match",
+            "match_univoco",
+            "match_ambiguo",
+            "sin_equivalencia_definida",
+            "proceso_especial",
+            "sin_delito_informado",
+            "sin_match",
         }
-        assert set(df_final_sintetico["estado_match_ministerio"].unique()).issubset(
-            estados_validos
-        )
+        assert set(df_final_sintetico["estado_match_ministerio"].unique()).issubset(estados_validos)
 
     def test_delito_informado_solo_si_o_no(self, df_final_sintetico) -> None:
         assert set(df_final_sintetico["delito_informado"].unique()).issubset({"si", "no"})

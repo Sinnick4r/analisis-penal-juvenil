@@ -1,4 +1,5 @@
 """Fila de KPIs principales del dashboard."""
+
 from __future__ import annotations
 
 import pandas as pd
@@ -32,5 +33,5 @@ def fila_kpis(df: pd.DataFrame) -> None:
         st.metric(
             label="% sin equivalencia ministerial",
             value=f"{stats['pct_sin_match']:.1f}%",
-            help="Causas donde el cruce con el nomenclador oficial no es jurídicamente prudente."
+            help="Causas donde el cruce con el nomenclador oficial no es jurídicamente prudente.",
         )

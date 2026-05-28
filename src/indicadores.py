@@ -1,11 +1,11 @@
-#normalizacion de indicadores mensuales del juzgado.
-'''
+# normalizacion de indicadores mensuales del juzgado.
+"""
 Aca hay tres operaciones:
 - `cargar_indicadores`: I/O -> normaliza las cosas del excel
 - `pivot_a_wide`: reshape a wide
 - `calcular_ratios`: agrega features como ratio_finalizacion.
 
-'''
+"""
 
 from __future__ import annotations
 
@@ -22,20 +22,21 @@ from src.logging_setup import get_logger
 logger = get_logger(__name__)
 
 
-
-DIMENSIONES_VALIDAS: frozenset[str] = frozenset({
-    "carga laboral",
-    "demanda del servicio",
-    "planta",
-    "respuesta del organo",
-    "teletrabajo",
-})
+DIMENSIONES_VALIDAS: frozenset[str] = frozenset(
+    {
+        "carga laboral",
+        "demanda del servicio",
+        "planta",
+        "respuesta del organo",
+        "teletrabajo",
+    }
+)
 
 # solo renombro las columnas de la fuente al snake_case interno
 RENAME_COLUMNAS: dict[str, str] = {
     "departamento": "departamento",
     "dependencia": "dependencia",
-    "ano": "anio",        # "Año" pierde la ñ al normalizar
+    "ano": "anio",  # "Año" pierde la ñ al normalizar
     "anio": "anio",
     "mes": "mes",
     "dimension": "dimension",
@@ -105,8 +106,9 @@ def _slug(nombre: str) -> str:
 
 # -Aca viene el I/O
 
+
 def cargar_indicadores(path: Path | None = None) -> pd.DataFrame:
-    #carga el xlsx de indicadores en formato long normalizado
+    # carga el xlsx de indicadores en formato long normalizado
 
     fuente = path if path is not None else config.INDICADORES_FILE
     if not fuente.exists():
@@ -127,7 +129,7 @@ def cargar_indicadores(path: Path | None = None) -> pd.DataFrame:
 
 
 def _normalizar(df_raw: pd.DataFrame) -> pd.DataFrame:
-    #se ahce la normalizacion al df
+    # se ahce la normalizacion al df
 
     df = df_raw.copy()
     df.columns = [normalizar_nombre_columna(c) for c in df.columns]
@@ -139,27 +141,38 @@ def _normalizar(df_raw: pd.DataFrame) -> pd.DataFrame:
     df["valor"] = pd.to_numeric(df["valor"], errors="coerce").astype(float)
 
     # sacco tildes, paso todo a minuscula
-    df["dimension"] = df["dimension"].astype("string").apply(
-        lambda s: quitar_tildes(s).lower() if pd.notna(s) else s
+    df["dimension"] = (
+        df["dimension"]
+        .astype("string")
+        .apply(lambda s: quitar_tildes(s).lower() if pd.notna(s) else s)
     )
 
     # trim
     for col in ("departamento", "dependencia", "indicador"):
         df[col] = df[col].astype("string").str.strip()
 
-    # slug del indicador 
+    # slug del indicador
     df["indicador_slug"] = df["indicador"].apply(_slug)
 
     # descarto filas sin fechas
     df = df.dropna(subset=["anio", "mes"]).reset_index(drop=True)
 
-    return df[[
-        "departamento", "dependencia", "anio", "mes",
-        "dimension", "indicador", "indicador_slug", "valor",
-    ]]
+    return df[
+        [
+            "departamento",
+            "dependencia",
+            "anio",
+            "mes",
+            "dimension",
+            "indicador",
+            "indicador_slug",
+            "valor",
+        ]
+    ]
 
 
 # reshape
+
 
 def pivot_a_wide(df_long: pd.DataFrame) -> pd.DataFrame:
     # pivota el df long a wide: una fila por la fecha
@@ -190,12 +203,12 @@ def pivot_a_wide(df_long: pd.DataFrame) -> pd.DataFrame:
 
 # Aca se procesan metricas
 def calcular_ratios(df_wide: pd.DataFrame) -> pd.DataFrame:
-    '''
+    """
     metricas calculadas si se puede obvio:
     - `tasa_resolucion_calculada`: finalizadas / ingresadas * 100.
     - `delta_ingreso_finalizacion`: ingresadas - finalizadas.
     - `ratio_finalizacion`: finalizadas / ingresadas (decimal).
-    '''
+    """
     df = df_wide.copy()
 
     tiene_ing = SLUG_CAUSAS_INGRESADAS in df.columns
@@ -222,6 +235,7 @@ def calcular_ratios(df_wide: pd.DataFrame) -> pd.DataFrame:
 
 # utils
 
+
 def serie_temporal(
     df_long: pd.DataFrame,
     indicador_slug: str,
@@ -232,10 +246,11 @@ def serie_temporal(
     if len(sub) == 0:
         slugs_disponibles = sorted(df_long["indicador_slug"].unique().tolist())
         raise KeyError(
-            f"Indicador '{indicador_slug}' no encontrado. "
-            f"Disponibles: {slugs_disponibles}"
+            f"Indicador '{indicador_slug}' no encontrado. Disponibles: {slugs_disponibles}"
         )
     sub["fecha_mes"] = pd.to_datetime(
         sub["anio"].astype(str) + "-" + sub["mes"].astype(str).str.zfill(2) + "-01"
     )
-    return sub[["anio", "mes", "fecha_mes", "valor"]].sort_values("fecha_mes").reset_index(drop=True)
+    return (
+        sub[["anio", "mes", "fecha_mes", "valor"]].sort_values("fecha_mes").reset_index(drop=True)
+    )

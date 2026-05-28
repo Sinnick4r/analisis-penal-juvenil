@@ -4,6 +4,7 @@ Este tab convierte al dashboard en herramienta operativa: muestra el estado
 del cruce ministerial y la cola de causas que conviene revisar para
 enriquecer los diccionarios locales.
 """
+
 from __future__ import annotations
 
 import altair as alt
@@ -25,11 +26,7 @@ COLORES_ESTADO_MATCH: dict[str, str] = {
 
 def _distribucion_match_chart(df: pd.DataFrame) -> alt.Chart:
     """Bar chart horizontal de la distribución del estado del match."""
-    dist = (
-        df["estado_match_ministerio"]
-        .value_counts()
-        .reset_index()
-    )
+    dist = df["estado_match_ministerio"].value_counts().reset_index()
     dist.columns = ["estado", "causas"]
     dist["pct"] = dist["causas"] / dist["causas"].sum() * 100
 
@@ -84,9 +81,13 @@ def _construir_cola_revision(df: pd.DataFrame) -> pd.DataFrame:
         | df["agravante_no_especificado"]
     )
     cols = [
-        "anio", "ipp",
-        "delito_raw", "delito_estandar", "estado_match_ministerio",
-        "posible_delito_multiple", "agravante_no_especificado",
+        "anio",
+        "ipp",
+        "delito_raw",
+        "delito_estandar",
+        "estado_match_ministerio",
+        "posible_delito_multiple",
+        "agravante_no_especificado",
     ]
     return df.loc[mask, cols].copy()
 
@@ -112,14 +113,15 @@ def render(df: pd.DataFrame) -> None:
 
     # --- Distribución del estado del match -----------------------------
     pct_univoco = df["estado_match_ministerio"].eq("match_univoco").mean() * 100
-    pct_problemas = df["estado_match_ministerio"].isin(
-        ["sin_equivalencia_definida", "sin_match", "sin_delito_informado"]
-    ).mean() * 100
+    pct_problemas = (
+        df["estado_match_ministerio"]
+        .isin(["sin_equivalencia_definida", "sin_match", "sin_delito_informado"])
+        .mean()
+        * 100
+    )
 
     if pct_univoco >= 60:
-        st.subheader(
-            f"El {pct_univoco:.1f}% de las causas tiene cruce ministerial unívoco"
-        )
+        st.subheader(f"El {pct_univoco:.1f}% de las causas tiene cruce ministerial unívoco")
     else:
         st.subheader(
             f"El {pct_problemas:.1f}% de las causas presenta algún problema de equivalencia"
@@ -146,23 +148,30 @@ def render(df: pd.DataFrame) -> None:
 
     if len(cola) == 0:
         st.success(
-            "Ninguna causa del subconjunto filtrado requiere revisión "
-            "manual. La calidad es buena."
+            "Ninguna causa del subconjunto filtrado requiere revisión manual. La calidad es buena."
         )
         return
 
     cola["motivos"] = cola.apply(_motivos_revision, axis=1)
-    cola_display = cola[[
-        "anio", "ipp", "delito_raw", "delito_estandar",
-        "estado_match_ministerio", "motivos",
-    ]].rename(columns={
-        "anio": "Año",
-        "ipp": "IPP",
-        "delito_raw": "Delito (raw)",
-        "delito_estandar": "Delito normalizado",
-        "estado_match_ministerio": "Estado del match",
-        "motivos": "Motivos de revisión",
-    })
+    cola_display = cola[
+        [
+            "anio",
+            "ipp",
+            "delito_raw",
+            "delito_estandar",
+            "estado_match_ministerio",
+            "motivos",
+        ]
+    ].rename(
+        columns={
+            "anio": "Año",
+            "ipp": "IPP",
+            "delito_raw": "Delito (raw)",
+            "delito_estandar": "Delito normalizado",
+            "estado_match_ministerio": "Estado del match",
+            "motivos": "Motivos de revisión",
+        }
+    )
 
     st.markdown(
         f"<small style='color:{GRIS_OSCURO}'>"

@@ -4,6 +4,7 @@ Dos niveles:
 - Unitarios con fixtures sintéticas (no requieren los Excel reales).
 - Aceptación contra los archivos reales (auto-skip si faltan).
 """
+
 from __future__ import annotations
 
 import json
@@ -24,6 +25,7 @@ from src.resoluciones import (
 )
 
 # --- Tests del split de multi-resoluciones --------------------------------
+
 
 class TestSplitResolucion:
     def test_single_devuelve_lista_de_uno(self) -> None:
@@ -67,6 +69,7 @@ class TestSplitResolucion:
 
 # --- Tests del slug ------------------------------------------------------
 
+
 class TestSlugToken:
     def test_lowercase_y_trim(self) -> None:
         assert _slug_token("  Sobreseimiento  ") == "sobreseimiento"
@@ -84,6 +87,7 @@ class TestSlugToken:
 
 
 # --- Tests del flujo completo de transformaciones (sin I/O) ---------------
+
 
 class TestPipelineTransformaciones:
     """Encadena las transformaciones puras sobre el fixture sintético."""
@@ -132,7 +136,8 @@ class TestPipelineTransformaciones:
         assert (sobre["categoria_resolucion"] == "cierre de proceso").all()
 
     def test_fechas_raw1_solo_anio(
-        self, df_resoluciones_raw_solo_anio_sint,
+        self,
+        df_resoluciones_raw_solo_anio_sint,
     ) -> None:
         """Verifica que cuando Año es int (RAW1), fecha_resolucion queda NaT
         pero anio_resolucion conserva el año correcto."""
@@ -146,7 +151,8 @@ class TestPipelineTransformaciones:
         assert sorted(df["anio_resolucion"].dropna().unique().tolist()) == [2017, 2018, 2019]
 
     def test_fechas_raw2_con_datetime(
-        self, df_resoluciones_raw_sint,
+        self,
+        df_resoluciones_raw_sint,
     ) -> None:
         df = df_resoluciones_raw_sint.copy()
         df["fuente_raw"] = "backfill_2020_2023a"
@@ -159,6 +165,7 @@ class TestPipelineTransformaciones:
 
 
 # --- Tests de seguridad: checksums ----------------------------------------
+
 
 class TestChecksums:
     def test_sha256_es_determinista(self, tmp_path: Path) -> None:
@@ -180,10 +187,7 @@ class TestChecksums:
 # --- Tests de aceptación contra archivos reales --------------------------
 
 pytestmark_archivos_reales = pytest.mark.skipif(
-    not (
-        all(p.exists() for p in BACKFILL_RESOLUCIONES)
-        and RAW_RESOLUCIONES.exists()
-    ),
+    not (all(p.exists() for p in BACKFILL_RESOLUCIONES) and RAW_RESOLUCIONES.exists()),
     reason="Archivos de resoluciones no disponibles en data/",
 )
 
@@ -198,6 +202,7 @@ class TestAceptacionArchivosReales:
 
     def test_cumple_schema(self) -> None:
         from src.schema import schema_resoluciones
+
         df = cargar_resoluciones()
         schema_resoluciones.validate(df)
 
@@ -243,6 +248,7 @@ class TestAceptacionArchivosReales:
 
         # Verificar que cada archivo registrado tiene un hash válido.
         from src.config import BACKFILL_CHECKSUMS
+
         if not BACKFILL_CHECKSUMS.exists():
             pytest.skip("checksums.json no existe; correr `make refresh-checksums`.")
         registro = json.loads(BACKFILL_CHECKSUMS.read_text())

@@ -5,6 +5,7 @@ Dos niveles:
 - Tests de aceptación contra el archivo real (auto-skip si no está disponible,
   útil para CI sin datos).
 """
+
 from __future__ import annotations
 
 import pandas as pd
@@ -25,15 +26,19 @@ from src.indicadores import (
 
 # --- Tests del slug --------------------------------------------------------
 
+
 class TestSlug:
-    @pytest.mark.parametrize("entrada,esperado", [
-        ("Causas Ingresadas", "causas_ingresadas"),
-        ("Tasa de resolución", "tasa_de_resolucion"),
-        ("Causas finalizadas (trámites de finalización)", "causas_finalizadas"),
-        ("Detenidos al final del periodo", "detenidos_al_final_del_periodo"),
-        ("Días asistencia en periodo", "dias_asistencia_en_periodo"),
-        ("ÁREA con TILDES", "area_con_tildes"),
-    ])
+    @pytest.mark.parametrize(
+        "entrada,esperado",
+        [
+            ("Causas Ingresadas", "causas_ingresadas"),
+            ("Tasa de resolución", "tasa_de_resolucion"),
+            ("Causas finalizadas (trámites de finalización)", "causas_finalizadas"),
+            ("Detenidos al final del periodo", "detenidos_al_final_del_periodo"),
+            ("Días asistencia en periodo", "dias_asistencia_en_periodo"),
+            ("ÁREA con TILDES", "area_con_tildes"),
+        ],
+    )
     def test_slug_produce_lo_esperado(self, entrada: str, esperado: str) -> None:
         assert _slug(entrada) == esperado
 
@@ -48,12 +53,19 @@ class TestSlug:
 
 # --- Tests de normalización (puros, sin I/O) ------------------------------
 
+
 class TestNormalizar:
     def test_estructura_de_columnas(self, df_indicadores_raw_sint) -> None:
         df = _normalizar(df_indicadores_raw_sint)
         cols_esperadas = {
-            "departamento", "dependencia", "anio", "mes",
-            "dimension", "indicador", "indicador_slug", "valor",
+            "departamento",
+            "dependencia",
+            "anio",
+            "mes",
+            "dimension",
+            "indicador",
+            "indicador_slug",
+            "valor",
         }
         assert set(df.columns) == cols_esperadas
 
@@ -83,6 +95,7 @@ class TestNormalizar:
 
 
 # --- Tests de pivot long → wide -------------------------------------------
+
 
 class TestPivotAWide:
     def test_estructura_wide(self, df_indicadores_raw_sint) -> None:
@@ -114,14 +127,20 @@ class TestPivotAWide:
         assert fechas == sorted(fechas)
 
     def test_input_vacio_no_rompe(self) -> None:
-        vacio = pd.DataFrame(columns=[
-            "anio", "mes", "indicador_slug", "valor",
-        ])
+        vacio = pd.DataFrame(
+            columns=[
+                "anio",
+                "mes",
+                "indicador_slug",
+                "valor",
+            ]
+        )
         out = pivot_a_wide(vacio)
         assert len(out) == 0
 
 
 # --- Tests de ratios calculados -------------------------------------------
+
 
 class TestCalcularRatios:
     def test_tasa_calculada_coincide_con_publicada(self, df_indicadores_raw_sint) -> None:
@@ -143,26 +162,35 @@ class TestCalcularRatios:
 
     def test_divide_by_zero_da_nan(self) -> None:
         """Si ingresadas es 0, los ratios deben ser NaN (no inf)."""
-        df = pd.DataFrame({
-            "anio": [2024], "mes": [1], "fecha_mes": [pd.Timestamp("2024-01-01")],
-            SLUG_CAUSAS_INGRESADAS: [0.0],
-            SLUG_CAUSAS_FINALIZADAS: [5.0],
-        })
+        df = pd.DataFrame(
+            {
+                "anio": [2024],
+                "mes": [1],
+                "fecha_mes": [pd.Timestamp("2024-01-01")],
+                SLUG_CAUSAS_INGRESADAS: [0.0],
+                SLUG_CAUSAS_FINALIZADAS: [5.0],
+            }
+        )
         out = calcular_ratios(df)
         assert pd.isna(out.iloc[0]["tasa_resolucion_calculada"])
         assert pd.isna(out.iloc[0]["ratio_finalizacion"])
 
     def test_columnas_faltantes_no_rompe(self) -> None:
         """Si no hay causas_ingresadas o finalizadas, no agrega columnas."""
-        df = pd.DataFrame({
-            "anio": [2024], "mes": [1], "fecha_mes": [pd.Timestamp("2024-01-01")],
-            "tramites_totales": [100.0],
-        })
+        df = pd.DataFrame(
+            {
+                "anio": [2024],
+                "mes": [1],
+                "fecha_mes": [pd.Timestamp("2024-01-01")],
+                "tramites_totales": [100.0],
+            }
+        )
         out = calcular_ratios(df)
         assert "tasa_resolucion_calculada" not in out.columns
 
 
 # --- Tests de serie_temporal ----------------------------------------------
+
 
 class TestSerieTemporal:
     def test_devuelve_serie_ordenada(self, df_indicadores_raw_sint) -> None:
@@ -194,11 +222,13 @@ class TestAceptacionArchivoReal:
 
     def test_cumple_schema_long(self) -> None:
         from src.schema import schema_indicadores_long
+
         df = cargar_indicadores()
         schema_indicadores_long.validate(df)
 
     def test_cumple_schema_wide(self) -> None:
         from src.schema import schema_indicadores_wide
+
         df = cargar_indicadores()
         wide = pivot_a_wide(df)
         schema_indicadores_wide.validate(wide)
@@ -221,8 +251,7 @@ class TestAceptacionArchivoReal:
         wide = pivot_a_wide(df)
         wide_r = calcular_ratios(wide)
         m = wide_r[
-            wide_r[SLUG_TASA_RESOLUCION].notna()
-            & wide_r["tasa_resolucion_calculada"].notna()
+            wide_r[SLUG_TASA_RESOLUCION].notna() & wide_r["tasa_resolucion_calculada"].notna()
         ]
         if len(m) == 0:
             pytest.skip("No hay meses con ambas tasas disponibles.")

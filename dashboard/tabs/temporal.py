@@ -4,6 +4,7 @@ Charts:
 - Causas por año (barras, año pico destacado).
 - Tendencia mensual completa (línea).
 """
+
 from __future__ import annotations
 
 import altair as alt
@@ -15,12 +16,7 @@ from dashboard.theme import ACENTO, GRIS_MEDIO, GRIS_OSCURO
 
 def _causas_por_anio(df: pd.DataFrame) -> alt.Chart:
     """Bar chart de causas por año con el año pico destacado."""
-    por_anio = (
-        df.dropna(subset=["anio"])
-        .groupby("anio")
-        .size()
-        .reset_index(name="causas")
-    )
+    por_anio = df.dropna(subset=["anio"]).groupby("anio").size().reset_index(name="causas")
     if len(por_anio) == 0:
         return alt.Chart(pd.DataFrame({"anio": [], "causas": []})).mark_bar()
 
@@ -95,7 +91,9 @@ def render(df: pd.DataFrame) -> None:
         anio_pico = int(por_anio.idxmax())
         causas_pico = int(por_anio.max())
         st.subheader(
-            f"El pico del período se registró en {anio_pico} con {causas_pico:,} causas".replace(",", ".")
+            f"El pico del período se registró en {anio_pico} con {causas_pico:,} causas".replace(
+                ",", "."
+            )
         )
     else:
         st.subheader("Causas por año")

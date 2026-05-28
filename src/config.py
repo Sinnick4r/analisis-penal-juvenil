@@ -4,6 +4,7 @@ Fuente única de paths y parámetros. Modificar valores acá en lugar de
 hardcodearlos en los módulos. Cumple con la regla CFG-01 del guideline
 (pyproject + módulo de config como fuente primaria).
 """
+
 from __future__ import annotations
 
 import logging
@@ -78,6 +79,4 @@ COLUMNAS_CLAVE: list[str] = [
 # --- Logging --------------------------------------------------------------
 
 LOG_LEVEL: int = logging.INFO
-LOG_FORMAT: str = (
-    "%(asctime)s | %(levelname)-7s | %(name)s | %(message)s"
-)
+LOG_FORMAT: str = "%(asctime)s | %(levelname)-7s | %(name)s | %(message)s"

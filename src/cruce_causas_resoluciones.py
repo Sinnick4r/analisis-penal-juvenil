@@ -14,6 +14,7 @@ aplicando `normalizar_ipp` al campo `ipp`. En una iteración futura,
 incorporar esas columnas al schema de causas (`src/normalizacion.py`)
 para que el cruce las consuma directamente.
 """
+
 from __future__ import annotations
 
 import sys
@@ -60,12 +61,11 @@ def _slug_categoria(categoria: str) -> str:
 
 # Slugs precomputados (estables). Mantener este mapeo si cambiás
 # CATEGORIAS_PRINCIPALES — los tests dependen de estos nombres.
-SLUGS_CATEGORIAS: dict[str, str] = {
-    cat: _slug_categoria(cat) for cat in CATEGORIAS_PRINCIPALES
-}
+SLUGS_CATEGORIAS: dict[str, str] = {cat: _slug_categoria(cat) for cat in CATEGORIAS_PRINCIPALES}
 
 
 # --- Carga (I/O) ----------------------------------------------------------
+
 
 def cargar_causas_con_canonico(path: Path | None = None) -> pd.DataFrame:
     """Carga el CSV de causas y agrega `ipp_canonico` + `tipo_ipp`.
@@ -76,8 +76,7 @@ def cargar_causas_con_canonico(path: Path | None = None) -> pd.DataFrame:
     p = path if path is not None else config.OUTPUT_CSV
     if not p.exists():
         raise FileNotFoundError(
-            f"No se encontró el output de causas en {p}. "
-            "Corré `make pipeline` primero."
+            f"No se encontró el output de causas en {p}. Corré `make pipeline` primero."
         )
     df = pd.read_csv(p)
     df["fecha_ingreso"] = pd.to_datetime(df["fecha_ingreso"], errors="coerce")
@@ -101,6 +100,7 @@ def cargar_resoluciones_consolidado(path: Path | None = None) -> pd.DataFrame:
 
 # --- Cálculo de métricas (puro) -------------------------------------------
 
+
 def calcular_metricas_por_ipp(resoluciones: pd.DataFrame) -> pd.DataFrame:
     """Para cada `ipp_canonico`, calcula las métricas agregadas.
 
@@ -119,8 +119,10 @@ def calcular_metricas_por_ipp(resoluciones: pd.DataFrame) -> pd.DataFrame:
     if len(res) == 0:
         # DataFrame vacío bien tipado.
         cols = [
-            "ipp_canonico", "n_resoluciones",
-            "fecha_primera_resolucion", "fecha_ultima_resolucion",
+            "ipp_canonico",
+            "n_resoluciones",
+            "fecha_primera_resolucion",
+            "fecha_ultima_resolucion",
             "categorias_resolucion",
             *[f"tiene_{slug}" for slug in SLUGS_CATEGORIAS.values()],
         ]
@@ -159,6 +161,7 @@ def calcular_metricas_por_ipp(resoluciones: pd.DataFrame) -> pd.DataFrame:
 
 # --- Cruce ----------------------------------------------------------------
 
+
 def cruzar(causas: pd.DataFrame, resoluciones: pd.DataFrame) -> pd.DataFrame:
     """Cruce LEFT desde causas. Preserva todas las causas, anota cuáles
     tienen resoluciones registradas.
@@ -182,9 +185,7 @@ def cruzar(causas: pd.DataFrame, resoluciones: pd.DataFrame) -> pd.DataFrame:
     )
 
     # Validación de shape post-merge (regla DATA-07).
-    assert len(cruce) == n_inicial, (
-        f"Cruce alteró cantidad de filas: {n_inicial} → {len(cruce)}"
-    )
+    assert len(cruce) == n_inicial, f"Cruce alteró cantidad de filas: {n_inicial} → {len(cruce)}"
 
     # Defaults para causas sin resoluciones registradas.
     cruce["n_resoluciones"] = cruce["n_resoluciones"].fillna(0).astype(int)
@@ -209,6 +210,7 @@ def cruzar(causas: pd.DataFrame, resoluciones: pd.DataFrame) -> pd.DataFrame:
 
 # --- Auditoría del cruce --------------------------------------------------
 
+
 def reporte_auditoria(causas: pd.DataFrame, resoluciones: pd.DataFrame) -> dict:
     """Estadísticas descriptivas del cruce para logging y dashboard de calidad.
 
@@ -232,14 +234,13 @@ def reporte_auditoria(causas: pd.DataFrame, resoluciones: pd.DataFrame) -> dict:
         "ipps_en_ambos_datasets": len(interseccion),
         "causas_sin_resoluciones_unicas": len(solo_causas),
         "resoluciones_huerfanas_ipps_unicas": len(solo_res),
-        "resoluciones_huerfanas_filas": int(
-            resoluciones["ipp_canonico"].isin(solo_res).sum()
-        ),
+        "resoluciones_huerfanas_filas": int(resoluciones["ipp_canonico"].isin(solo_res).sum()),
     }
     return audit
 
 
 # --- Orquestador ----------------------------------------------------------
+
 
 def correr_cruce(
     causas_path: Path | None = None,
@@ -261,7 +262,8 @@ def correr_cruce(
 
     logger.info(
         "Inputs: %d causas, %d filas de resoluciones",
-        len(causas), len(resoluciones),
+        len(causas),
+        len(resoluciones),
     )
 
     cruce = cruzar(causas, resoluciones)

@@ -3,6 +3,7 @@
 Cubren cada función pura con casos felices y casos borde (NA, vacíos,
 caracteres raros, espacios múltiples).
 """
+
 from __future__ import annotations
 
 import pandas as pd
@@ -18,6 +19,7 @@ from src.limpieza import (
 )
 
 # --- normalizar_nombre_columna -------------------------------------------
+
 
 class TestNormalizarNombreColumna:
     def test_lower_y_sin_tildes(self) -> None:
@@ -35,20 +37,25 @@ class TestNormalizarNombreColumna:
 
 # --- quitar_tildes --------------------------------------------------------
 
+
 class TestQuitarTildes:
-    @pytest.mark.parametrize("entrada,esperado", [
-        ("agresión", "agresion"),
-        ("año", "ano"),
-        ("ñandú", "nandu"),
-        ("Juan Pérez", "Juan Perez"),
-        ("sin acentos", "sin acentos"),
-        ("", ""),
-    ])
+    @pytest.mark.parametrize(
+        "entrada,esperado",
+        [
+            ("agresión", "agresion"),
+            ("año", "ano"),
+            ("ñandú", "nandu"),
+            ("Juan Pérez", "Juan Perez"),
+            ("sin acentos", "sin acentos"),
+            ("", ""),
+        ],
+    )
     def test_quita_diacriticos(self, entrada: str, esperado: str) -> None:
         assert quitar_tildes(entrada) == esperado
 
 
 # --- limpiar_texto --------------------------------------------------------
+
 
 class TestLimpiarTexto:
     def test_lower_y_trim(self) -> None:
@@ -64,7 +71,7 @@ class TestLimpiarTexto:
         assert limpiar_texto("robo (en tentativa)") == "robo en tentativa"
 
     def test_remueve_comillas(self) -> None:
-        assert limpiar_texto("hurto \"agravado\"") == "hurto agravado"
+        assert limpiar_texto('hurto "agravado"') == "hurto agravado"
 
     def test_colapsa_puntos_multiples(self) -> None:
         # tres puntos seguidos colapsan a uno, luego se separa por espacio
@@ -87,6 +94,7 @@ class TestLimpiarTexto:
 
 # --- limpiar_para_match ---------------------------------------------------
 
+
 class TestLimpiarParaMatch:
     def test_mas_conservador_que_limpiar_texto(self) -> None:
         # limpiar_para_match preserva paréntesis/signos internos
@@ -100,6 +108,7 @@ class TestLimpiarParaMatch:
 
 
 # --- aplicar_reglas_regex -------------------------------------------------
+
 
 class TestAplicarReglasRegex:
     def test_corrige_typo_simple(self) -> None:
@@ -124,6 +133,7 @@ class TestAplicarReglasRegex:
 
 # --- limpiar_tramite ------------------------------------------------------
 
+
 class TestLimpiarTramite:
     def test_lower_y_trim(self) -> None:
         assert limpiar_tramite("  ARCHIVO  ") == "archivo"
@@ -138,17 +148,21 @@ class TestLimpiarTramite:
 
 # --- Reglas regex del dominio --------------------------------------------
 
+
 class TestReglasDelitosCubrenTyposFrecuentes:
     """Verifica que las reglas regex cubran los typos documentados en el notebook."""
 
-    @pytest.mark.parametrize("entrada,esperado_contiene", [
-        ("lesioens", "lesiones"),
-        ("amanazas", "amenazas"),
-        ("agrabado", "agravado"),
-        ("agvdo", "agravado"),
-        ("desobedencia", "desobediencia"),
-        ("estupef", "estupefacientes"),
-    ])
+    @pytest.mark.parametrize(
+        "entrada,esperado_contiene",
+        [
+            ("lesioens", "lesiones"),
+            ("amanazas", "amenazas"),
+            ("agrabado", "agravado"),
+            ("agvdo", "agravado"),
+            ("desobedencia", "desobediencia"),
+            ("estupef", "estupefacientes"),
+        ],
+    )
     def test_correccion_typo(self, entrada: str, esperado_contiene: str) -> None:
         resultado = aplicar_reglas_regex(entrada, REGLAS_DELITOS)
         assert esperado_contiene in resultado

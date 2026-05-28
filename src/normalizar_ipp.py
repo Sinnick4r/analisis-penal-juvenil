@@ -1,6 +1,6 @@
 """Clasificacion y normalización del IPP (Investigación Penal Preparatoria).
 
-El pdoer judicial de la Pcia. de Bs. As. usa 8 numeros con prefijo PP. 
+El pdoer judicial de la Pcia. de Bs. As. usa 8 numeros con prefijo PP.
 
 Aca se va a
 
@@ -14,6 +14,7 @@ Aca se va a
    - Para IPPs malformados (typos no reconstruibles): preserva tal cual con
      flag de revision
 """
+
 from __future__ import annotations
 
 import re
@@ -23,18 +24,18 @@ import pandas as pd
 # categorías de causas
 
 TIPO_IPP_VALIDOS: tuple[str, ...] = (
-    "estandar",                 # PP-NN-NN-NNNNNN-NN/NN (Proceso Penal)
-    "oficio_exhorto",           # OE-...
-    "amparo",                   # AM-...
-    "querella",                 # QU-...
-    "habeas_corpus",            # HC-...
-    "faltas_contravenciones",   # FC-...
-    "apelacion_contravencional",# AC-...
-    "habeas_data",              # HD-...
-    "dictamen_civil",           # DC-...
-    "externa",                  # IPP de otra jurisdicción, formato libre
-    "pp_malformada",            # empieza con PP pero no matchea canónico (typo no resuelto)
-    "nulo",                     # ausencia de valor
+    "estandar",  # PP-NN-NN-NNNNNN-NN/NN (Proceso Penal)
+    "oficio_exhorto",  # OE-...
+    "amparo",  # AM-...
+    "querella",  # QU-...
+    "habeas_corpus",  # HC-...
+    "faltas_contravenciones",  # FC-...
+    "apelacion_contravencional",  # AC-...
+    "habeas_data",  # HD-...
+    "dictamen_civil",  # DC-...
+    "externa",  # IPP de otra jurisdicción, formato libre
+    "pp_malformada",  # empieza con PP pero no matchea canónico (typo no resuelto)
+    "nulo",  # ausencia de valor
 )
 
 # mapeo prefijo de otros procesos validos
@@ -51,20 +52,19 @@ PREFIJOS_INSTITUCIONALES: dict[str, str] = {
 }
 
 # formato de IPP estándar
-PATRON_CANONICO: re.Pattern[str] = re.compile(
-    r"^\d{2}-\d{2}-\d{6}-\d{2}/\d{2}$"
-)
+PATRON_CANONICO: re.Pattern[str] = re.compile(r"^\d{2}-\d{2}-\d{6}-\d{2}/\d{2}$")
 PREFIJO_PP: re.Pattern[str] = re.compile(r"^PP[-\s]+")
 
-#clasificacion de ipps
+# clasificacion de ipps
+
 
 def clasificar_ipp(ipp: str | None | float) -> str:
-    '''lasifica las IPP
+    """lasifica las IPP
 
     no modifica el string, solamente  lo clasifica para que el caller sepa
     qie hacer
 
-    '''
+    """
     if ipp is None:
         return "nulo"
     # pd.isna() reconoce None, np.nan, pd.NA, NaT.
@@ -76,7 +76,7 @@ def clasificar_ipp(ipp: str | None | float) -> str:
             pass
 
     s = str(ipp).strip()
-    
+
     if not s or s.lower() == "nan":
         return "nulo"
 
@@ -92,7 +92,6 @@ def clasificar_ipp(ipp: str | None | float) -> str:
         if PATRON_CANONICO.match(sin_pp):
             return "estandar"
         return "pp_malformada"
-
 
     if PATRON_CANONICO.match(s):
         return "estandar"

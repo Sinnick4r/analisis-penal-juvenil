@@ -5,6 +5,7 @@ Charts:
 - Heatmap top trámites × top delitos.
 - Tabla descargable del cruce completo.
 """
+
 from __future__ import annotations
 
 import altair as alt
@@ -16,13 +17,7 @@ from dashboard.theme import ACENTO, ACENTO_SUAVE, GRIS_MEDIO, GRIS_OSCURO
 
 def _top_tramites_chart(df: pd.DataFrame, top_n: int = 10) -> alt.Chart:
     """Bar chart horizontal de los top N trámites."""
-    top = (
-        df["tipo_tramite_estandar"]
-        .dropna()
-        .value_counts()
-        .head(top_n)
-        .reset_index()
-    )
+    top = df["tipo_tramite_estandar"].dropna().value_counts().head(top_n).reset_index()
     top.columns = ["tramite", "causas"]
     top["es_top"] = [True] + [False] * (len(top) - 1)
 
@@ -60,7 +55,9 @@ def _top_tramites_chart(df: pd.DataFrame, top_n: int = 10) -> alt.Chart:
     return (bars + etiquetas).properties(height=max(280, top_n * 28))
 
 
-def _heatmap_tramite_delito(df: pd.DataFrame, top_tramites: int = 5, top_delitos: int = 8) -> alt.Chart:
+def _heatmap_tramite_delito(
+    df: pd.DataFrame, top_tramites: int = 5, top_delitos: int = 8
+) -> alt.Chart:
     """Heatmap del cruce top trámites × top delitos."""
     top_tr = df["tipo_tramite_estandar"].dropna().value_counts().head(top_tramites).index.tolist()
     top_de = df["delito_estandar"].value_counts().head(top_delitos).index.tolist()
@@ -73,10 +70,13 @@ def _heatmap_tramite_delito(df: pd.DataFrame, top_tramites: int = 5, top_delitos
     )
 
     base = alt.Chart(cruce).encode(
-        x=alt.X("tipo_tramite_estandar:N", title=None, sort=top_tr,
-                axis=alt.Axis(labelAngle=-30, labelLimit=200)),
-        y=alt.Y("delito_estandar:N", title=None, sort=top_de,
-                axis=alt.Axis(labelLimit=300)),
+        x=alt.X(
+            "tipo_tramite_estandar:N",
+            title=None,
+            sort=top_tr,
+            axis=alt.Axis(labelAngle=-30, labelLimit=200),
+        ),
+        y=alt.Y("delito_estandar:N", title=None, sort=top_de, axis=alt.Axis(labelLimit=300)),
     )
 
     rectangulos = base.mark_rect().encode(
@@ -116,9 +116,7 @@ def render(df: pd.DataFrame) -> None:
     if len(top_tram) > 0:
         nombre = top_tram.index[0]
         pct = top_tram.iloc[0] / len(df) * 100
-        st.subheader(
-            f"El trámite \"{nombre}\" representa el {pct:.1f}% del ingreso"
-        )
+        st.subheader(f'El trámite "{nombre}" representa el {pct:.1f}% del ingreso')
     else:
         st.subheader("Top de trámites de ingreso")
 

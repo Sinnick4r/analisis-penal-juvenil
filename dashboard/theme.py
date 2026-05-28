@@ -1,4 +1,4 @@
-#tema visual del dashboard: paleta + config base de Altair
+# tema visual del dashboard: paleta + config base de Altair
 
 from __future__ import annotations
 
@@ -18,11 +18,12 @@ PALETA_CUALITATIVA = ["#1F4E79", "#7BA7C9", "#B8B8B8", "#4A4A4A", "#9C9C9C"]
 
 # -config de Altair
 
+
 def _config_base() -> dict:
     return {
         "config": {
             "view": {
-                "stroke": "transparent", 
+                "stroke": "transparent",
             },
             "axis": {
                 "domain": False,
@@ -48,7 +49,7 @@ def _config_base() -> dict:
                 "color": GRIS_TEXTO,
                 "fontSize": 14,
                 "fontWeight": "normal",
-                "anchor": "start", 
+                "anchor": "start",
             },
             "range": {
                 "category": PALETA_CUALITATIVA,
@@ -58,7 +59,7 @@ def _config_base() -> dict:
 
 
 def aplicar_tema_altair() -> None:
-    #registra y activa el tema custom en Altair. Idempotente
+    # registra y activa el tema custom en Altair. Idempotente
     if hasattr(alt, "theme"):
         # Altair >= 5.5: register devuelve un decorator.
         api = alt.theme
@@ -75,6 +76,7 @@ def aplicar_tema_altair() -> None:
 
 
 # helpers de color
+
 
 def color_destacado(es_destacado, acento: str = ACENTO, base: str = GRIS_MEDIO) -> alt.Color:
 

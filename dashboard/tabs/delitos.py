@@ -4,6 +4,7 @@ Charts:
 - Top 10 delitos (barras horizontales, top 2 destacados con narrativa).
 - Evolución year-over-year de los top 5 delitos.
 """
+
 from __future__ import annotations
 
 import altair as alt
@@ -15,12 +16,7 @@ from dashboard.theme import ACENTO, GRIS_MEDIO, GRIS_OSCURO, PALETA_CUALITATIVA
 
 def _top_delitos_chart(df: pd.DataFrame, top_n: int = 10, destacar: int = 2) -> alt.Chart:
     """Bar chart horizontal de los top N delitos, con los top `destacar` en acento."""
-    top = (
-        df["delito_estandar"]
-        .value_counts()
-        .head(top_n)
-        .reset_index()
-    )
+    top = df["delito_estandar"].value_counts().head(top_n).reset_index()
     top.columns = ["delito", "causas"]
     top["es_top"] = [True] * destacar + [False] * (len(top) - destacar)
 
@@ -64,11 +60,7 @@ def _evolucion_top_chart(df: pd.DataFrame, top_n: int = 5) -> alt.Chart:
     """Líneas de evolución anual para los top N delitos del período."""
     top_delitos = df["delito_estandar"].value_counts().head(top_n).index.tolist()
     sub = df[df["delito_estandar"].isin(top_delitos)].dropna(subset=["anio"])
-    por_anio = (
-        sub.groupby(["anio", "delito_estandar"])
-        .size()
-        .reset_index(name="causas")
-    )
+    por_anio = sub.groupby(["anio", "delito_estandar"]).size().reset_index(name="causas")
     por_anio["anio_str"] = por_anio["anio"].astype(int).astype(str)
 
     return (
@@ -108,11 +100,15 @@ def _resumen_flags(df: pd.DataFrame) -> pd.DataFrame:
         "Proceso especial (amparo, habeas corpus)": int(df["es_proceso_especial"].sum()),
         "Posible delito múltiple": int(df["posible_delito_multiple"].sum()),
     }
-    return pd.DataFrame({
-        "Indicador": list(flags.keys()),
-        "Cantidad": list(flags.values()),
-        "% sobre el total": [f"{(v / total * 100):.1f}%" if total > 0 else "—" for v in flags.values()],
-    })
+    return pd.DataFrame(
+        {
+            "Indicador": list(flags.keys()),
+            "Cantidad": list(flags.values()),
+            "% sobre el total": [
+                f"{(v / total * 100):.1f}%" if total > 0 else "—" for v in flags.values()
+            ],
+        }
+    )
 
 
 def render(df: pd.DataFrame) -> None:
@@ -126,9 +122,7 @@ def render(df: pd.DataFrame) -> None:
         top2 = top.head(2)
         nombres_top2 = " y ".join(top2.index.tolist())
         pct = top2.sum() / len(df) * 100
-        st.subheader(
-            f"{nombres_top2.capitalize()} concentran el {pct:.1f}% de las causas"
-        )
+        st.subheader(f"{nombres_top2.capitalize()} concentran el {pct:.1f}% de las causas")
     else:
         st.subheader("Top de delitos en el período")
 

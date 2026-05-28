@@ -1,4 +1,4 @@
-#Carga y preparacion de diccionarios
+# Carga y preparacion de diccionarios
 
 from __future__ import annotations
 
@@ -33,9 +33,7 @@ def cargar_diccionarios(
 
     faltantes = [str(p) for p in paths.values() if not p.exists()]
     if faltantes:
-        raise FileNotFoundError(
-            f"Faltan archivos de diccionarios: {faltantes}"
-        )
+        raise FileNotFoundError(f"Faltan archivos de diccionarios: {faltantes}")
 
     dicts: Diccionarios = {
         "delitos_local": pd.read_csv(paths["delitos_local"]),
@@ -79,9 +77,7 @@ def cargar_nomenclador_ministerio(
         logger.info("Nomenclador filtrado por vigente=SI: %d filas", len(df))
 
     if "delito_descripcion" not in df.columns:
-        raise ValueError(
-            "El nomenclador no tiene la columna obligatoria 'delito_descripcion'."
-        )
+        raise ValueError("El nomenclador no tiene la columna obligatoria 'delito_descripcion'.")
 
     # se aseguran columnas opcionales: si vienen con otro nombre se cambia y si faltan, se crean vacias
     if "delito_articulo" not in df.columns:

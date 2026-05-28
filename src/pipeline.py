@@ -13,6 +13,7 @@ Encadena:
 6. Selección de columnas finales y validación de schema.
 7. Exportación a CSV (y opcionalmente XLSX).
 """
+
 from __future__ import annotations
 
 import sys
@@ -76,8 +77,9 @@ def correr_pipeline(
 
     # 6. Selección de columnas finales + validación de schema.
     df_final = seleccionar_columnas_finales(df)
-    logger.info("Validando schema sobre %d filas y %d columnas",
-                len(df_final), len(df_final.columns))
+    logger.info(
+        "Validando schema sobre %d filas y %d columnas", len(df_final), len(df_final.columns)
+    )
     df_final = schema_dataset_final.validate(df_final)
 
     # 7. Persistencia.

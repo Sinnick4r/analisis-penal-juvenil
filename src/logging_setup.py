@@ -10,7 +10,7 @@ from src import config
 def configurar_logging(nivel: int | None = None) -> None:
 
     root = logging.getLogger()
-    if root.handlers: 
+    if root.handlers:
         return
 
     handler = logging.StreamHandler()
