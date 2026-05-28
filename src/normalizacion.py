@@ -1,7 +1,7 @@
-"""Normalización de delitos, cruce con nomenclador ministerial y trámites.
+'''
+Normalización de delitos
 
-Esta es la lógica central del pipeline. Se preserva 100% de la prudencia
-jurisprudencial del notebook original:
+Sale del notebook original:
 
 - No se fuerzan matches cuando hay ambigüedad: el estado de match es
   `match_univoco`, `match_ambiguo` o `sin_equivalencia_definida`.
@@ -10,9 +10,10 @@ jurisprudencial del notebook original:
 - Las excepciones operativas del juzgado están explícitas en
   `EXCEPCIONES_NO_MULTIPLES`.
 
-Cumple PY-05 (separar transformación de I/O), DATA-02 (validar cardinalidad
-de merges con `validate=`) y DATA-07 (validar shape post-merge).
-"""
+
+'''
+
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -37,15 +38,12 @@ from src.logging_setup import get_logger
 logger = get_logger(__name__)
 
 
-# --- Constantes de dominio ------------------------------------------------
 
-# Patrones para detectar tentativa después de la limpieza.
+# patrones
 PATRON_TENTATIVA: str = r"\b(?:tentativa)\b"
-
-# Patrón regex para flag de delito agravado o calificado.
 PATRON_AGRAVADO: str = r"\bagravad[oa]s?\b|\bcalificad[oa]s?\b"
 
-# Patrones de los 5 subtipos de agravante reconocidos por el juzgado.
+# estos son unicos por como el juzgado ingresa datos juzgado.
 PATRONES_AGRAVANTES: dict[str, str] = {
     "agravante_poblado_banda": r"poblado y en banda|despoblado y banda",
     "agravante_arma": r"arma|armas",
@@ -55,7 +53,7 @@ PATRONES_AGRAVANTES: dict[str, str] = {
 }
 
 # Delitos que parecen múltiples por contener " y " o "," pero son una
-# sola figura jurídica compuesta. Se excluyen de `posible_delito_multiple`.
+# Se excluyen de `posible_delito_multiple`
 EXCEPCIONES_NO_MULTIPLES: frozenset[str] = frozenset({
     "robo agravado en poblado y en banda",
     "robo agravado arma no apta en poblado y en banda",
@@ -69,7 +67,7 @@ EXCEPCIONES_NO_MULTIPLES: frozenset[str] = frozenset({
     "hurto agravado por escalamiento",
 })
 
-# Renombres de columnas de la planilla fuente al snake_case del pipeline.
+
 RENAME_MAP: dict[str, str] = {
     "fecha de ingreso": "fecha_ingreso",
     "ipp": "ipp",
@@ -81,7 +79,7 @@ RENAME_MAP: dict[str, str] = {
 }
 
 
-# --- Carga de datos crudos ------------------------------------------------
+# carga
 
 def cargar_datos_raw(
     path: Path | None = None,
@@ -89,27 +87,17 @@ def cargar_datos_raw(
     usecols: str = config.RAW_USECOLS,
     anio_minimo: int = config.ANIO_MINIMO,
 ) -> pd.DataFrame:
-    """Carga la planilla Excel fuente y aplica la limpieza estructural mínima.
+    '''
+    ccarga excel y
 
-    - Lee la hoja `Registro` (columnas A:F).
-    - Normaliza nombres de columnas a snake_case sin tildes.
-    - Tipifica `ipp`, `tipo_tramite`, etc. como string.
-    - Convierte `fecha_ingreso` a datetime y deriva `anio`.
-    - Filtra causas con `anio >= anio_minimo`.
-    - Hace backup de columnas raw: `delito_raw` y `tipo_tramite_raw`.
+    - lee la hoja `Registro` (columnas A:F).
+    - normaliza nombres de columnas a snake_case sin tildes.
+    - tipifica `ipp`, `tipo_tramite`, etc. como string.
+    - convierte `fecha_ingreso` a datetime y deriva `anio`.
+    - filtra causas con `anio >= anio_minimo`.
+    - hace backup de columnas raw: `delito_raw` y `tipo_tramite_raw`.
 
-    Args:
-        path: ruta al Excel. Si es None, usa `config.RAW_FILE`.
-        sheet_name: nombre de la hoja a leer.
-        usecols: rango de columnas a leer (formato openpyxl).
-        anio_minimo: año desde el cual conservar causas.
-
-    Returns:
-        DataFrame con columnas tipificadas y backups `_raw`.
-
-    Raises:
-        FileNotFoundError: si el Excel no existe.
-    """
+    '''
     fuente = path if path is not None else config.RAW_FILE
     if not fuente.exists():
         raise FileNotFoundError(
@@ -145,44 +133,39 @@ def cargar_datos_raw(
     return df
 
 
-# --- Normalización de delitos --------------------------------------------
+#normalizacion de delitos
 
 def normalizar_delitos(
     df: pd.DataFrame,
     dict_delitos_local: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Aplica la cadena completa de normalización de delitos.
+    '''
 
     Etapas:
-    1. Limpieza textual base con `limpiar_texto`.
-    2. Reemplazo de valores faltantes por NA.
-    3. Aplicación de las 50+ reglas regex (`REGLAS_DELITOS`).
-    4. Detección de tentativa y construcción de `delito_sin_tentativa`.
-    5. Identificación de procesos especiales (amparo, habeas corpus).
-    6. Cruce con diccionario local — fallback a `delito_no_informado`.
-    7. Cálculo de flags: agravado, sub-agravantes, no especificado.
-    8. Detección de posible delito múltiple (con excepciones operativas).
+    1. limpieza textual base con `limpiar_texto`
+    2. remplazo de valores faltantes por NA
+    3. aplicación de las reglas regex  que estan en `REGLAS_DELITOS`
+    4. detección de tentativa y construcción de `delito_sin_tentativa`
+    5. id de procesos especiales (amparo, habeas corpus)
+    6. cruce con diccionario local y  fallback a `delito_no_informado`
+    7. calculo de flags: agravantes yno especificado
+    8. detección de posible delito mutiple
 
-    Args:
-        df: DataFrame con la columna `delito_raw`.
-        dict_delitos_local: diccionario local de equivalencias.
+    '''
 
-    Returns:
-        DataFrame con todas las columnas derivadas agregadas.
-    """
     filas_inicial = len(df)
     df = df.copy()
 
-    # 1-2. Limpieza textual + reemplazo de faltantes.
+    # limpieza textual + reemplazo de faltantes
     df["delito_limpio"] = df["delito_raw"].apply(limpiar_texto)
     df["delito_limpio"] = df["delito_limpio"].replace(list(FALTANTES_DELITO), pd.NA)
 
-    # 3. Reglas regex secuenciales (típos, abreviaturas, expansiones).
+    # rglas regex secuenciales
     df["delito_limpio"] = df["delito_limpio"].apply(
         lambda x: aplicar_reglas_regex(x, REGLAS_DELITOS)
     )
 
-    # 4. Tentativa: detección y eliminación del texto.
+    # tentativa
     df["tentativa"] = df["delito_limpio"].astype("string").str.contains(
         PATRON_TENTATIVA, regex=True, na=False
     )
@@ -194,19 +177,17 @@ def normalizar_delitos(
         .str.strip(" .,-_/")
     )
 
-    # 5. Procesos especiales (no son delitos en sentido estricto).
+    # procesos especiales
     df["es_proceso_especial"] = df["delito_sin_tentativa"].isin(PROCESOS_ESPECIALES)
 
-    # 6. Match con diccionario local. Se aplica `limpiar_para_match` en ambos
-    # lados del merge para uniformar las claves.
+    # match con diccionario local
     dic = dict_delitos_local.copy()
     dic["delito_fuente_limpio"] = dic["delito_fuente"].apply(limpiar_para_match)
     dic["delito_estandar"] = dic["delito_estandar"].apply(limpiar_para_match)
 
     df["delito_key"] = df["delito_sin_tentativa"].apply(limpiar_para_match)
 
-    # Validación de cardinalidad m:1: el diccionario local debe ser único por
-    # delito_fuente_limpio. Si no lo es, alguien duplicó equivalencias.
+    # valid de cardinalidad m:1
     df = df.merge(
         dic[["delito_fuente_limpio", "delito_estandar"]].drop_duplicates(
             subset=["delito_fuente_limpio"]
@@ -223,15 +204,13 @@ def normalizar_delitos(
         df["delito_estandar"].eq("delito_no_informado"), "no", "si"
     )
 
-    # 7. Flags jurídicos.
+    # flags juridicos
     delito_str = df["delito_estandar"].astype("string")
     df["agravado_flag"] = delito_str.str.contains(PATRON_AGRAVADO, regex=True, na=False)
 
     for flag, patron in PATRONES_AGRAVANTES.items():
         df[flag] = delito_str.str.contains(patron, regex=True, na=False)
 
-    # Agravado pero ninguno de los sub-agravantes específicos: sigue siendo
-    # agravado pero queda "sin especificar" — útil para auditoría.
     df["agravante_no_especificado"] = (
         df["agravado_flag"]
         & ~df["agravante_poblado_banda"]
@@ -241,15 +220,13 @@ def normalizar_delitos(
         & ~df["agravante_vehiculo_via_publica"]
     )
 
-    # 8. Posible delito múltiple: tiene ',' o ' y ', no es proceso especial,
-    # y no está en la lista de figuras compuestas conocidas.
     df["posible_delito_multiple"] = (
         ~df["es_proceso_especial"]
         & delito_str.str.contains(r",|\s+y\s+", regex=True, na=False)
         & ~df["delito_estandar"].isin(EXCEPCIONES_NO_MULTIPLES)
     )
 
-    # Validación de shape (DATA-07).
+    # validacion de shape
     assert len(df) == filas_inicial, (
         f"normalizar_delitos cambió la cantidad de filas: "
         f"{filas_inicial} → {len(df)}"
@@ -264,43 +241,22 @@ def normalizar_delitos(
     return df
 
 
-# --- Cruce con nomenclador del Ministerio ---------------------------------
+# cruce de delitos estandarizados con nomenclador del Ministerio
 
 def cruzar_ministerio(
     df: pd.DataFrame,
     dict_delitos_ministerio: pd.DataFrame,
     nomenclador: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Cruza los delitos estandarizados con el nomenclador oficial.
 
-    Modela el cruce en tres estados principales: `match_univoco`,
-    `match_ambiguo` y `sin_equivalencia_definida`. Más dos estados auxiliares
-    para casos no aplicables: `proceso_especial` y `sin_delito_informado`.
-
-    Args:
-        df: DataFrame con `delito_estandar`, `delito_informado` y
-            `es_proceso_especial` ya calculados.
-        dict_delitos_ministerio: puente local entre `delito_estandar` y
-            `objetivo_ministerio`.
-        nomenclador: nomenclador oficial cargado con
-            `cargar_nomenclador_ministerio`.
-
-    Returns:
-        DataFrame con columnas agregadas:
-        `objetivo_ministerio`, `descripcion_ministerio`,
-        `articulo_ministerio`, `codigo_delito_ministerio`,
-        `tipo_registro_ministerio`, `cantidad_codigos_ministerio`,
-        `estado_match_ministerio`.
-    """
     filas_inicial = len(df)
     df = df.copy()
 
-    # 1. Preparar puente local: aplicar limpieza de match a sus claves.
     puente = dict_delitos_ministerio.copy()
     puente["delito_estandar"] = puente["delito_estandar"].apply(limpiar_para_match)
     puente["objetivo_ministerio"] = puente["objetivo_ministerio"].apply(limpiar_para_match)
 
-    # 2. Agregar el nomenclador oficial por descripción limpia.
+    # agrega¡ el nomenclador oficial por descripcion limpia
     nom = nomenclador.copy()
     nom["delito_ministerio_limpio"] = nom["delito_descripcion"].apply(limpiar_para_match)
 
@@ -328,7 +284,7 @@ def cruzar_ministerio(
         .reset_index()
     )
 
-    # 3. Primer merge: df → puente (vía delito_estandar limpio).
+    # df a puente usando como key el delito estandar
     df["delito_estandar_key"] = df["delito_estandar"].apply(limpiar_para_match)
 
     puente_dedup = puente[[
@@ -344,7 +300,7 @@ def cruzar_ministerio(
         validate="m:1",
     )
 
-    # 4. Segundo merge: df → nomenclador agregado (vía objetivo_ministerio limpio).
+    # df a nomenclador agregado
     df["objetivo_ministerio_limpio"] = df["objetivo_ministerio"].apply(limpiar_para_match)
 
     df = df.merge(
@@ -355,7 +311,7 @@ def cruzar_ministerio(
         validate="m:1",
     )
 
-    # 5. Estado del match: lógica jurídicamente prudente del notebook.
+    # estado del match
     df["estado_match_ministerio"] = np.select(
         condlist=[
             df["es_proceso_especial"],
@@ -376,7 +332,7 @@ def cruzar_ministerio(
         default="sin_match",
     )
 
-    # Validación de shape (DATA-07).
+    # validacion de shape
     assert len(df) == filas_inicial, (
         f"cruzar_ministerio cambió la cantidad de filas: "
         f"{filas_inicial} → {len(df)}"
@@ -389,17 +345,11 @@ def cruzar_ministerio(
     return df
 
 
-# --- Normalización de trámites --------------------------------------------
+# normalizacion de tramites
 
-# Reglas residuales aplicadas tras el merge con el diccionario de trámites.
-# Capturan operatorias específicas del juzgado que el diccionario no cubre
-# en forma exhaustiva.
 def _aplicar_reglas_residuales_tramite(df: pd.DataFrame) -> pd.DataFrame:
-    """Aplica overrides locales al tipo_tramite_estandar después del merge.
+    # overrides locales al tipo_tramite_estandar después del merge
 
-    Mutación in-place sobre `tipo_tramite_estandar`. Devuelve el mismo df
-    por conveniencia.
-    """
     tram = df["tipo_tramite_limpio"].astype("string").str.lower().str.strip()
 
     mask_elev = tram.str.contains(r"elevacion|requisitoria", regex=True, na=False)
@@ -420,22 +370,17 @@ def normalizar_tramites(
     df: pd.DataFrame,
     dict_tramites: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Normaliza el tipo de trámite con diccionario local + reglas residuales.
+    '''
+    
+    aca se normaliza el tipo de tramite con diccionario local + reglas
 
-    1. Limpieza textual del trámite con `limpiar_tramite`.
-    2. Reemplazo de faltantes por NA.
-    3. Merge con diccionario local.
-    4. Fallback: si no hay match, queda el `tipo_tramite_limpio`.
-    5. Reglas residuales por operatoria del juzgado (elevación, competencia,
+    1. Limpieza textual del trámite con `limpiar_tramite`
+    2. Reemplazo de faltantes por NA
+    3. Merge con diccionario local
+    4. Fallback: si no hay match, queda el `tipo_tramite_limpio`
+    5. Reglas residuales por lo que se usa en el juzgado (elevacion, competencia,
        declinatoria).
-
-    Args:
-        df: DataFrame con `tipo_tramite_raw`.
-        dict_tramites: diccionario local de trámites.
-
-    Returns:
-        DataFrame con `tipo_tramite_limpio` y `tipo_tramite_estandar`.
-    """
+    '''
     filas_inicial = len(df)
     df = df.copy()
 
@@ -470,7 +415,7 @@ def normalizar_tramites(
     return df
 
 
-# --- Columnas finales del dataset analítico -------------------------------
+# columnas finales
 
 COLUMNAS_FINALES: tuple[str, ...] = (
     "fecha_ingreso",
@@ -505,17 +450,12 @@ COLUMNAS_FINALES: tuple[str, ...] = (
 
 
 def seleccionar_columnas_finales(df: pd.DataFrame) -> pd.DataFrame:
-    """Recorta el DataFrame al conjunto de columnas analíticas finales.
-
-    Falla si falta alguna columna esperada (validación de contrato).
-    """
+    # pasa el DataFrame al conjunto de columnas finales
     faltantes = [c for c in COLUMNAS_FINALES if c not in df.columns]
     if faltantes:
         raise ValueError(
             f"Faltan columnas para el dataset final: {faltantes}"
         )
-    # Si alguna columna 'responsable' u 'observaciones' no estaba en el raw,
-    # rellenar con NA para no romper el contrato.
     if "responsable" not in df.columns:
         df = df.copy()
         df["responsable"] = pd.NA
