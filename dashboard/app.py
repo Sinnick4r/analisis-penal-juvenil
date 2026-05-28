@@ -1,20 +1,16 @@
-"""Entry point del dashboard Streamlit.
+''' point del dashboard Streamlit
 
 Correr con:
     streamlit run dashboard/app.py
 o:
     make dashboard
-
-Requiere que el pipeline haya generado el CSV en `outputs/`. Si no existe,
-mostramos un mensaje con instrucciones.
-"""
+'''
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-# Permite ejecutar `streamlit run dashboard/app.py` desde la raíz del proyecto
-# sin necesidad de instalar el paquete en modo editable.
+
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -31,7 +27,7 @@ from dashboard.data import cargar_dataset  # noqa: E402
 from dashboard.tabs import calidad, delitos, temporal, tramites  # noqa: E402
 from dashboard.theme import CSS_GLOBAL, aplicar_tema_altair  # noqa: E402
 
-# --- Configuración de página ---------------------------------------------
+# -config de pag
 
 st.set_page_config(
     page_title="Causas penal juvenil — 2020-2026",
@@ -44,7 +40,7 @@ aplicar_tema_altair()
 st.markdown(CSS_GLOBAL, unsafe_allow_html=True)
 
 
-# --- Carga del dataset ---------------------------------------------------
+# carga el df
 
 try:
     df = cargar_dataset()
@@ -61,7 +57,7 @@ except FileNotFoundError as exc:
     st.stop()
 
 
-# --- Sidebar + filtros ---------------------------------------------------
+# sidebar y filtros
 
 filtros = sidebar_filtros(df)
 df_f = aplicar_filtros(df, filtros)
@@ -78,7 +74,7 @@ st.sidebar.markdown(
 )
 
 
-# --- Cabecera + KPIs -----------------------------------------------------
+# header y KPIs
 
 st.title("Causas del fuero penal juvenil — 2020-2026")
 st.markdown(
@@ -94,7 +90,7 @@ fila_kpis(df_f)
 st.markdown("")  # separador suave
 
 
-# --- Tabs ----------------------------------------------------------------
+# -tabs
 
 tab1, tab2, tab3, tab4 = st.tabs([
     "Evolución temporal",
