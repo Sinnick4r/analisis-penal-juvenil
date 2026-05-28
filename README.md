@@ -183,7 +183,7 @@ Si el output viola el contrato, el pipeline falla con `SchemaError`.
 
 ## Calidad del código
 
-- **Tests**: 205 tests (unitarios + integración + dashboard + indicadores + resoluciones + cruce) con fixtures sintéticos.
+- **Tests**: 212 tests (unitarios + integración + dashboard + indicadores + resoluciones + cruce + tab gestión) con fixtures sintéticos.
 - **CI**: lint + tests automáticos en cada push (GitHub Actions).
 - **Lint/format**: `ruff` configurado en `pyproject.toml`.
 - **Type hints**: en firmas públicas de `src/`.
@@ -370,6 +370,31 @@ El cruce logea en cada corrida un reporte de auditoría con:
 - Causas con/sin resoluciones registradas (esperado: ~77% con, ~23% sin)
 - Resoluciones huérfanas (IPPs en resoluciones que no aparecen en causas).
   Esperable: son causas anteriores al período del registro (pre-2020).
+
+## Dashboard: tab Gestión
+
+El tab **Gestión** del dashboard Streamlit consume el output del cruce
+(Iteración C) y muestra 4 visualizaciones de gestión judicial:
+
+1. **KPIs**: % de causas con resoluciones, mediana de días hasta primera
+   resolución, mediana de días de proceso total, % que termina en cierre
+   de proceso.
+2. **Cómo terminan las causas**: bar horizontal con la distribución
+   porcentual por modalidad resolutiva (cierre, competencia, derivación,
+   salida alternativa, etc).
+3. **Cuánto tarda la primera resolución**: histograma con bins de tiempo
+   (0-7 días, 8-30, 31-90, 91-180, 181-365, +1 año). Excluye causas con
+   métrica temporal anómala (días negativos por reingresos o IPPs de
+   otra jurisdicción).
+4. **Tiempo de proceso por tipo de delito**: mediana de días por delito,
+   top N por volumen, con umbral de 5 causas mínimas para descartar
+   ruido estadístico.
+5. **Cohorte por año de ingreso**: barras apiladas mostrando causas con
+   vs sin resolución registrada, por año. Permite leer el efecto cohorte
+   (causas recientes naturalmente tienen menor tasa de resolución).
+
+Si el output del cruce no está disponible, el tab muestra un mensaje
+informativo con los comandos necesarios para generarlo.
 
 ## Próximas etapas
 

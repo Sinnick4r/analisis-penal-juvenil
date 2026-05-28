@@ -1,16 +1,21 @@
-''' point del dashboard Streamlit
+"""Entry point del dashboard Streamlit.
 
 Correr con:
     streamlit run dashboard/app.py
 o:
     make dashboard
-'''
+
+Requiere que el pipeline haya generado el CSV en `outputs/`. Si no existe,
+mostramos un mensaje con instrucciones.
+"""
+
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-
+# Permite ejecutar `streamlit run dashboard/app.py` desde la raíz del proyecto
+# sin necesidad de instalar el paquete en modo editable.
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -24,10 +29,10 @@ from dashboard.components.filtros import (  # noqa: E402
 )
 from dashboard.components.kpis import fila_kpis  # noqa: E402
 from dashboard.data import cargar_dataset  # noqa: E402
-from dashboard.tabs import calidad, delitos, temporal, tramites  # noqa: E402
+from dashboard.tabs import calidad, delitos, gestion, temporal, tramites  # noqa: E402
 from dashboard.theme import CSS_GLOBAL, aplicar_tema_altair  # noqa: E402
 
-# -config de pag
+# --- Configuración de página ---------------------------------------------
 
 st.set_page_config(
     page_title="Causas penal juvenil — 2020-2026",
@@ -40,7 +45,7 @@ aplicar_tema_altair()
 st.markdown(CSS_GLOBAL, unsafe_allow_html=True)
 
 
-# carga el df
+# --- Carga del dataset ---------------------------------------------------
 
 try:
     df = cargar_dataset()
@@ -57,7 +62,7 @@ except FileNotFoundError as exc:
     st.stop()
 
 
-# sidebar y filtros
+# --- Sidebar + filtros ---------------------------------------------------
 
 filtros = sidebar_filtros(df)
 df_f = aplicar_filtros(df, filtros)
@@ -74,7 +79,7 @@ st.sidebar.markdown(
 )
 
 
-# header y KPIs
+# --- Cabecera + KPIs -----------------------------------------------------
 
 st.title("Causas del fuero penal juvenil — 2020-2026")
 st.markdown(
@@ -90,14 +95,17 @@ fila_kpis(df_f)
 st.markdown("")  # separador suave
 
 
-# -tabs
+# --- Tabs ----------------------------------------------------------------
 
-tab1, tab2, tab3, tab4 = st.tabs([
-    "Evolución temporal",
-    "Delitos",
-    "Trámites",
-    "Calidad de datos",
-])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(
+    [
+        "Evolución temporal",
+        "Delitos",
+        "Trámites",
+        "Gestión",
+        "Calidad de datos",
+    ]
+)
 
 with tab1:
     temporal.render(df_f)
@@ -109,4 +117,7 @@ with tab3:
     tramites.render(df_f)
 
 with tab4:
+    gestion.render(df_f)
+
+with tab5:
     calidad.render(df_f)
