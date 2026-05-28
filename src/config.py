@@ -61,7 +61,7 @@ OUTPUT_CSV: Path = OUTPUT_DIR / "causas_penal_juvenil_2020_2026_limpio_diccionar
 OUTPUT_XLSX: Path = OUTPUT_DIR / "causas_penal_juvenil_2020_2026_limpio_diccionarios.xlsx"
 OUTPUT_RESOLUCIONES_CSV: Path = OUTPUT_DIR / "resoluciones_2017_2026_consolidado.csv"
 OUTPUT_CRUCE_CSV: Path = OUTPUT_DIR / "causas_con_metricas_resoluciones.csv"
-
+OUTPUT_VALIDACION_CSV: Path = OUTPUT_DIR / "validacion_indicadores_2021_2025.csv"
 # --- Parámetros del pipeline ----------------------------------------------
 
 ANIO_MINIMO: int = 2020
