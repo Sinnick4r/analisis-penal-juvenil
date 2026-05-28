@@ -39,8 +39,11 @@ analitica-judicial-penal-juvenil/
 │   ├── normalizacion.py        ← normalización jurídica + cruces
 │   ├── diccionarios.py         ← carga de diccionarios y nomenclador
 │   ├── indicadores.py          ← carga indicadores mensuales del juzgado
-│   ├── pipeline.py             ← orquestador CLI
-│   ├── schema.py               ← contratos pandera (causas + indicadores)
+│   ├── normalizar_ipp.py       ← clasificador IPP (12 categorías)
+│   ├── resoluciones.py         ← pipeline de resoluciones (3 RAWs)
+│   ├── cruce_causas_resoluciones.py  ← join causas ↔ resoluciones + métricas
+│   ├── pipeline.py             ← orquestador CLI de causas
+│   ├── schema.py               ← contratos pandera (causas + indicadores + resoluciones + cruce)
 │   └── logging_setup.py        ← logging estructurado
 │
 ├── dashboard/                  ← visualización Streamlit + Altair
@@ -56,8 +59,9 @@ analitica-judicial-penal-juvenil/
 │   └── integration/
 │
 ├── data/
-│   ├── raw/                    ← Excel fuente (gitignored)
-│   ├── diccionarios/           ← 3 CSVs versionados
+│   ├── raw/                    ← Excel fuente + RAW vigente (gitignored)
+│   ├── backfill/               ← históricos inmutables + checksums.json
+│   ├── diccionarios/           ← 5 CSVs versionados (delitos, trámites, resoluciones, prefijos)
 │   └── external/               ← nomenclador del Ministerio + indicadores estadística
 │
 ├── outputs/                    ← CSV/XLSX generados (gitignored)
@@ -179,7 +183,7 @@ Si el output viola el contrato, el pipeline falla con `SchemaError`.
 
 ## Calidad del código
 
-- **Tests**: 112 tests (unitarios + integración + dashboard + indicadores) con fixtures sintéticos.
+- **Tests**: 205 tests (unitarios + integración + dashboard + indicadores + resoluciones + cruce) con fixtures sintéticos.
 - **CI**: lint + tests automáticos en cada push (GitHub Actions).
 - **Lint/format**: `ruff` configurado en `pyproject.toml`.
 - **Type hints**: en firmas públicas de `src/`.
@@ -260,6 +264,112 @@ identidad se rompe en una entrega futura, el test alerta.
 Los slugs estables de los indicadores principales están en
 `src.indicadores.SLUGS_PRINCIPALES` con constantes `SLUG_*` para uso en
 código downstream sin depender del wording exacto del Excel.
+
+## Resoluciones del juzgado
+
+El proyecto carga el registro causa-por-causa de **resoluciones** desde tres
+archivos con ciclos de vida distintos:
+
+```
+data/
+├── backfill/              ← inmutable, checksums versionados
+│   ├── resoluciones_2017_2019.xlsx       (RAW1, año solo)
+│   ├── resoluciones_2020_2023a.xlsx      (RAW2, fecha completa)
+│   └── checksums.json                    ← safety net
+└── raw/                   ← se actualiza mensualmente
+    └── resoluciones_2023b_2026.xlsx      (RAW3, vigente)
+```
+
+### Cómo correr
+
+```bash
+make pipeline-resoluciones      # produce outputs/resoluciones_2017_2026_consolidado.csv
+```
+
+El pipeline:
+1. Verifica los checksums SHA-256 de los backfills (warning ruidoso si cambiaron).
+2. Concatena los 3 archivos con `fuente_raw` como audit trail.
+3. **Explota multi-resoluciones**: una entrada `"sobreseimiento, derivación"`
+   se convierte en 2 filas, cada una con `multi_resolucion_origen=True`.
+4. Clasifica cada IPP en una de **12 categorías** (`tipo_ipp`):
+   estándar, oficio_exhorto, amparo, querella, habeas_corpus,
+   faltas_contravenciones, apelacion_contravencional, habeas_data,
+   dictamen_civil, externa, pp_malformada, nulo.
+5. Normaliza el IPP a `ipp_canonico` (join key para cruce con causas).
+6. Aplica el diccionario de resoluciones (424 tokens → 99 canónicas
+   en 20 categorías).
+7. Valida el output contra un schema pandera.
+
+### Safety net de backfills
+
+Los archivos en `data/backfill/` son históricos inmutables. Cualquier cambio
+accidental (alguien sobrescribe un archivo por error) se detecta en la
+próxima corrida del pipeline:
+
+```bash
+# Si modificás intencionalmente un backfill:
+make refresh-checksums-backfill
+git add data/backfill/checksums.json
+git commit -m "data: actualización legítima de backfill XXX"
+```
+
+Si no se regeneran los checksums tras un cambio, el pipeline logea un
+warning ruidoso (pero no falla, así sigue siendo idempotente).
+
+### Schema del dataset consolidado (12 columnas)
+
+| Columna | Tipo | Notas |
+|---------|------|-------|
+| `ipp_original`, `ipp_canonico` | str | El canónico es la clave de join con causas |
+| `tipo_ipp` | enum | 12 categorías |
+| `fecha_resolucion` | datetime \| NaT | NaT en RAW1 (solo año disponible) |
+| `anio_resolucion` | Int64 | Siempre presente |
+| `mes_resolucion` | Int64 \| NA | NA en RAW1 |
+| `resolucion_raw` / `_canonica` / `categoria_resolucion` | str | 3 capas del diccionario |
+| `multi_resolucion_origen` | bool | True si la fila salió de explotar multi |
+| `requiere_validacion` | bool | Cola de revisión |
+| `fuente_raw` | enum | `backfill_2017_2019` / `backfill_2020_2023a` / `raw_2023b_2026` |
+
+## Cruce causas ↔ resoluciones
+
+Por encima de los pipelines de causas (Iteración A) y resoluciones (Iteración B),
+el módulo `src/cruce_causas_resoluciones.py` produce un dataset con un row
+por causa enriquecido con métricas derivadas del join por IPP canónico.
+
+### Cómo correr
+
+```bash
+make pipeline                       # produce outputs/causas_..._diccionarios.csv
+make pipeline-resoluciones          # produce outputs/resoluciones_..._consolidado.csv
+make cruce-causas-resoluciones      # produce outputs/causas_con_metricas_resoluciones.csv
+```
+
+El cruce hace LEFT JOIN desde causas (preserva las 1.267 filas) y agrega
+14 columnas nuevas:
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| `ipp_canonico`, `tipo_ipp` | str | Clasificación del IPP (12 categorías) |
+| `n_resoluciones` | int | Cantidad total de resoluciones del IPP |
+| `tiene_resoluciones` | bool | True si al menos 1 |
+| `fecha_primera_resolucion`, `fecha_ultima_resolucion` | datetime, NaT | NaT si solo hay resoluciones de RAW1 |
+| `dias_hasta_primera_resolucion`, `dias_proceso` | Int64, NA | NA si la métrica no es computable |
+| `tiene_cierre_proceso`, `tiene_elevacion_juicio`, ... (7 flags) | bool | Una por categoría principal de resolución |
+| `categorias_resolucion` | str | Concat de todas las categorías únicas (audit) |
+
+### Deuda técnica documentada
+
+El dataset de causas no tiene `ipp_canonico` ni `tipo_ipp` como columnas
+nativas. El cruce los calcula localmente aplicando `normalizar_ipp` al
+campo `ipp`. En una iteración futura, incorporar esas columnas al pipeline
+de causas para que el cruce las consuma directamente.
+
+### Auditoría del cruce
+
+El cruce logea en cada corrida un reporte de auditoría con:
+- Causas con/sin resoluciones registradas (esperado: ~77% con, ~23% sin)
+- Resoluciones huérfanas (IPPs en resoluciones que no aparecen en causas).
+  Esperable: son causas anteriores al período del registro (pre-2020).
 
 ## Próximas etapas
 
