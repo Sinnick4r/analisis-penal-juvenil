@@ -241,11 +241,25 @@ pytestmark_archivos_reales = pytest.mark.skipif(
 @pytestmark_archivos_reales
 class TestAceptacionArchivosReales:
     def test_pipeline_corre_end_to_end(self) -> None:
+        """Smoke + invariante: el cruce es LEFT JOIN desde causas →
+        preserva cardinalidad. No depende del tamaño actual del dataset."""
+        from src.cruce_causas_resoluciones import correr_cruce
+
+        causas = cargar_causas_con_canonico()
+        cruce = correr_cruce()
+
+        assert len(cruce) == len(causas)
+        assert len(cruce) > 0
+        assert "n_resoluciones" in cruce.columns
+        assert "tiene_resoluciones" in cruce.columns
+
+    def test_volumen_dentro_de_rango_plausible(self) -> None:
+        """Canario: detecta colapsos o explosiones del dataset, no
+        microcambios mes a mes."""
         from src.cruce_causas_resoluciones import correr_cruce
 
         cruce = correr_cruce()
-        # Debe haber 1267 causas (output de Iteración A).
-        assert len(cruce) == 1267
+        assert 1000 <= len(cruce) <= 10000
 
     def test_cumple_schema(self) -> None:
         from src.cruce_causas_resoluciones import correr_cruce
