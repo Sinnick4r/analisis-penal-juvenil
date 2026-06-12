@@ -54,7 +54,6 @@ def cargar_nomenclador_ministerio(
     path: Path | None = None,
     solo_vigentes: bool = True,
 ) -> pd.DataFrame:
-
     fuente = path if path is not None else config.MINISTERIO_CSV
     if not fuente.exists():
         raise FileNotFoundError(

@@ -11,7 +11,6 @@ from src import config
 
 @st.cache_data(show_spinner="Cargando dataset…")
 def cargar_dataset(path: Path | None = None) -> pd.DataFrame:
-
     fuente = _resolver_fuente(path)
     df = pd.read_csv(fuente)
 

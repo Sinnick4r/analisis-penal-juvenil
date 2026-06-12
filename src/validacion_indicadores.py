@@ -106,11 +106,7 @@ def cargar_series_pipeline(
     res["periodo"] = _periodo(res["fecha_resolucion"])
 
     tramites = res.groupby("periodo").size()
-    fin = (
-        res[res["categoria_resolucion"].isin(CATEGORIAS_FINALIZACION)]
-        .groupby("periodo")
-        .size()
-    )
+    fin = res[res["categoria_resolucion"].isin(CATEGORIAS_FINALIZACION)].groupby("periodo").size()
 
     return {
         SLUG_CAUSAS_INGRESADAS: ing,
@@ -141,7 +137,9 @@ def _serie_oficial(wide_oficial: pd.DataFrame, slug: str) -> pd.Series:
     return pd.Series(wide_oficial[slug].to_numpy(), index=_periodos_wide(wide_oficial))
 
 
-def _alinear(serie_oficial: pd.Series, serie_pipeline: pd.Series, ventana: pd.Index) -> pd.DataFrame:
+def _alinear(
+    serie_oficial: pd.Series, serie_pipeline: pd.Series, ventana: pd.Index
+) -> pd.DataFrame:
     # alinea ambas series a la ventana, 0 donde no hay dato
     d = pd.DataFrame(
         {
@@ -191,8 +189,15 @@ def _validar_ingresadas(wide, series, ventana) -> list[dict]:
     # mensual: solo se reporta; el ratio mensual es atribucion temporal
     for per, r in d.iterrows():
         filas.append(
-            _fila("nivel_validacion", "mensual", SLUG_CAUSAS_INGRESADAS, per,
-                  r["valor_oficial"], r["valor_pipeline"], "ruido_atribucion_temporal")
+            _fila(
+                "nivel_validacion",
+                "mensual",
+                SLUG_CAUSAS_INGRESADAS,
+                per,
+                r["valor_oficial"],
+                r["valor_pipeline"],
+                "ruido_atribucion_temporal",
+            )
         )
 
     # anual: aca vive el criterio de aceptacion
@@ -204,7 +209,16 @@ def _validar_ingresadas(wide, series, ventana) -> list[dict]:
         dentro = bool(lo <= ratio <= hi and pl <= of)
         clasif = "metodologica_universo" if dentro else "anomalia_revisar"
         filas.append(
-            _fila("nivel_validacion", "anual", SLUG_CAUSAS_INGRESADAS, anio, of, pl, clasif, banda=dentro)
+            _fila(
+                "nivel_validacion",
+                "anual",
+                SLUG_CAUSAS_INGRESADAS,
+                anio,
+                of,
+                pl,
+                clasif,
+                banda=dentro,
+            )
         )
 
     # agregado de la ventana completa
@@ -212,27 +226,51 @@ def _validar_ingresadas(wide, series, ventana) -> list[dict]:
     ratio = pl / of
     dentro = bool(lo <= ratio <= hi and pl <= of)
     filas.append(
-        _fila("nivel_validacion", "agregado", SLUG_CAUSAS_INGRESADAS,
-              f"{ventana[0]}_{ventana[-1]}", of, pl,
-              "metodologica_universo" if dentro else "anomalia_revisar", banda=dentro)
+        _fila(
+            "nivel_validacion",
+            "agregado",
+            SLUG_CAUSAS_INGRESADAS,
+            f"{ventana[0]}_{ventana[-1]}",
+            of,
+            pl,
+            "metodologica_universo" if dentro else "anomalia_revisar",
+            banda=dentro,
+        )
     )
     return filas
 
 
 def _validar_consistencia_tasa(wide, ventana) -> list[dict]:
     # tasa publicada vs recalculada con las propias columnas del oficial
-    sub = wide.dropna(subset=[SLUG_CAUSAS_INGRESADAS, SLUG_CAUSAS_FINALIZADAS, SLUG_TASA_RESOLUCION])
+    sub = wide.dropna(
+        subset=[SLUG_CAUSAS_INGRESADAS, SLUG_CAUSAS_FINALIZADAS, SLUG_TASA_RESOLUCION]
+    )
     filas = []
     for _, row in sub.iterrows():
-        ing, fin, tasa_pub = row[SLUG_CAUSAS_INGRESADAS], row[SLUG_CAUSAS_FINALIZADAS], row[SLUG_TASA_RESOLUCION]
+        ing, fin, tasa_pub = (
+            row[SLUG_CAUSAS_INGRESADAS],
+            row[SLUG_CAUSAS_FINALIZADAS],
+            row[SLUG_TASA_RESOLUCION],
+        )
         if ing == 0:
             continue
         periodo = f"{int(row['anio'])}-{int(row['mes']):02d}"
         tasa_calc = fin / ing * 100
-        clasif = "consistencia_interna_ok" if abs(tasa_pub - tasa_calc) <= TOL_TASA else "consistencia_interna_revisar"
+        clasif = (
+            "consistencia_interna_ok"
+            if abs(tasa_pub - tasa_calc) <= TOL_TASA
+            else "consistencia_interna_revisar"
+        )
         filas.append(
-            _fila("consistencia_interna", "mensual", SLUG_TASA_RESOLUCION, periodo,
-                  oficial=tasa_pub, pipeline=tasa_calc, clasif=clasif)
+            _fila(
+                "consistencia_interna",
+                "mensual",
+                SLUG_TASA_RESOLUCION,
+                periodo,
+                oficial=tasa_pub,
+                pipeline=tasa_calc,
+                clasif=clasif,
+            )
         )
     return filas
 
@@ -243,14 +281,29 @@ def _caracterizar(wide, series, ventana, slug) -> list[dict]:
     d = _alinear(serie_of, series[slug], ventana)
     corr = _correlacion(d["valor_oficial"], d["valor_pipeline"])
     filas = [
-        _fila("caracterizacion", "mensual", slug, per,
-              r["valor_oficial"], r["valor_pipeline"], "cobertura_parcial")
+        _fila(
+            "caracterizacion",
+            "mensual",
+            slug,
+            per,
+            r["valor_oficial"],
+            r["valor_pipeline"],
+            "cobertura_parcial",
+        )
         for per, r in d.iterrows()
     ]
     of, pl = d["valor_oficial"].sum(), d["valor_pipeline"].sum()
     filas.append(
-        _fila("caracterizacion", "agregado", slug, f"{ventana[0]}_{ventana[-1]}",
-              of, pl, "cobertura_parcial", corr=corr)
+        _fila(
+            "caracterizacion",
+            "agregado",
+            slug,
+            f"{ventana[0]}_{ventana[-1]}",
+            of,
+            pl,
+            "cobertura_parcial",
+            corr=corr,
+        )
     )
     return filas
 
@@ -259,7 +312,9 @@ def _caracterizar(wide, series, ventana, slug) -> list[dict]:
 
 schema_reporte = pa.DataFrameSchema(
     {
-        "nivel": pa.Column(str, pa.Check.isin(["nivel_validacion", "consistencia_interna", "caracterizacion"])),
+        "nivel": pa.Column(
+            str, pa.Check.isin(["nivel_validacion", "consistencia_interna", "caracterizacion"])
+        ),
         "granularidad": pa.Column(str, pa.Check.isin(["mensual", "anual", "agregado"])),
         "indicador_slug": pa.Column(str),
         "periodo": pa.Column(str),
@@ -319,7 +374,10 @@ def _log_resumen(reporte: pd.DataFrame) -> None:
     ing = agg.loc[SLUG_CAUSAS_INGRESADAS]
     logger.info(
         "INGRESADAS agregado: oficial=%.0f pipeline=%.0f ratio=%.3f dentro_banda=%s",
-        ing.valor_oficial, ing.valor_pipeline, ing.ratio, ing.dentro_banda,
+        ing.valor_oficial,
+        ing.valor_pipeline,
+        ing.ratio,
+        ing.dentro_banda,
     )
     tasa = reporte[reporte.indicador_slug == SLUG_TASA_RESOLUCION]
     ok = (tasa.clasificacion == "consistencia_interna_ok").sum()

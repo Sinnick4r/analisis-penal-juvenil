@@ -79,7 +79,6 @@ def aplicar_tema_altair() -> None:
 
 
 def color_destacado(es_destacado, acento: str = ACENTO, base: str = GRIS_MEDIO) -> alt.Color:
-
     return alt.Color(
         f"{es_destacado}:N",
         scale=alt.Scale(domain=[True, False], range=[acento, base]),

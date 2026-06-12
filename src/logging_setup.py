@@ -8,7 +8,6 @@ from src import config
 
 
 def configurar_logging(nivel: int | None = None) -> None:
-
     root = logging.getLogger()
     if root.handlers:
         return
@@ -20,6 +19,5 @@ def configurar_logging(nivel: int | None = None) -> None:
 
 
 def get_logger(name: str) -> logging.Logger:
-
     configurar_logging()
     return logging.getLogger(name)

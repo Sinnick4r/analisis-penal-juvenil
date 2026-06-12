@@ -332,7 +332,7 @@ def _normalizar_ipp_y_fechas(df: pd.DataFrame) -> pd.DataFrame:
     for idx, val in df["fecha_o_anio"].items():
         if pd.isna(val):
             continue
-        if isinstance(val, (int, np.integer)) and 2000 <= int(val) <= 2100:
+        if isinstance(val, int | np.integer) and 2000 <= int(val) <= 2100:
             # Es solo el año, no una fecha (caso RAW1).
             anio_serie.loc[idx] = int(val)
         else:

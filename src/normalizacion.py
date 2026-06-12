@@ -256,7 +256,6 @@ def cruzar_ministerio(
     dict_delitos_ministerio: pd.DataFrame,
     nomenclador: pd.DataFrame,
 ) -> pd.DataFrame:
-
     filas_inicial = len(df)
     df = df.copy()
 

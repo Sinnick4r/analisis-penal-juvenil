@@ -177,7 +177,11 @@ def test_caracterizacion_reporta_correlacion():
 
 
 @pytest.mark.skipif(
-    not (config.INDICADORES_FILE.exists() and config.OUTPUT_CSV.exists() and config.OUTPUT_RESOLUCIONES_CSV.exists()),
+    not (
+        config.INDICADORES_FILE.exists()
+        and config.OUTPUT_CSV.exists()
+        and config.OUTPUT_RESOLUCIONES_CSV.exists()
+    ),
     reason="archivos reales no presentes (causa-por-causa fuera del repo)",
 )
 def test_aceptacion_datos_reales(tmp_path):

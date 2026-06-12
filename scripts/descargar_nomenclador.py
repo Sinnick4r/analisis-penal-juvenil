@@ -16,7 +16,6 @@ logger = get_logger(__name__)
 
 
 def descargar(destino: Path, url: str, force: bool = False) -> Path:
-
     if destino.exists() and not force:
         logger.info("Ya existe %s (usar --force para sobrescribir)", destino)
         return destino

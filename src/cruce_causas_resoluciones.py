@@ -193,7 +193,7 @@ def cruzar(causas: pd.DataFrame, resoluciones: pd.DataFrame) -> pd.DataFrame:
     cruce["categorias_resolucion"] = cruce["categorias_resolucion"].fillna("")
     for slug in SLUGS_CATEGORIAS.values():
         col = f"tiene_{slug}"
-        cruce[col] = cruce[col].fillna(False).astype(bool)
+        cruce[col] = cruce[col].astype("boolean").fillna(False).astype(bool)
 
     # Métricas temporales: diferencia en días entre fechas.
     # Solo válido cuando ambas fechas existen (causas con fecha_ingreso real

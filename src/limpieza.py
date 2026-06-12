@@ -134,7 +134,6 @@ def quitar_tildes(texto: str) -> str:
 
 
 def limpiar_texto(texto: Any) -> Any:
-
     if pd.isna(texto):
         return pd.NA
 
@@ -166,7 +165,6 @@ def limpiar_texto(texto: Any) -> Any:
 
 
 def limpiar_para_match(texto: Any) -> Any:
-
     if pd.isna(texto):
         return pd.NA
     s = str(texto).strip().lower()
@@ -180,7 +178,6 @@ def limpiar_para_match(texto: Any) -> Any:
 def aplicar_reglas_regex(
     texto: Any, reglas: tuple[tuple[str, str], ...] | list[tuple[str, str]]
 ) -> Any:
-
     if pd.isna(texto):
         return texto
     s = str(texto)
@@ -191,7 +188,6 @@ def aplicar_reglas_regex(
 
 
 def limpiar_tramite(texto: Any) -> Any:
-
     if pd.isna(texto):
         return pd.NA
 
